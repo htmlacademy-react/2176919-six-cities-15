@@ -1,4 +1,4 @@
-import { Offer } from '../../../mocks/data';
+import { Offer } from '../../mocks/data';
 
 function Premium(): JSX.Element {
   return (
