@@ -1,6 +1,7 @@
 import PlaceCard from '../../components/place-card/place-card';
 import Header from '../../components/header/header';
 import Location from './components/location';
+import Map from './components/map';
 import { Offers, Offer } from '../../mocks/data';
 import { CITIES } from '../../utils/constants';
 
@@ -55,9 +56,9 @@ function Main({ offersCount }: MainProps): JSX.Element {
 
               </div>
             </section>
-            <div className="cities__right-section">
-              <section className="cities__map map"></section>
-            </div>
+
+            <Map />
+
           </div>
         </div>
       </main>
