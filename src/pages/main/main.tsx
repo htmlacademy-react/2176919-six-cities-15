@@ -1,15 +1,12 @@
 import PlaceCard from '../../components/app/place-card/place-card';
+import { Offers, Offer } from '../../mocks/data';
 
 type MainProps = {
   offersCount: number;
 }
 
-function renderPlaceCard(value: number, placeCard: JSX.Element) {
-  const arrayOfCards = [];
-  for (let i = 0; i < value; i++) {
-    arrayOfCards.push(placeCard);
-  }
-  return arrayOfCards;
+function renderPlaceCard(value: number) {
+  return Offers.slice(0, value).map((offer: Offer) => <PlaceCard {...offer} key={offer.id} />);
 }
 
 function Main({ offersCount }: MainProps): JSX.Element {
@@ -104,7 +101,7 @@ function Main({ offersCount }: MainProps): JSX.Element {
               </form>
               <div className="cities__places-list places__list tabs__content">
 
-                {renderPlaceCard(offersCount, <PlaceCard />)}
+                {renderPlaceCard(offersCount)}
 
               </div>
             </section>

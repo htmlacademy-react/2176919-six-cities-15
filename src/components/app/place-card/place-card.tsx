@@ -1,4 +1,7 @@
-function PlaceCard(): JSX.Element {
+import { Offer } from '../../../mocks/data';
+
+function PlaceCard(offer: Offer): JSX.Element {
+  const {title} = offer;
   return (
     <article className="cities__card place-card">
       <div className="place-card__mark">
@@ -29,7 +32,7 @@ function PlaceCard(): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">Beautiful &amp; luxurious apartment at great location</a>
+          <a href="#">{title}</a>
         </h2>
         <p className="place-card__type">Apartment</p>
       </div>
