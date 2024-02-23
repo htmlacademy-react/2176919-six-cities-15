@@ -1,9 +1,10 @@
+import { Helmet } from 'react-helmet-async';
+import { Offers, Offer } from '../../mocks/data';
+import { CITIES } from '../../utils/constants';
 import PlaceCard from '../../components/place-card/place-card';
 import Header from '../../components/header/header';
 import Location from './components/location';
 import Map from './components/map';
-import { Offers, Offer } from '../../mocks/data';
-import { CITIES } from '../../utils/constants';
 
 type MainProps = {
   offersCount: number;
@@ -16,6 +17,9 @@ function renderPlaceCard(value: number) {
 function Main({ offersCount }: MainProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
+      <Helmet>
+        <title>6 cities</title>
+      </Helmet>
 
       <Header />
 
