@@ -1,6 +1,13 @@
 import { Helmet } from 'react-helmet-async';
+import { Review } from '../../mocks/reviews';
+import { OfferData } from '../../mocks/offers';
 
-function Offer (): JSX.Element {
+type OfferProps = {
+  offers: OfferData[];
+  reviews: Review[];
+}
+
+function Offer ({offers, reviews}: OfferProps): JSX.Element {
   return (
     <main className="page__main page__main--offer">
       <section className="offer">

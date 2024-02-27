@@ -1,19 +1,16 @@
 import { Helmet } from 'react-helmet-async';
-import { Offers, Offer } from '../../mocks/data';
 import { CITIES } from '../../utils/constants';
-import PlaceCard from '../../components/place-card/place-card';
+import { OfferData } from '../../mocks/offers';
+import OffersList from '../../components/offers-list/offers-list';
 import Location from './components/location';
 import Map from './components/map';
 
 type MainProps = {
   offersCount: number;
+  offers: OfferData[];
 }
 
-function renderPlaceCard(value: number) {
-  return Offers.slice(0, value).map((offer: Offer) => <PlaceCard {...offer} key={offer.id} />);
-}
-
-function Main({ offersCount }: MainProps): JSX.Element {
+function Main({ offersCount, offers }: MainProps): JSX.Element {
   return (
     <main className="page__main page__main--index">
       <Helmet>
@@ -49,11 +46,7 @@ function Main({ offersCount }: MainProps): JSX.Element {
                 <li className="places__option" tabIndex={0}>Top rated first</li>
               </ul>
             </form>
-            <div className="cities__places-list places__list tabs__content">
-
-              {renderPlaceCard(offersCount)}
-
-            </div>
+            {<OffersList offersCount={offersCount} offers={offers} />}
           </section>
 
           <Map />

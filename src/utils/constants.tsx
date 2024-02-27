@@ -13,3 +13,14 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const PlaceCardSize = {
+  PlaceCard: {
+    with: '260',
+    height: '200',
+  },
+  PlaceCardSmall: {
+    with: '150',
+    height: '110',
+  }
+};

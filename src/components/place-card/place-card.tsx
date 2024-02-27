@@ -1,4 +1,24 @@
-import { Offer } from '../../mocks/data';
+import { OfferData } from '../../mocks/offers';
+import { useLocation } from 'react-router-dom';
+import { AppRoute, PlaceCardSize } from '../../utils/constants';
+
+const getPlaceCardState = (pathname: AppRoute) => {
+  let cardClassName = 'cities__card';
+  let cardWrapperClassName = 'cities__image-wrapper';
+  let cardInfoClassName = '';
+  let cardWidth = PlaceCardSize.PlaceCard.with;
+  let cardHeight = PlaceCardSize.PlaceCard.height;
+
+  if (pathname === AppRoute.Favorites) {
+    cardClassName = 'favorites__card';
+    cardWrapperClassName = 'favorites__image-wrapper';
+    cardInfoClassName = 'favorites__card-info';
+    cardWidth = PlaceCardSize.PlaceCardSmall.with;
+    cardHeight = PlaceCardSize.PlaceCardSmall.height;
+  }
+
+  return {cardClassName, cardWidth, cardHeight, cardWrapperClassName, cardInfoClassName};
+};
 
 function Premium(): JSX.Element {
   return (
@@ -8,17 +28,19 @@ function Premium(): JSX.Element {
   );
 }
 
-function PlaceCard(offer: Offer): JSX.Element {
+function PlaceCard(offer: OfferData): JSX.Element {
   const {title, isPremium, price, type, previewImage, rating} = offer;
+  const {pathname} = useLocation();
+  const {cardClassName, cardWidth, cardHeight, cardWrapperClassName, cardInfoClassName} = getPlaceCardState(pathname as AppRoute);
   return (
-    <article className="cities__card place-card">
+    <article className={`${cardClassName} place-card`}>
       {isPremium ? <Premium /> : ''}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${cardWrapperClassName} place-card__image-wrapper`}>
         <a href={previewImage}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={previewImage} width={cardWidth} height={cardHeight} alt="Place image"/>
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={`${cardInfoClassName} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
