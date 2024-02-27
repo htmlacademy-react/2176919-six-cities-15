@@ -1,5 +1,6 @@
 import { OfferData } from '../../mocks/offers';
-import { Review } from '../../mocks/reviews';
+import { OfferDetailed } from '../../mocks/offer';
+import { ReviewData } from '../../mocks/reviews';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {HelmetProvider} from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../../utils/constants';
@@ -14,10 +15,11 @@ import Layout from '../layout/layout';
 type AppProps = {
   offersCount: number;
   offers: OfferData[];
-  reviews: Review[];
+  reviews: ReviewData[];
+  offer: OfferDetailed;
 }
 
-function App({ offersCount, offers, reviews }: AppProps): JSX.Element {
+function App({ offersCount, offers, reviews, offer }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -46,7 +48,7 @@ function App({ offersCount, offers, reviews }: AppProps): JSX.Element {
             />
             <Route
               path={AppRoute.Offer}
-              element={<Offer offers={offers} reviews={reviews}/>}
+              element={<Offer offer={offer} reviews={reviews}/>}
             />
             <Route
               path="*"

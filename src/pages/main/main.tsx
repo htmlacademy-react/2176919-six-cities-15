@@ -1,9 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 import { CITIES } from '../../utils/constants';
 import { OfferData } from '../../mocks/offers';
+import { SORTING_TYPES } from '../../utils/constants';
 import OffersList from '../../components/offers-list/offers-list';
 import Location from './components/location';
 import Map from './components/map';
+import PlacesOption from './components/places-option';
 
 type MainProps = {
   offersCount: number;
@@ -40,10 +42,7 @@ function Main({ offersCount, offers }: MainProps): JSX.Element {
                 </svg>
               </span>
               <ul className="places__options places__options--custom places__options--opened">
-                <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                <li className="places__option" tabIndex={0}>Price: low to high</li>
-                <li className="places__option" tabIndex={0}>Price: high to low</li>
-                <li className="places__option" tabIndex={0}>Top rated first</li>
+                {SORTING_TYPES.map((option) => <PlacesOption option={option} key={option}/>)}
               </ul>
             </form>
             {<OffersList offersCount={offersCount} offers={offers} />}

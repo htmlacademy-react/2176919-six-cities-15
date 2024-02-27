@@ -1,5 +1,5 @@
 import { OfferData } from '../../mocks/offers';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { AppRoute, PlaceCardSize } from '../../utils/constants';
 
 type PlaceCardProp = {
@@ -35,7 +35,7 @@ function Premium(): JSX.Element {
 }
 
 function PlaceCard({offer, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.Element {
-  const {title, isPremium, price, type, previewImage, rating} = offer;
+  const {title, isPremium, price, type, previewImage, rating, id} = offer;
   const {pathname} = useLocation();
   const {cardClassName, cardWidth, cardHeight, cardWrapperClassName, cardInfoClassName} = getPlaceCardState(pathname as AppRoute);
   return (
@@ -43,9 +43,9 @@ function PlaceCard({offer, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.Elem
       onMouseLeave={onMouseLeave}>
       {isPremium ? <Premium /> : ''}
       <div className={`${cardWrapperClassName} place-card__image-wrapper`}>
-        <a href={previewImage}>
+        <Link to={`${AppRoute.Offer}${id}`}>
           <img className="place-card__image" src={previewImage} width={cardWidth} height={cardHeight} alt="Place image"/>
-        </a>
+        </Link>
       </div>
       <div className={`${cardInfoClassName} place-card__info`}>
         <div className="place-card__price-wrapper">
@@ -67,7 +67,7 @@ function PlaceCard({offer, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.Elem
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`${AppRoute.Offer}${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type.charAt(0).toUpperCase() + type.slice(1)}</p>
       </div>

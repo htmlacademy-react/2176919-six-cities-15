@@ -1,4 +1,4 @@
-export type Review = {
+export type ReviewData = {
   id: string;
   date: string;
   user: {
@@ -10,7 +10,7 @@ export type Review = {
   rating: number;
 }
 
-export const reviews: Review[] = [
+export const reviews: ReviewData[] = [
   {
     'id': 'b67ddfd5-b953-4a30-8c8d-bd083cd6b62a',
     'date': '2019-05-08T14:13:56.569Z',

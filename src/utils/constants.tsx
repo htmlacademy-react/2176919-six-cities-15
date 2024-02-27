@@ -14,6 +14,15 @@ export enum AuthorizationStatus {
   Unknown = 'Unknown',
 }
 
+export enum SortType {
+  Popular = 'Popular',
+  PriceAscending = 'Price: low to high',
+  PriceDescending = 'Price: high to low',
+  RatingDescending = 'Top rated first',
+}
+
+export const SORTING_TYPES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
+
 export const PlaceCardSize = {
   PlaceCard: {
     with: '260',
