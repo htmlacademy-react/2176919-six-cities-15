@@ -1,7 +1,5 @@
-import { SortType } from '../../utils/constants';
-
 type PlacesOptionProps = {
-  option: SortType;
+  option: string;
 }
 
 function PlacesOption({option}: PlacesOptionProps): JSX.Element {
