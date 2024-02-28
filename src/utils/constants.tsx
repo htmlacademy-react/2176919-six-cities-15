@@ -1,6 +1,3 @@
-
-const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
-
 enum AppRoute {
   Root='/',
   Login='/login',
@@ -21,8 +18,6 @@ enum SortType {
   RatingDescending = 'Top rated first',
 }
 
-const SORTING_TYPES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
-
 const PlaceCardSize = {
   PlaceCard: {
     with: '260',
@@ -34,4 +29,4 @@ const PlaceCardSize = {
   }
 };
 
-export {CITIES, AppRoute, AuthorizationStatus, SortType, SORTING_TYPES, PlaceCardSize};
+export {AppRoute, AuthorizationStatus, SortType, PlaceCardSize};

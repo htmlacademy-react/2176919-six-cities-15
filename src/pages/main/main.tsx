@@ -1,11 +1,12 @@
 import { Helmet } from 'react-helmet-async';
-import { CITIES } from '../../utils/constants';
 import { OfferData } from '../../mocks/offers';
-import { SORTING_TYPES } from '../../utils/constants';
 import OffersList from '../../components/offers-list/offers-list';
 import Location from './components/location';
 import Map from './components/map';
 import PlacesOption from './components/places-option';
+
+const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+const SORTING_TYPES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
 
 type MainProps = {
   offersCount: number;
