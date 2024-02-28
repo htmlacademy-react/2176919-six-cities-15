@@ -40,7 +40,8 @@ function PlaceCard({offer, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.Elem
   const {cardClassName, cardWidth, cardHeight, cardWrapperClassName, cardInfoClassName} = getPlaceCardState(pathname as AppRoute);
   return (
     <article className={`${cardClassName} place-card`} onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}>
+      onMouseLeave={onMouseLeave}
+    >
       {isPremium ? <Premium /> : ''}
       <div className={`${cardWrapperClassName} place-card__image-wrapper`}>
         <Link to={`${AppRoute.Offer}${id}`}>
