@@ -5,7 +5,6 @@ import { AppRoute } from '../../utils/constants';
 import PlaceCard from '../place-card/place-card';
 
 type OffersListProps = {
-  offersCount: number;
   offers: OfferData[];
 }
 
@@ -20,13 +19,13 @@ const getOffersListState = (pathname: AppRoute) => {
   return {offersListClassName};
 };
 
-function OffersList({offersCount, offers}: OffersListProps): JSX.Element {
+function OffersList({offers}: OffersListProps): JSX.Element {
   const [, setCardActive ] = useState('');
   const {pathname} = useLocation();
   const {offersListClassName} = getOffersListState(pathname as AppRoute);
   return (
     <div className={offersListClassName}>
-      {offers.slice(0, offersCount).map((offer: OfferData) => <PlaceCard offer={offer} key={offer.id} onMouseEnter={() => setCardActive(offer.id)} onMouseLeave={() => setCardActive('')} />)};
+      {offers.map((offer: OfferData) => <PlaceCard offer={offer} key={offer.id} onMouseEnter={() => setCardActive(offer.id)} onMouseLeave={() => setCardActive('')} />)};
     </div>
   );
 }

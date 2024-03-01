@@ -162,7 +162,3 @@ export const offers: OfferData[] = [
     'rating': 4.9,
   },
 ];
-
-export enum Settings {
-  OffersCount = 5,
-}

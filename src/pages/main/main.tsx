@@ -9,11 +9,10 @@ const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseld
 const SORTING_TYPES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
 
 type MainProps = {
-  offersCount: number;
   offers: OfferData[];
 }
 
-function Main({ offersCount, offers }: MainProps): JSX.Element {
+function Main({ offers }: MainProps): JSX.Element {
   return (
     <main className="page__main page__main--index">
       <Helmet>
@@ -46,7 +45,7 @@ function Main({ offersCount, offers }: MainProps): JSX.Element {
                 {SORTING_TYPES.map((option) => <PlacesOption option={option} key={option}/>)}
               </ul>
             </form>
-            {<OffersList offersCount={offersCount} offers={offers} />}
+            {<OffersList offers={offers} />}
           </section>
 
           <Map />
