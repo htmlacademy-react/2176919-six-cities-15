@@ -1,4 +1,30 @@
-import { Offer } from '../../mocks/data';
+import { OfferData } from '../../mocks/offers';
+import { useLocation, Link } from 'react-router-dom';
+import { AppRoute, PlaceCardSize } from '../../utils/constants';
+
+type PlaceCardProp = {
+  offer: OfferData;
+  onMouseEnter(): void;
+  onMouseLeave(): void;
+};
+
+const getPlaceCardState = (pathname: AppRoute) => {
+  let cardClassName = 'cities__card';
+  let cardWrapperClassName = 'cities__image-wrapper';
+  let cardInfoClassName = '';
+  let cardWidth = PlaceCardSize.PlaceCard.with;
+  let cardHeight = PlaceCardSize.PlaceCard.height;
+
+  if (pathname === AppRoute.Favorites) {
+    cardClassName = 'favorites__card';
+    cardWrapperClassName = 'favorites__image-wrapper';
+    cardInfoClassName = 'favorites__card-info';
+    cardWidth = PlaceCardSize.PlaceCardSmall.with;
+    cardHeight = PlaceCardSize.PlaceCardSmall.height;
+  }
+
+  return {cardClassName, cardWidth, cardHeight, cardWrapperClassName, cardInfoClassName};
+};
 
 function Premium(): JSX.Element {
   return (
@@ -8,17 +34,21 @@ function Premium(): JSX.Element {
   );
 }
 
-function PlaceCard(offer: Offer): JSX.Element {
-  const {title, isPremium, price, type, previewImage, rating} = offer;
+function PlaceCard({offer, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.Element {
+  const {title, isPremium, price, type, previewImage, rating, id} = offer;
+  const {pathname} = useLocation();
+  const {cardClassName, cardWidth, cardHeight, cardWrapperClassName, cardInfoClassName} = getPlaceCardState(pathname as AppRoute);
   return (
-    <article className="cities__card place-card">
+    <article className={`${cardClassName} place-card`} onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       {isPremium ? <Premium /> : ''}
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href={previewImage}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
-        </a>
+      <div className={`${cardWrapperClassName} place-card__image-wrapper`}>
+        <Link to={`${AppRoute.Offer}${id}`}>
+          <img className="place-card__image" src={previewImage} width={cardWidth} height={cardHeight} alt="Place image"/>
+        </Link>
       </div>
-      <div className="place-card__info">
+      <div className={`${cardInfoClassName} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -38,7 +68,7 @@ function PlaceCard(offer: Offer): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`${AppRoute.Offer}${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type.charAt(0).toUpperCase() + type.slice(1)}</p>
       </div>

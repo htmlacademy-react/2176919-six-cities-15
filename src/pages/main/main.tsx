@@ -1,19 +1,19 @@
 import { Helmet } from 'react-helmet-async';
-import { Offers, Offer } from '../../mocks/data';
-import { CITIES } from '../../utils/constants';
-import PlaceCard from '../../components/place-card/place-card';
+import { OfferData } from '../../mocks/offers';
+import OffersList from '../../components/offers-list/offers-list';
 import Location from './components/location';
 import Map from './components/map';
+import PlacesOption from './components/places-option';
+
+const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+const SORTING_TYPES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
 
 type MainProps = {
   offersCount: number;
+  offers: OfferData[];
 }
 
-function renderPlaceCard(value: number) {
-  return Offers.slice(0, value).map((offer: Offer) => <PlaceCard {...offer} key={offer.id} />);
-}
-
-function Main({ offersCount }: MainProps): JSX.Element {
+function Main({ offersCount, offers }: MainProps): JSX.Element {
   return (
     <main className="page__main page__main--index">
       <Helmet>
@@ -43,17 +43,10 @@ function Main({ offersCount }: MainProps): JSX.Element {
                 </svg>
               </span>
               <ul className="places__options places__options--custom places__options--opened">
-                <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                <li className="places__option" tabIndex={0}>Price: low to high</li>
-                <li className="places__option" tabIndex={0}>Price: high to low</li>
-                <li className="places__option" tabIndex={0}>Top rated first</li>
+                {SORTING_TYPES.map((option) => <PlacesOption option={option} key={option}/>)}
               </ul>
             </form>
-            <div className="cities__places-list places__list tabs__content">
-
-              {renderPlaceCard(offersCount)}
-
-            </div>
+            {<OffersList offersCount={offersCount} offers={offers} />}
           </section>
 
           <Map />
