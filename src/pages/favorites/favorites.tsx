@@ -37,7 +37,7 @@ function Favorites ({offers}: FavoritesProps): JSX.Element {
                   </div>
                 </div>
 
-                {<OffersList offers={offers} />}
+                {<OffersList variant={'horizontal'} offers={offers} />}
 
               </li>
             </ul>

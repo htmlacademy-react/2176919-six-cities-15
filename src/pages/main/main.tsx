@@ -45,7 +45,7 @@ function Main({ offers }: MainProps): JSX.Element {
                 {SORTING_TYPES.map((option) => <PlacesOption option={option} key={option}/>)}
               </ul>
             </form>
-            {<OffersList offers={offers} />}
+            {<OffersList variant={'vertical'} offers={offers} />}
           </section>
 
           <Map />
