@@ -1,8 +1,10 @@
 import { Helmet } from 'react-helmet-async';
+import { useState } from 'react';
 import { OfferData } from '../../mocks/offers';
+import { Point } from '../../components/map';
 import OffersList from '../../components/offers-list/offers-list';
 import Location from './components/location';
-import Map from './components/map';
+import Map from '../../components/map';
 import PlacesOption from './components/places-option';
 
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
@@ -13,6 +15,18 @@ type MainProps = {
 }
 
 function Main({ offers }: MainProps): JSX.Element {
+  const points = offers.map((offer) => ({id: offer.id, latitude: offer.location.latitude, longitude: offer.location.longitude, zoom: offer.location.zoom}));
+
+  const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
+    undefined
+  );
+
+  const handleListItemHover = (listItemId: string) => {
+    const currentPoint = points.find((point) => point.id === listItemId);
+
+    setSelectedPoint(currentPoint);
+  };
+
   return (
     <main className="page__main page__main--index">
       <Helmet>
@@ -45,10 +59,10 @@ function Main({ offers }: MainProps): JSX.Element {
                 {SORTING_TYPES.map((option) => <PlacesOption option={option} key={option}/>)}
               </ul>
             </form>
-            {<OffersList variant={'vertical'} offers={offers} />}
+            {<OffersList variant={'vertical'} offers={offers} onListItemHover={handleListItemHover}/>}
           </section>
 
-          <Map />
+          <Map city={offers[0].city} points={points} selectedPoint={selectedPoint}/>
 
         </div>
       </div>

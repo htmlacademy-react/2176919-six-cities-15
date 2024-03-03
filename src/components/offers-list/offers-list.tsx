@@ -1,12 +1,13 @@
 import { OfferData } from '../../mocks/offers';
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, MouseEvent } from 'react';
 import { AppRoute } from '../../utils/constants';
 import PlaceCard from '../place-card/place-card';
 
 type OffersListProps = {
   variant: 'vertical' | 'horizontal';
   offers: OfferData[];
+  onListItemHover: (listItemId: string) => void;
 }
 
 const getOffersListState = (pathname: AppRoute) => {
@@ -20,10 +21,15 @@ const getOffersListState = (pathname: AppRoute) => {
   return {offersListClassName};
 };
 
-function OffersList({variant, offers}: OffersListProps): JSX.Element {
-  const [, setCardActive ] = useState('');
+function OffersList({variant, offers, onListItemHover}: OffersListProps): JSX.Element {
+  const [cardActive, setCardActive ] = useState('');
   const {pathname} = useLocation();
   const {offersListClassName} = getOffersListState(pathname as AppRoute);
+  const handleListItemHover = (event: MouseEvent<HTMLLIElement>) => {
+    event.preventDefault();
+    onListItemHover(cardActive);
+  };
+
   return (
     <div className={offersListClassName}>
       {offers.map((offer: OfferData) => <PlaceCard variant={variant} offer={offer} key={offer.id} onMouseEnter={() => setCardActive(offer.id)} onMouseLeave={() => setCardActive('')} />)};
