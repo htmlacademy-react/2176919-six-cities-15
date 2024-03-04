@@ -1,6 +1,7 @@
 import { OfferData } from '../../mocks/offers';
 import { OfferDetailed } from '../../mocks/offer';
 import { ReviewData } from '../../mocks/reviews';
+import { OfferNearby } from '../../mocks/offers-nearby';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {HelmetProvider} from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../../utils/constants';
@@ -16,9 +17,10 @@ type AppProps = {
   offers: OfferData[];
   reviews: ReviewData[];
   offer: OfferDetailed;
+  offersNearby: OfferNearby[];
 }
 
-function App({ offers, reviews, offer }: AppProps): JSX.Element {
+function App({ offers, reviews, offer, offersNearby }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -47,7 +49,7 @@ function App({ offers, reviews, offer }: AppProps): JSX.Element {
             />
             <Route
               path={AppRoute.Offer}
-              element={<Offer offer={offer} reviews={reviews}/>}
+              element={<Offer offer={offer} reviews={reviews} offersNearby={offersNearby}/>}
             />
             <Route
               path="*"

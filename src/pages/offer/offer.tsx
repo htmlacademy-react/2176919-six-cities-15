@@ -1,16 +1,20 @@
 import { Helmet } from 'react-helmet-async';
 import { ReviewData } from '../../mocks/reviews';
 import { OfferDetailed } from '../../mocks/offer';
+import { OfferNearby } from '../../mocks/offers-nearby';
 import OfferGoods from './components/offer-goods';
 import ReviewsList from './components/reviews-list';
+import Map from '../../components/map';
 
 type OfferProps = {
   offer: OfferDetailed;
   reviews: ReviewData[];
+  offersNearby: OfferNearby[];
 }
 
-function Offer ({offer, reviews}: OfferProps): JSX.Element {
-  const {title, isPremium, rating, price, type, bedrooms, maxAdults, goods, host, description} = offer;
+function Offer ({offer, reviews, offersNearby}: OfferProps): JSX.Element {
+  const {title, isPremium, rating, price, type, bedrooms, maxAdults, goods, host, description, city} = offer;
+  const points = offersNearby.map((item) => ({id: item.id, latitude: item.location.latitude, longitude: item.location.longitude, zoom: item.location.zoom}));
   return (
     <main className="page__main page__main--offer">
       <section className="offer">
@@ -113,7 +117,7 @@ function Offer ({offer, reviews}: OfferProps): JSX.Element {
             <ReviewsList reviews={reviews} />
           </div>
         </div>
-        <section className="offer__map map"></section>
+        <Map city={city} points={points} isMain={false}/>
       </section>
     </main>
   );

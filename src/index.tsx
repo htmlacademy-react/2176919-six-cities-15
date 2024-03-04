@@ -4,6 +4,7 @@ import App from './components/app/app';
 import { offers } from './mocks/offers';
 import { offer } from './mocks/offer';
 import { reviews } from './mocks/reviews';
+import { offersNearby } from './mocks/offers-nearby';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,6 +12,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App offers={offers} reviews={reviews} offer={offer} />
+    <App offers={offers} reviews={reviews} offer={offer} offersNearby={offersNearby} />
   </React.StrictMode>
 );
