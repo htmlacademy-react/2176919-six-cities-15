@@ -7,7 +7,7 @@ import PlaceCard from '../place-card/place-card';
 type OffersListProps = {
   variant: 'vertical' | 'horizontal';
   offers: OfferData[];
-  onListItemHover: (listItemId: string) => void;
+  onListItemHover?: (listItemId: string) => void;
 }
 
 const getOffersListState = (pathname: AppRoute) => {
@@ -26,8 +26,9 @@ function OffersList({variant, offers, onListItemHover}: OffersListProps): JSX.El
   const {pathname} = useLocation();
   const {offersListClassName} = getOffersListState(pathname as AppRoute);
 
-  onListItemHover(cardActive);
-
+  if (onListItemHover) {
+    onListItemHover(cardActive);
+  }
 
   return (
     <div className={offersListClassName}>
