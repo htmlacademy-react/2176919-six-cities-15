@@ -5,6 +5,7 @@ import { OfferNearby } from '../../mocks/offers-nearby';
 import OfferGoods from './components/offer-goods';
 import ReviewsList from './components/reviews-list';
 import Map from '../../components/map';
+import OffersList from '../../components/offers-list/offers-list';
 
 type OfferProps = {
   offer: OfferDetailed;
@@ -119,6 +120,12 @@ function Offer ({offer, reviews, offersNearby}: OfferProps): JSX.Element {
         </div>
         <Map city={city} points={points} isMain={false}/>
       </section>
+      <div className="container">
+        <section className="near-places places">
+          <h2 className="near-places__title">Other places in the neighbourhood</h2>
+          <OffersList variant={'vertical'} offers={offersNearby}/>
+        </section>
+      </div>
     </main>
   );
 }

@@ -34,7 +34,7 @@ export const offersNearby: OfferNearby[] = [
     'isFavorite': false,
     'isPremium': false,
     'rating': 4,
-    'previewImage': 'https://url-to-image/image.png'
+    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/2.jpg'
   },
   {
     'id': '6af6f711-c28d-4121-82cd-e0b462a27f00',
@@ -56,7 +56,7 @@ export const offersNearby: OfferNearby[] = [
     'isFavorite': false,
     'isPremium': false,
     'rating': 4,
-    'previewImage': 'https://url-to-image/image.png'
+    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/19.jpg'
   },
   {
     'id': '6af6f711-c28d-4121-82cd-e0b462a27f00',
@@ -78,6 +78,6 @@ export const offersNearby: OfferNearby[] = [
     'isFavorite': false,
     'isPremium': false,
     'rating': 4,
-    'previewImage': 'https://url-to-image/image.png'
+    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/8.jpg'
   },
 ];
