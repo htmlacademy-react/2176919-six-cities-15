@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { Settings } from './mocks/offers';
 import { offers } from './mocks/offers';
 import { offer } from './mocks/offer';
 import { reviews } from './mocks/reviews';

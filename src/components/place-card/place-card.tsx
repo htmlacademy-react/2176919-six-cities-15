@@ -77,12 +77,3 @@ function PlaceCard({offer, variant, onMouseEnter, onMouseLeave}: PlaceCardProp):
 }
 
 export default PlaceCard;
-/* Однако завязываться на useLocation - идея, хоть и вполне рабочая, но не самая удобная.
-Представь, что руководитель проекта решит добавить эти карточки на ещё какую-нибудь страницу)
-Гораздо проще было бы определить для карточки дополнительный пропс, назвать его, например, variant и передавать его снаружи там, где ты отрисовываешь карточки)
-
-тогда у тебя тип для пропсов карточки выглядел бы примерно так:;
-interface PlaceCardProps {
-data: OfferData
-variant: 'vertical' | 'horizontal'
-} */
