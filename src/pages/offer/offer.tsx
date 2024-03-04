@@ -2,8 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { ReviewData } from '../../mocks/reviews';
 import { OfferDetailed } from '../../mocks/offer';
 import OfferGoods from './components/offer-goods';
-import Review from './components/review';
-import CommentSubmissionForm from './components/comment-submission-form';
+import ReviewsList from './components/reviews-list';
 
 type OfferProps = {
   offer: OfferDetailed;
@@ -111,16 +110,7 @@ function Offer ({offer, reviews}: OfferProps): JSX.Element {
                 </p>
               </div>
             </div>
-            <section className="offer__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-              <ul className="reviews__list">
-                {
-                  reviews.map((review) => <Review review={review} key={review.id}/>)
-                }
-
-              </ul>
-              {<CommentSubmissionForm />}
-            </section>
+            <ReviewsList reviews={reviews} />
           </div>
         </div>
         <section className="offer__map map"></section>
