@@ -1,6 +1,6 @@
 import { OfferData } from '../../mocks/offers';
 import { useLocation } from 'react-router-dom';
-import { useState, MouseEvent } from 'react';
+import { useState } from 'react';
 import { AppRoute } from '../../utils/constants';
 import PlaceCard from '../place-card/place-card';
 
@@ -25,10 +25,9 @@ function OffersList({variant, offers, onListItemHover}: OffersListProps): JSX.El
   const [cardActive, setCardActive ] = useState('');
   const {pathname} = useLocation();
   const {offersListClassName} = getOffersListState(pathname as AppRoute);
-  const handleListItemHover = (event: MouseEvent<HTMLLIElement>) => {
-    event.preventDefault();
-    onListItemHover(cardActive);
-  };
+
+  onListItemHover(cardActive);
+
 
   return (
     <div className={offersListClassName}>
