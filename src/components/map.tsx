@@ -3,6 +3,7 @@ import {useRef, useEffect} from 'react';
 import {Icon, Marker, layerGroup} from 'leaflet';
 import useMap from '../hooks/use-map';
 import 'leaflet/dist/leaflet.css';
+import classNames from 'classnames';
 
 export type Point = {
   id: string;
@@ -28,11 +29,12 @@ const currentCustomIcon = new Icon({
 type MapProps = {
   city: City;
   points: Points;
-  selectedPoint: Point | undefined;
+  isMain: boolean;
+  selectedPoint?: Point | undefined;
 };
 
 function Map(props: MapProps): JSX.Element {
-  const {city, points, selectedPoint} = props;
+  const {city, points, isMain, selectedPoint} = props;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -62,9 +64,13 @@ function Map(props: MapProps): JSX.Element {
   }, [map, points, selectedPoint]);
 
   return (
-    <div className="cities__right-section">
-      <section className="cities__map map" ref={mapRef}></section>
-    </div>
+    <section className={classNames(
+      'map',
+      {'cities__map': isMain},
+      {'offer__map': !isMain}
+    )} ref={mapRef}
+    >
+    </section>
   );
 }
 

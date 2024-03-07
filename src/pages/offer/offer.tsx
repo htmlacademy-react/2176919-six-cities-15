@@ -1,17 +1,21 @@
 import { Helmet } from 'react-helmet-async';
 import { ReviewData } from '../../mocks/reviews';
 import { OfferDetailed } from '../../mocks/offer';
+import { OfferNearby } from '../../mocks/offers-nearby';
 import OfferGoods from './components/offer-goods';
-import Review from './components/review';
-import CommentSubmissionForm from './components/comment-submission-form';
+import ReviewsList from './components/reviews-list';
+import Map from '../../components/map';
+import OffersList from '../../components/offers-list/offers-list';
 
 type OfferProps = {
   offer: OfferDetailed;
   reviews: ReviewData[];
+  offersNearby: OfferNearby[];
 }
 
-function Offer ({offer, reviews}: OfferProps): JSX.Element {
-  const {title, isPremium, rating, price, type, bedrooms, maxAdults, goods, host, description} = offer;
+function Offer ({offer, reviews, offersNearby}: OfferProps): JSX.Element {
+  const {title, isPremium, rating, price, type, bedrooms, maxAdults, goods, host, description, city} = offer;
+  const points = offersNearby.map((item) => ({id: item.id, latitude: item.location.latitude, longitude: item.location.longitude, zoom: item.location.zoom}));
   return (
     <main className="page__main page__main--offer">
       <section className="offer">
@@ -111,20 +115,17 @@ function Offer ({offer, reviews}: OfferProps): JSX.Element {
                 </p>
               </div>
             </div>
-            <section className="offer__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-              <ul className="reviews__list">
-                {
-                  reviews.map((review) => <Review review={review} key={review.id}/>)
-                }
-
-              </ul>
-              {<CommentSubmissionForm />}
-            </section>
+            <ReviewsList reviews={reviews} />
           </div>
         </div>
-        <section className="offer__map map"></section>
+        <Map city={city} points={points} isMain={false}/>
       </section>
+      <div className="container">
+        <section className="near-places places">
+          <h2 className="near-places__title">Other places in the neighbourhood</h2>
+          <OffersList variant={'vertical'} offers={offersNearby}/>
+        </section>
+      </div>
     </main>
   );
 }
