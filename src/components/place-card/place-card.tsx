@@ -1,21 +1,22 @@
 import { OfferData } from '../../mocks/offers';
-import { useLocation, Link } from 'react-router-dom';
 import { AppRoute, PlaceCardSize } from '../../utils/constants';
+import { Link } from 'react-router-dom';
 
 type PlaceCardProp = {
   offer: OfferData;
+  variant: 'vertical' | 'horizontal';
   onMouseEnter(): void;
   onMouseLeave(): void;
 };
 
-const getPlaceCardState = (pathname: AppRoute) => {
+const getPlaceCardState = (variant = 'vertical') => {
   let cardClassName = 'cities__card';
   let cardWrapperClassName = 'cities__image-wrapper';
   let cardInfoClassName = '';
   let cardWidth = PlaceCardSize.PlaceCard.with;
   let cardHeight = PlaceCardSize.PlaceCard.height;
 
-  if (pathname === AppRoute.Favorites) {
+  if (variant === 'horizontal') {
     cardClassName = 'favorites__card';
     cardWrapperClassName = 'favorites__image-wrapper';
     cardInfoClassName = 'favorites__card-info';
@@ -34,10 +35,9 @@ function Premium(): JSX.Element {
   );
 }
 
-function PlaceCard({offer, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.Element {
+function PlaceCard({offer, variant, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.Element {
   const {title, isPremium, price, type, previewImage, rating, id} = offer;
-  const {pathname} = useLocation();
-  const {cardClassName, cardWidth, cardHeight, cardWrapperClassName, cardInfoClassName} = getPlaceCardState(pathname as AppRoute);
+  const {cardClassName, cardWidth, cardHeight, cardWrapperClassName, cardInfoClassName} = getPlaceCardState(variant);
   return (
     <article className={`${cardClassName} place-card`} onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

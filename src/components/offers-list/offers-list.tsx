@@ -5,8 +5,9 @@ import { AppRoute } from '../../utils/constants';
 import PlaceCard from '../place-card/place-card';
 
 type OffersListProps = {
-  offersCount: number;
+  variant: 'vertical' | 'horizontal';
   offers: OfferData[];
+  onListItemHover?: (listItemId: string) => void;
 }
 
 const getOffersListState = (pathname: AppRoute) => {
@@ -20,13 +21,18 @@ const getOffersListState = (pathname: AppRoute) => {
   return {offersListClassName};
 };
 
-function OffersList({offersCount, offers}: OffersListProps): JSX.Element {
-  const [, setCardActive ] = useState('');
+function OffersList({variant, offers, onListItemHover}: OffersListProps): JSX.Element {
+  const [cardActive, setCardActive ] = useState('');
   const {pathname} = useLocation();
   const {offersListClassName} = getOffersListState(pathname as AppRoute);
+
+  if (onListItemHover) {
+    onListItemHover(cardActive);
+  }
+
   return (
     <div className={offersListClassName}>
-      {offers.slice(0, offersCount).map((offer: OfferData) => <PlaceCard offer={offer} key={offer.id} onMouseEnter={() => setCardActive(offer.id)} onMouseLeave={() => setCardActive('')} />)};
+      {offers.map((offer: OfferData) => <PlaceCard variant={variant} offer={offer} key={offer.id} onMouseEnter={() => setCardActive(offer.id)} onMouseLeave={() => setCardActive('')} />)};
     </div>
   );
 }

@@ -4,11 +4,10 @@ import Footer from '../../components/footer/footer';
 import OffersList from '../../components/offers-list/offers-list';
 
 type FavoritesProps = {
-  offersCount: number;
   offers: OfferData[];
 }
 
-function Favorites ({offersCount, offers}: FavoritesProps): JSX.Element {
+function Favorites ({offers}: FavoritesProps): JSX.Element {
   return (
     <>
       <main className="page__main page__main--favorites">
@@ -38,7 +37,7 @@ function Favorites ({offersCount, offers}: FavoritesProps): JSX.Element {
                   </div>
                 </div>
 
-                {<OffersList offersCount={offersCount} offers={offers} />}
+                {<OffersList variant={'horizontal'} offers={offers} />}
 
               </li>
             </ul>

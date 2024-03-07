@@ -13,13 +13,12 @@ import PrivateRoute from '../private-route/private-route';
 import Layout from '../layout/layout';
 
 type AppProps = {
-  offersCount: number;
   offers: OfferData[];
   reviews: ReviewData[];
   offer: OfferDetailed;
 }
 
-function App({ offersCount, offers, reviews, offer }: AppProps): JSX.Element {
+function App({ offers, reviews, offer }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -30,7 +29,7 @@ function App({ offersCount, offers, reviews, offer }: AppProps): JSX.Element {
           >
             <Route
               index
-              element={<Main offersCount={offersCount} offers={offers} />}
+              element={<Main offers={offers} />}
             />
             <Route
               path={AppRoute.Login}
@@ -42,7 +41,7 @@ function App({ offersCount, offers, reviews, offer }: AppProps): JSX.Element {
                 <PrivateRoute
                   authorizationStatus={AuthorizationStatus.NoAuth}
                 >
-                  <Favorites offersCount={offersCount} offers={offers}/>
+                  <Favorites offers={offers}/>
                 </PrivateRoute>
               }
             />
