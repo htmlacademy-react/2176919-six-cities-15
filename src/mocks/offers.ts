@@ -1,5 +1,7 @@
-export type City = {
-  'name': string;
+import { City } from '../components/cities-list/cities-list';
+
+export type CityLocation = {
+  'name': City;
       'location': Location;
 }
 
@@ -15,7 +17,7 @@ export type OfferData = {
     'type': string;
     'price': number;
     'previewImage': string;
-    'city': City;
+    'city': CityLocation;
     'location': Location;
     'isFavorite': boolean;
     'isPremium': boolean;

@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 import { OfferData } from '../../mocks/offers';
 import { Point } from '../../components/map';
-import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useAppSelector} from '../../hooks';
 import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map';
 import PlacesOption from './components/places-option';
@@ -16,15 +16,17 @@ type MainProps = {
 }
 
 function Main({ offers }: MainProps): JSX.Element {
-  const points = offers.map((offer) => ({id: offer.id, latitude: offer.location.latitude, longitude: offer.location.longitude, zoom: offer.location.zoom}));
+  const selectedCity = useAppSelector((state) => state.city);
+
+  const getSelectedOffers = (city: string) => offers.filter((item) => item.city.name === city);
+
+  const selectedOffers = getSelectedOffers(selectedCity);
+
+  const points = selectedOffers.map((offer) => ({id: offer.id, latitude: offer.location.latitude, longitude: offer.location.longitude, zoom: offer.location.zoom}));
 
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
     undefined
   );
-
-  const dispatch = useAppDispatch();
-
-  const getSelectedOffers = (city: string) => offers.filter((item) => item.city.name === city);
 
   const handleListItemHover = (listItemId: string) => {
     const currentPoint = points.find((point) => point.id === listItemId);
@@ -51,7 +53,7 @@ function Main({ offers }: MainProps): JSX.Element {
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">312 places to stay in Amsterdam</b>
+            <b className="places__found">{selectedOffers.length} places to stay in {selectedCity}</b>
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by</span>
               <span className="places__sorting-type" tabIndex={0}>
@@ -64,10 +66,10 @@ function Main({ offers }: MainProps): JSX.Element {
                 {SORTING_TYPES.map((option) => <PlacesOption option={option} key={option}/>)}
               </ul>
             </form>
-            {<OffersList variant={'vertical'} offers={offers} onListItemHover={handleListItemHover}/>}
+            {<OffersList variant={'vertical'} selectedOffers={selectedOffers} onListItemHover={handleListItemHover}/>}
           </section>
           <div className="cities__right-section">
-            <Map city={offers[0].city} points={points} isMain selectedPoint={selectedPoint}/>
+            {<Map city={selectedOffers[0]?.city} points={points} isMain selectedPoint={selectedPoint}/>}
           </div>
         </div>
       </div>
