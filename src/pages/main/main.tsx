@@ -2,12 +2,13 @@ import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 import { OfferData } from '../../mocks/offers';
 import { Point } from '../../components/map';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import OffersList from '../../components/offers-list/offers-list';
-import Location from './components/location';
 import Map from '../../components/map';
 import PlacesOption from './components/places-option';
+import CitiesList from '../../components/cities-list/cities-list';
 
-const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
 const SORTING_TYPES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
 
 type MainProps = {
@@ -20,6 +21,10 @@ function Main({ offers }: MainProps): JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
     undefined
   );
+
+  const dispatch = useAppDispatch();
+
+  const getSelectedOffers = (city: string) => offers.filter((item) => item.city.name === city);
 
   const handleListItemHover = (listItemId: string) => {
     const currentPoint = points.find((point) => point.id === listItemId);
@@ -37,7 +42,7 @@ function Main({ offers }: MainProps): JSX.Element {
         <section className="locations container">
           <ul className="locations__list tabs__list">
 
-            {CITIES.map((city) => <Location city={city} key={city} />)}
+            <CitiesList isTabs/>
 
           </ul>
         </section>

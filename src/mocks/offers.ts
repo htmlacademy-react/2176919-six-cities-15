@@ -161,4 +161,96 @@ export const offers: OfferData[] = [
     'isPremium': true,
     'rating': 4.9,
   },
+  {
+    'id': 'b6a283d3-0e2d-4039-a5c9-607b415cd56e',
+    'title': 'The Pondhouse - A Magical Place',
+    'type': 'room',
+    'price': 282,
+    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/2.jpg',
+    'city': {
+      'name': 'Dusseldorf',
+      'location': {
+        'latitude': 51.225402,
+        'longitude': 6.776314,
+        'zoom': 13
+      }
+    },
+    'location': {
+      'latitude': 51.214402,
+      'longitude': 6.764314000000001,
+      'zoom': 16
+    },
+    'isFavorite': false,
+    'isPremium': true,
+    'rating': 1.4
+  },
+  {
+    'id': '03d0b121-7feb-48e4-8152-7f22a3a2ccfd',
+    'title': 'Loft Studio in the Central Area',
+    'type': 'hotel',
+    'price': 228,
+    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/1.jpg',
+    'city': {
+      'name': 'Dusseldorf',
+      'location': {
+        'latitude': 51.225402,
+        'longitude': 6.776314,
+        'zoom': 13
+      }
+    },
+    'location': {
+      'latitude': 51.225402,
+      'longitude': 6.784314,
+      'zoom': 16
+    },
+    'isFavorite': false,
+    'isPremium': false,
+    'rating': 2.6
+  },
+  {
+    'id': '453ead1b-e49c-4f58-926d-15006e9b39d5',
+    'title': 'Penthouse, 4-5 rooms + 5 balconies',
+    'type': 'hotel',
+    'price': 450,
+    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/1.jpg',
+    'city': {
+      'name': 'Cologne',
+      'location': {
+        'latitude': 50.938361,
+        'longitude': 6.959974,
+        'zoom': 13
+      }
+    },
+    'location': {
+      'latitude': 50.950361,
+      'longitude': 6.961974,
+      'zoom': 16
+    },
+    'isFavorite': false,
+    'isPremium': false,
+    'rating': 1.4
+  },
+  {
+    'id': '99aea0ae-6ec9-4907-87c1-0268e6397d5b',
+    'title': 'Nice, cozy, warm big bed apartment',
+    'type': 'room',
+    'price': 166,
+    'previewImage': 'https://15.design.htmlacademy.pro/static/hotel/15.jpg',
+    'city': {
+      'name': 'Brussels',
+      'location': {
+        'latitude': 50.846557,
+        'longitude': 4.351697,
+        'zoom': 13
+      }
+    },
+    'location': {
+      'latitude': 50.867557,
+      'longitude': 4.371696999999999,
+      'zoom': 16
+    },
+    'isFavorite': false,
+    'isPremium': true,
+    'rating': 2.1
+  },
 ];

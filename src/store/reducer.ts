@@ -7,7 +7,9 @@ const initialState = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(cityChange, (state) => state)
+    .addCase(cityChange, (state, action) => {
+      state.city = action.payload;
+    })
     .addCase(fillingListOffers, (state) => state);
 });
 
