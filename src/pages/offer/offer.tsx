@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { ReviewData } from '../../mocks/reviews';
 import { OfferDetailed } from '../../mocks/offer';
 import { OfferNearby } from '../../mocks/offers-nearby';
+import { CityLocation } from '../../mocks/offers';
 import OfferGoods from './components/offer-goods';
 import ReviewsList from './components/reviews-list';
 import Map from '../../components/map';
@@ -118,12 +119,12 @@ function Offer ({offer, reviews, offersNearby}: OfferProps): JSX.Element {
             <ReviewsList reviews={reviews} />
           </div>
         </div>
-        <Map city={city} points={points} isMain={false}/>
+        <Map city={city as CityLocation} points={points} isMain={false}/>
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <OffersList variant={'vertical'} offers={offersNearby}/>
+          <OffersList variant={'vertical'} selectedOffers={offersNearby}/>
         </section>
       </div>
     </main>
