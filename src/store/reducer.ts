@@ -1,7 +1,12 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {cityChange, fillingListOffers} from './action';
+import { City } from '../components/cities-list/cities-list';
 
-const initialState = {
+type InitialState = {
+  city: City;
+}
+
+const initialState: InitialState = {
   city: 'Paris',
 };
 
