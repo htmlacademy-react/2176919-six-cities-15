@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { OfferData } from '../../mocks/offers';
 import { Point } from '../../components/map';
 import {useAppSelector} from '../../hooks';
+import { sortOffers } from '../../utils/sorting';
 import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map';
 import PlacesOption from './components/places-option';
@@ -22,7 +23,9 @@ function Main({ offers }: MainProps): JSX.Element {
 
   const getSelectedOffers = (city: string) => offers.filter((item) => item.city.name === city);
 
-  const selectedOffers = getSelectedOffers(selectedCity);
+  const selectedOffersByCity = getSelectedOffers(selectedCity);
+
+  const selectedOffers = sortOffers(selectedSorting, selectedOffersByCity);
 
   const points = selectedOffers.map((offer) => ({id: offer.id, latitude: offer.location.latitude, longitude: offer.location.longitude, zoom: offer.location.zoom}));
 
