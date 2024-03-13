@@ -1,10 +1,22 @@
+import { useAppDispatch } from '../../../hooks';
+import { changeSorting } from '../../../store/action';
+import { Sorting } from '../main';
+
 type PlacesOptionProps = {
-  option: string;
+  option: Sorting;
 }
 
 function PlacesOption({option}: PlacesOptionProps): JSX.Element {
+  const dispatch = useAppDispatch();
   return (
-    <li className="places__option" tabIndex={0}>{option}</li>
+    <li className="places__option" tabIndex={0} onClick={(evt) => {
+      const value = (evt.target as HTMLElement).textContent;
+      if (value) {
+        dispatch(changeSorting(value as Sorting));
+      }
+    }}
+    >{option}
+    </li>
   );
 }
 

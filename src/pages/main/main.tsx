@@ -3,13 +3,15 @@ import { useState } from 'react';
 import { OfferData } from '../../mocks/offers';
 import { Point } from '../../components/map';
 import {useAppSelector} from '../../hooks';
+import { sortOffers } from '../../utils/sorting';
 import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map';
 import PlacesOption from './components/places-option';
 import CitiesList from '../../components/cities-list/cities-list';
 
+const SORTING_TYPES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'] as const;
 
-const SORTING_TYPES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
+export type Sorting = typeof SORTING_TYPES[number]
 
 type MainProps = {
   offers: OfferData[];
@@ -17,10 +19,13 @@ type MainProps = {
 
 function Main({ offers }: MainProps): JSX.Element {
   const selectedCity = useAppSelector((state) => state.city);
+  const selectedSorting = useAppSelector((state) => state.sorting);
 
   const getSelectedOffers = (city: string) => offers.filter((item) => item.city.name === city);
 
-  const selectedOffers = getSelectedOffers(selectedCity);
+  const selectedOffersByCity = getSelectedOffers(selectedCity);
+
+  const selectedOffers = sortOffers(selectedSorting, selectedOffersByCity);
 
   const points = selectedOffers.map((offer) => ({id: offer.id, latitude: offer.location.latitude, longitude: offer.location.longitude, zoom: offer.location.zoom}));
 
