@@ -1,7 +1,8 @@
-import { City } from '../mocks/offers';
+import { CityLocation } from '../mocks/offers';
 import {useRef, useEffect} from 'react';
-import {Icon, Marker, layerGroup} from 'leaflet';
+import {Icon, Marker} from 'leaflet';
 import useMap from '../hooks/use-map';
+import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import classNames from 'classnames';
 
@@ -27,7 +28,7 @@ const currentCustomIcon = new Icon({
 });
 
 type MapProps = {
-  city: City;
+  city: CityLocation;
   points: Points;
   isMain: boolean;
   selectedPoint?: Point | undefined;
@@ -38,10 +39,17 @@ function Map(props: MapProps): JSX.Element {
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+  const markerLayer = leaflet.layerGroup();
 
   useEffect(() => {
     if (map) {
-      const markerLayer = layerGroup().addTo(map);
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
+    }
+  }, [city, map]);
+
+  useEffect(() => {
+    if (map) {
+      markerLayer.addTo(map);
       points.forEach((point) => {
         const marker = new Marker({
           lat: point.latitude,
@@ -61,7 +69,7 @@ function Map(props: MapProps): JSX.Element {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, points, selectedPoint]);
+  }, [map, points, selectedPoint, markerLayer]);
 
   return (
     <section className={classNames(

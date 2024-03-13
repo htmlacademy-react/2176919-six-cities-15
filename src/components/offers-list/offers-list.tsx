@@ -5,11 +5,11 @@ import classNames from 'classnames';
 
 type OffersListProps = {
   variant: 'vertical' | 'horizontal';
-  offers: OfferData[];
+  selectedOffers: OfferData[];
   onListItemHover?: (listItemId: string) => void;
 }
 
-function OffersList({variant, offers, onListItemHover}: OffersListProps): JSX.Element {
+function OffersList({variant, selectedOffers, onListItemHover}: OffersListProps): JSX.Element {
   const [cardActive, setCardActive ] = useState('');
   const isVertical = variant === 'vertical';
 
@@ -24,7 +24,7 @@ function OffersList({variant, offers, onListItemHover}: OffersListProps): JSX.El
       {'favorites__places': !isVertical}
     )}
     >
-      {offers.map((offer: OfferData) => <PlaceCard variant={variant} offer={offer} key={offer.id} onMouseEnter={() => setCardActive(offer.id)} onMouseLeave={() => setCardActive('')} />)};
+      {selectedOffers.map((offer: OfferData) => <PlaceCard variant={variant} offer={offer} key={offer.id} onMouseEnter={() => setCardActive(offer.id)} onMouseLeave={() => setCardActive('')} />)};
     </div>
   );
 }
