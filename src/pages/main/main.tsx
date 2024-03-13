@@ -1,9 +1,12 @@
 import { Helmet } from 'react-helmet-async';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { OfferData } from '../../mocks/offers';
 import { Point } from '../../components/map';
-import {useAppSelector} from '../../hooks';
+import {useAppSelector, useAppDispatch} from '../../hooks';
 import { sortOffers } from '../../utils/sorting';
+import { selectedCitySelector } from '../../store/selectors';
+import { offers } from '../../mocks/offers';
+import { setOffers } from '../../store/action';
 import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map';
 import PlacesOption from './components/places-option';
@@ -13,13 +16,14 @@ const SORTING_TYPES = ['Popular', 'Price: low to high', 'Price: high to low', 'T
 
 export type Sorting = typeof SORTING_TYPES[number]
 
-type MainProps = {
-  offers: OfferData[];
-}
-
-function Main({ offers }: MainProps): JSX.Element {
-  const selectedCity = useAppSelector((state) => state.city);
+function Main(): JSX.Element {
+  const selectedCity = useAppSelector(selectedCitySelector);
   const selectedSorting = useAppSelector((state) => state.sorting);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setOffers(offers));
+  }, []);
 
   const getSelectedOffers = (city: string) => offers.filter((item) => item.city.name === city);
 

@@ -31,7 +31,7 @@ function App({ offers, reviews, offer, offersNearby }: AppProps): JSX.Element {
           >
             <Route
               index
-              element={<Main offers={offers} />}
+              element={<Main />}
             />
             <Route
               path={AppRoute.Login}
