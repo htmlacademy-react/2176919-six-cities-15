@@ -1,17 +1,19 @@
 import { OfferData } from '../../mocks/offers';
 import { useState } from 'react';
+import { useAppSelector } from '../../hooks';
+import { sortedOffersSelector } from '../../store/selectors';
 import PlaceCard from '../place-card/place-card';
 import classNames from 'classnames';
 
 type OffersListProps = {
   variant: 'vertical' | 'horizontal';
-  selectedOffers: OfferData[];
   onListItemHover?: (listItemId: string) => void;
 }
 
-function OffersList({variant, selectedOffers, onListItemHover}: OffersListProps): JSX.Element {
+function OffersList({variant, onListItemHover}: OffersListProps): JSX.Element {
   const [cardActive, setCardActive ] = useState('');
   const isVertical = variant === 'vertical';
+  const selectedOffers = useAppSelector(sortedOffersSelector);
 
   if (onListItemHover) {
     onListItemHover(cardActive);
