@@ -63,7 +63,7 @@ function Main(): JSX.Element {
             {<OffersList variant={'vertical'} onListItemHover={handleListItemHover}/>}
           </section>
           <div className="cities__right-section">
-            {<Map city={selectedOffers[0]?.city} points={points} isMain selectedPoint={selectedPoint}/>}
+            {<Map points={points} isMain selectedPoint={selectedPoint}/>}
           </div>
         </div>
       </div>
