@@ -4,7 +4,6 @@ import { State } from '../types/state';
 
 export const selectedCitySelector = (state: State) => state.city;
 
-export const sortedOffersSelector = (state: State) => {
-  const selectedOffersByCity = state.offers.filter((offer) => offer.city.name === state.city);
-  return sortOffers(state.sorting, selectedOffersByCity);
-};
+export const selectedOffersByCity = (state: State) => state.offers.filter((offer) => offer.city.name === state.city);
+
+export const sortedOffersSelector = (state: State) => sortOffers(state.sorting, selectedOffersByCity(state));
