@@ -8,6 +8,10 @@ import { offer } from './mocks/offer';
 import { reviews } from './mocks/reviews';
 import { offersNearby } from './mocks/offers-nearby';
 import { store } from './store';
+import { fetchOfferAction, checkAuthAction } from './store/api-actions';
+
+store.dispatch(fetchOfferAction());
+store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

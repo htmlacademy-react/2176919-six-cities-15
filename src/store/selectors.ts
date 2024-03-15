@@ -11,3 +11,7 @@ export const sortedOffersSelector = (state: State) => sortOffers(state.sorting, 
 export const selectedCityLocation = (state: State) => selectedOffersByCity(state)[0].city;
 
 export const pointsOffersByCity = (state: State) => selectedOffersByCity(state).map((offer) => ({id: offer.id, latitude: offer.location.latitude, longitude: offer.location.longitude, zoom: offer.location.zoom}));
+
+export const getAuthorizationStatus = (state: State) => state.authorizationStatus;
+
+export const getIsOffersDataLoading = (state: State) => state.isOffersDataLoading;

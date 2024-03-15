@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {setCity, setOffers, setSorting, loadOffers, requireAuthorization, setOffersDataLoadingStatus, setError} from './action';
+import {setCity, setSorting, setOffers, requireAuthorization, setOffersDataLoadingStatus, setError} from './action';
 import { City } from '../components/cities-list/cities-list';
 import { Sorting } from '../pages/main/main';
 import { OfferData } from '../mocks/offers';
@@ -33,9 +33,6 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setSorting, (state, action) => {
       state.sorting = action.payload;
-    })
-    .addCase(loadOffers, (state, action) => {
-      state.offers = action.payload;
     })
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;

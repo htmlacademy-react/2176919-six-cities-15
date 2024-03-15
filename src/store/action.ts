@@ -5,12 +5,13 @@ import { OfferData } from '../mocks/offers';
 import { AuthorizationStatus } from '../utils/constants';
 
 export const setCity = createAction<City>('setCity');
+
 export const setOffers = createAction<OfferData[]>('setOffers');
+
 export const setSorting = createAction<Sorting>('setSorting');
 
-export const loadOffers = createAction<OfferData[]>('data/loadOffers');
-export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
+export const setOffersDataLoadingStatus = createAction<boolean>('setOffersDataLoadingStatus');
 
-export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
+export const requireAuthorization = createAction<AuthorizationStatus>('requireAuthorization');
 
 export const setError = createAction<string | null>('setError');
