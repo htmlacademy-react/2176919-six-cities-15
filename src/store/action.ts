@@ -11,3 +11,5 @@ export const setSorting = createAction<Sorting>('setSorting');
 export const loadOffers = createAction<OfferData[]>('data/loadOffers');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
+
+export const setError = createAction<string | null>('setError');
