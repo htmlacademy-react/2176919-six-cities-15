@@ -7,3 +7,4 @@ export const setCity = createAction<City>('setCity');
 export const setOffers = createAction<OfferData[]>('setOffers');
 export const setSorting = createAction<Sorting>('setSorting');
 
+export const loadOffers = createAction<OfferData[]>('data/loadOffers');
