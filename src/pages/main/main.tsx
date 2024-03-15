@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 import { Point } from '../../components/map';
 import {useAppSelector} from '../../hooks';
-import { selectedCitySelector, sortedOffersSelector } from '../../store/selectors';
+import { selectedCitySelector, sortedOffersSelector, pointsOffersByCity } from '../../store/selectors';
 import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map';
 import PlacesOption from './components/places-option';
@@ -15,8 +15,7 @@ export type Sorting = typeof SORTING_TYPES[number]
 function Main(): JSX.Element {
   const selectedCity = useAppSelector(selectedCitySelector);
   const selectedOffers = useAppSelector(sortedOffersSelector);
-
-  const points = selectedOffers.map((offer) => ({id: offer.id, latitude: offer.location.latitude, longitude: offer.location.longitude, zoom: offer.location.zoom}));
+  const points = useAppSelector(pointsOffersByCity);
 
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
     undefined
@@ -63,7 +62,7 @@ function Main(): JSX.Element {
             {<OffersList variant={'vertical'} onListItemHover={handleListItemHover}/>}
           </section>
           <div className="cities__right-section">
-            {<Map points={points} isMain selectedPoint={selectedPoint}/>}
+            {<Map isMain selectedPoint={selectedPoint}/>}
           </div>
         </div>
       </div>
