@@ -2,6 +2,7 @@ import {useRef, useEffect} from 'react';
 import {Icon, Marker} from 'leaflet';
 import { useAppSelector } from '../hooks';
 import { selectedCityLocation, pointsOffersByCity } from '../store/selectors';
+import { offersNearby } from '../mocks/offers-nearby';
 import useMap from '../hooks/use-map';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -36,7 +37,11 @@ type MapProps = {
 function Map(props: MapProps): JSX.Element {
   const {isMain, selectedPoint} = props;
   const city = useAppSelector(selectedCityLocation);
-  const points = useAppSelector(pointsOffersByCity);
+  let points = useAppSelector(pointsOffersByCity);
+
+  if (!isMain) {
+    points = offersNearby.map((item) => ({id: item.id, latitude: item.location.latitude, longitude: item.location.longitude, zoom: item.location.zoom}));
+  }
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);

@@ -1,6 +1,5 @@
 import { OfferDetailed } from '../../mocks/offer';
 import { ReviewData } from '../../mocks/reviews';
-import { OfferNearby } from '../../mocks/offers-nearby';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {HelmetProvider} from 'react-helmet-async';
 import { useAppSelector } from '../../hooks';
@@ -18,10 +17,9 @@ import Loader from '../loader/loader';
 type AppProps = {
   reviews: ReviewData[];
   offer: OfferDetailed;
-  offersNearby: OfferNearby[];
 }
 
-function App({ reviews, offer, offersNearby }: AppProps): JSX.Element {
+function App({ reviews, offer }: AppProps): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
 
@@ -58,7 +56,7 @@ function App({ reviews, offer, offersNearby }: AppProps): JSX.Element {
             />
             <Route
               path={AppRoute.Offer}
-              element={<Offer offer={offer} reviews={reviews} offersNearby={offersNearby}/>}
+              element={<Offer offer={offer} reviews={reviews}/>}
             />
             <Route
               path="*"
