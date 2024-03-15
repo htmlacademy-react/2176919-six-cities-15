@@ -1,5 +1,4 @@
 import { Helmet } from 'react-helmet-async';
-import { OfferData } from '../../types/offers';
 import Footer from '../../components/footer/footer';
 import OffersList from '../../components/offers-list/offers-list';
 

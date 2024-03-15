@@ -1,4 +1,3 @@
-import { OfferData } from '../../types/offers';
 import { OfferDetailed } from '../../mocks/offer';
 import { ReviewData } from '../../mocks/reviews';
 import { OfferNearby } from '../../mocks/offers-nearby';
