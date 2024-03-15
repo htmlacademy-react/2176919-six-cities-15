@@ -9,6 +9,7 @@ export const setOffers = createAction<OfferData[]>('setOffers');
 export const setSorting = createAction<Sorting>('setSorting');
 
 export const loadOffers = createAction<OfferData[]>('data/loadOffers');
+export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
