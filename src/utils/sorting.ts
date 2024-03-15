@@ -1,4 +1,4 @@
-import { OfferData } from '../mocks/offers';
+import { OfferData } from '../types/offers';
 import { Sorting } from '../pages/main/main';
 
 function sortOfferByPriceToHigh(offerA: OfferData, offerB: OfferData) {

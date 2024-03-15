@@ -1,4 +1,4 @@
-import { OfferData } from '../../mocks/offers';
+import { OfferData } from '../../types/offers';
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
 import { sortedOffersSelector } from '../../store/selectors';

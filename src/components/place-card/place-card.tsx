@@ -1,4 +1,4 @@
-import { OfferData } from '../../mocks/offers';
+import { OfferData } from '../../types/offers';
 import { AppRoute, PlaceCardSize } from '../../utils/constants';
 import { Link } from 'react-router-dom';
 

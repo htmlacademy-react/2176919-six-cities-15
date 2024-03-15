@@ -1,7 +1,7 @@
 import {createAction} from '@reduxjs/toolkit';
 import { City } from '../components/cities-list/cities-list';
 import { Sorting } from '../pages/main/main';
-import { OfferData } from '../mocks/offers';
+import { OfferData } from '../types/offers';
 import { AuthorizationStatus } from '../utils/constants';
 
 export const setCity = createAction<City>('setCity');

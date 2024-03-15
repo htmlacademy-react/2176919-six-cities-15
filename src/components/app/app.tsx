@@ -1,4 +1,4 @@
-import { OfferData } from '../../mocks/offers';
+import { OfferData } from '../../types/offers';
 import { OfferDetailed } from '../../mocks/offer';
 import { ReviewData } from '../../mocks/reviews';
 import { OfferNearby } from '../../mocks/offers-nearby';
@@ -17,13 +17,12 @@ import Layout from '../layout/layout';
 import Loader from '../loader/loader';
 
 type AppProps = {
-  offers: OfferData[];
   reviews: ReviewData[];
   offer: OfferDetailed;
   offersNearby: OfferNearby[];
 }
 
-function App({ offers, reviews, offer, offersNearby }: AppProps): JSX.Element {
+function App({ reviews, offer, offersNearby }: AppProps): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
 
@@ -54,7 +53,7 @@ function App({ offers, reviews, offer, offersNearby }: AppProps): JSX.Element {
                 <PrivateRoute
                   authorizationStatus={authorizationStatus}
                 >
-                  <Favorites offers={offers}/>
+                  <Favorites />
                 </PrivateRoute>
               }
             />

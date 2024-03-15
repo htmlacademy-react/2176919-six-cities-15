@@ -1,4 +1,4 @@
-import { CityLocation, Location } from './offers';
+import { CityLocation, Location } from '../types/offers';
 
 export type OfferNearby = {
   id: string;

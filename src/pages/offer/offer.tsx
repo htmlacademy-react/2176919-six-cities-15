@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { ReviewData } from '../../mocks/reviews';
 import { OfferDetailed } from '../../mocks/offer';
 import { OfferNearby } from '../../mocks/offers-nearby';
-import { CityLocation } from '../../mocks/offers';
+import { CityLocation } from '../../types/offers';
 import OfferGoods from './components/offer-goods';
 import ReviewsList from './components/reviews-list';
 import Map from '../../components/map';
