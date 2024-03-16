@@ -34,13 +34,13 @@ function Login (): JSX.Element {
           <form className="login__form form" action="#" method="post" onSubmit={handleSubmit}>
             <div className="login__input-wrapper form__input-wrapper">
               <label className="visually-hidden">E-mail</label>
-              <input className="login__input form__input" ref={loginRef} type="email" name="email" placeholder="Email" required/>
+              <input className="login__input form__input" ref={loginRef} type="email" name="email" id="email" placeholder="Email" required/>
             </div>
             <div className="login__input-wrapper form__input-wrapper">
               <label className="visually-hidden">Password</label>
-              <input className="login__input form__input" ref={passwordRef} type="password" name="password" placeholder="Password" required/>
+              <input className="login__input form__input" ref={passwordRef} type="password" name="password" id="password" placeholder="Password" required/>
             </div>
-            <button className="login__submit form__submit button" onClick={() => navigate(AppRoute.Root)} type="submit">Sign in</button>
+            <button className="login__submit form__submit button" type="submit" onClick={() => navigate(AppRoute.Root)}>Sign in</button>
           </form>
         </section>
         <section className="locations locations--login locations--current">
