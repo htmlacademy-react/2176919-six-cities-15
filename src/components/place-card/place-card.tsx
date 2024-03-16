@@ -1,6 +1,9 @@
 import { OfferData } from '../../types/offers';
 import { AppRoute, PlaceCardSize } from '../../utils/constants';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
+import Premium from './components/premium';
+
 
 type PlaceCardProp = {
   offer: OfferData;
@@ -10,45 +13,44 @@ type PlaceCardProp = {
 };
 
 const getPlaceCardState = (variant = 'vertical') => {
-  let cardClassName = 'cities__card';
-  let cardWrapperClassName = 'cities__image-wrapper';
-  let cardInfoClassName = '';
   let cardWidth = PlaceCardSize.PlaceCard.with;
   let cardHeight = PlaceCardSize.PlaceCard.height;
 
   if (variant === 'horizontal') {
-    cardClassName = 'favorites__card';
-    cardWrapperClassName = 'favorites__image-wrapper';
-    cardInfoClassName = 'favorites__card-info';
     cardWidth = PlaceCardSize.PlaceCardSmall.with;
     cardHeight = PlaceCardSize.PlaceCardSmall.height;
   }
-
-  return {cardClassName, cardWidth, cardHeight, cardWrapperClassName, cardInfoClassName};
+  return {cardWidth, cardHeight};
 };
-
-function Premium(): JSX.Element {
-  return (
-    <div className="place-card__mark">
-      <span>Premium</span>
-    </div>
-  );
-}
 
 function PlaceCard({offer, variant, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.Element {
   const {title, isPremium, price, type, previewImage, rating, id} = offer;
-  const {cardClassName, cardWidth, cardHeight, cardWrapperClassName, cardInfoClassName} = getPlaceCardState(variant);
+  const {cardWidth, cardHeight} = getPlaceCardState(variant);
+  const isVertical = variant === 'vertical';
   return (
-    <article className={`${cardClassName} place-card`} onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+    <article className={classNames(
+      'place-card',
+      {'cities__card': isVertical},
+      {'favorites__card': !isVertical}
+    )} onMouseEnter={onMouseEnter}
+    onMouseLeave={onMouseLeave}
     >
       {isPremium ? <Premium /> : ''}
-      <div className={`${cardWrapperClassName} place-card__image-wrapper`}>
+      <div className={classNames(
+        'place-card__image-wrapper',
+        {'cities__image-wrapper': isVertical},
+        {'favorites__image-wrapper': !isVertical}
+      )}
+      >
         <Link to={`${AppRoute.Offer}${id}`}>
           <img className="place-card__image" src={previewImage} width={cardWidth} height={cardHeight} alt="Place image"/>
         </Link>
       </div>
-      <div className={`${cardInfoClassName} place-card__info`}>
+      <div className={classNames(
+        'place-card__info',
+        {'favorites__card-info': !isVertical}
+      )}
+      >
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
