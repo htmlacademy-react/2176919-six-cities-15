@@ -83,7 +83,7 @@ function Offer ({reviews}: OfferProps): JSX.Element {
             </div>
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
-                {offerById?.type.charAt(0).toUpperCase() + offerById?.type.slice(1)}
+                {offerById?.type ? offerById?.type.charAt(0).toUpperCase() + offerById?.type.slice(1) : null}
               </li>
               <li className="offer__feature offer__feature--bedrooms">
                 {offerById?.bedrooms} Bedrooms
