@@ -1,9 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
-import { OfferData } from '../../mocks/offers';
 import { Point } from '../../components/map';
 import {useAppSelector} from '../../hooks';
-import { sortOffers } from '../../utils/sorting';
+import { selectedCitySelector, sortedOffersSelector, pointsOffersByCity } from '../../store/selectors';
 import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map';
 import PlacesOption from './components/places-option';
@@ -13,21 +12,10 @@ const SORTING_TYPES = ['Popular', 'Price: low to high', 'Price: high to low', 'T
 
 export type Sorting = typeof SORTING_TYPES[number]
 
-type MainProps = {
-  offers: OfferData[];
-}
-
-function Main({ offers }: MainProps): JSX.Element {
-  const selectedCity = useAppSelector((state) => state.city);
-  const selectedSorting = useAppSelector((state) => state.sorting);
-
-  const getSelectedOffers = (city: string) => offers.filter((item) => item.city.name === city);
-
-  const selectedOffersByCity = getSelectedOffers(selectedCity);
-
-  const selectedOffers = sortOffers(selectedSorting, selectedOffersByCity);
-
-  const points = selectedOffers.map((offer) => ({id: offer.id, latitude: offer.location.latitude, longitude: offer.location.longitude, zoom: offer.location.zoom}));
+function Main(): JSX.Element {
+  const selectedCity = useAppSelector(selectedCitySelector);
+  const selectedOffers = useAppSelector(sortedOffersSelector);
+  const points = useAppSelector(pointsOffersByCity);
 
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
     undefined
@@ -71,10 +59,10 @@ function Main({ offers }: MainProps): JSX.Element {
                 {SORTING_TYPES.map((option) => <PlacesOption option={option} key={option}/>)}
               </ul>
             </form>
-            {<OffersList variant={'vertical'} selectedOffers={selectedOffers} onListItemHover={handleListItemHover}/>}
+            {<OffersList variant={'vertical'} onListItemHover={handleListItemHover}/>}
           </section>
           <div className="cities__right-section">
-            {<Map city={selectedOffers[0]?.city} points={points} isMain selectedPoint={selectedPoint}/>}
+            {<Map isMain selectedPoint={selectedPoint}/>}
           </div>
         </div>
       </div>

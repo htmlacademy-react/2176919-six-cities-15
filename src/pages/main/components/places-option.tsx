@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../../hooks';
-import { changeSorting } from '../../../store/action';
+import { setSorting } from '../../../store/action';
 import { Sorting } from '../main';
 
 type PlacesOptionProps = {
@@ -12,7 +12,7 @@ function PlacesOption({option}: PlacesOptionProps): JSX.Element {
     <li className="places__option" tabIndex={0} onClick={(evt) => {
       const value = (evt.target as HTMLElement).textContent;
       if (value) {
-        dispatch(changeSorting(value as Sorting));
+        dispatch(setSorting(value as Sorting));
       }
     }}
     >{option}

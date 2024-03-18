@@ -18,6 +18,12 @@ enum SortType {
   RatingDescending = 'Top rated first',
 }
 
+enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+}
+
 const PlaceCardSize = {
   PlaceCard: {
     with: '260',
@@ -29,4 +35,4 @@ const PlaceCardSize = {
   }
 };
 
-export {AppRoute, AuthorizationStatus, SortType, PlaceCardSize};
+export {AppRoute, AuthorizationStatus, SortType, APIRoute, PlaceCardSize};

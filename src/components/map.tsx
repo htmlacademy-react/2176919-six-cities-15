@@ -1,6 +1,8 @@
-import { CityLocation } from '../mocks/offers';
 import {useRef, useEffect} from 'react';
 import {Icon, Marker} from 'leaflet';
+import { useAppSelector } from '../hooks';
+import { selectedCityLocation, pointsOffersByCity } from '../store/selectors';
+import { offersNearby } from '../mocks/offers-nearby';
 import useMap from '../hooks/use-map';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -28,14 +30,18 @@ const currentCustomIcon = new Icon({
 });
 
 type MapProps = {
-  city: CityLocation;
-  points: Points;
   isMain: boolean;
   selectedPoint?: Point | undefined;
 };
 
 function Map(props: MapProps): JSX.Element {
-  const {city, points, isMain, selectedPoint} = props;
+  const {isMain, selectedPoint} = props;
+  const city = useAppSelector(selectedCityLocation);
+  let points = useAppSelector(pointsOffersByCity);
+
+  if (!isMain) {
+    points = offersNearby.map((item) => ({id: item.id, latitude: item.location.latitude, longitude: item.location.longitude, zoom: item.location.zoom}));
+  }
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);

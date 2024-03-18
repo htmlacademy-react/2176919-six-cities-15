@@ -1,13 +1,8 @@
 import { Helmet } from 'react-helmet-async';
-import { OfferData } from '../../mocks/offers';
 import Footer from '../../components/footer/footer';
 import OffersList from '../../components/offers-list/offers-list';
 
-type FavoritesProps = {
-  offers: OfferData[];
-}
-
-function Favorites ({offers}: FavoritesProps): JSX.Element {
+function Favorites (): JSX.Element {
   return (
     <>
       <main className="page__main page__main--favorites">
@@ -26,19 +21,7 @@ function Favorites ({offers}: FavoritesProps): JSX.Element {
                     </a>
                   </div>
                 </div>
-              </li>
-
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Cologne</span>
-                    </a>
-                  </div>
-                </div>
-
-                {<OffersList variant={'horizontal'} selectedOffers={offers} />}
-
+                {<OffersList variant={'horizontal'} />}
               </li>
             </ul>
           </section>
