@@ -21,7 +21,7 @@ function Favorites (): JSX.Element {
                     </a>
                   </div>
                 </div>
-                {<OffersList variant={'horizontal'} />}
+                {<OffersList variant={'horizontal'} isSelectedOffer={false} />}
               </li>
             </ul>
           </section>

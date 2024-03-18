@@ -15,3 +15,7 @@ export const pointsOffersByCity = (state: State) => selectedOffersByCity(state).
 export const getAuthorizationStatus = (state: State) => state.authorizationStatus;
 
 export const getIsOffersDataLoading = (state: State) => state.isOffersDataLoading;
+
+export const selectedOffer = (state: State) => state.offer;
+
+export const getOffersNearby = (state: State) => state.offersNearby;

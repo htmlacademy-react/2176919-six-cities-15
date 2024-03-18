@@ -1,4 +1,3 @@
-import { OfferDetailed } from '../../mocks/offer';
 import { ReviewData } from '../../mocks/reviews';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {HelmetProvider} from 'react-helmet-async';
@@ -16,10 +15,9 @@ import Loader from '../loader/loader';
 
 type AppProps = {
   reviews: ReviewData[];
-  offer: OfferDetailed;
 }
 
-function App({ reviews, offer }: AppProps): JSX.Element {
+function App({ reviews }: AppProps): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
 
@@ -56,7 +54,7 @@ function App({ reviews, offer }: AppProps): JSX.Element {
             />
             <Route
               path={AppRoute.Offer}
-              element={<Offer offer={offer} reviews={reviews}/>}
+              element={<Offer reviews={reviews}/>}
             />
             <Route
               path="*"

@@ -1,8 +1,10 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {setCity, setSorting, setOffers, requireAuthorization, setOffersDataLoadingStatus, setError} from './action';
+import {setCity, setSorting, setOffers, setOffer, requireAuthorization, setOffersDataLoadingStatus, setError, setOffersNearby, dropOffer} from './action';
 import { City } from '../components/cities-list/cities-list';
 import { Sorting } from '../pages/main/main';
 import { OfferData } from '../types/offers';
+import { OfferDetailed } from '../mocks/offer';
+import { OfferNearby } from '../mocks/offers-nearby';
 import { AuthorizationStatus } from '../utils/constants';
 
 type InitialState = {
@@ -11,6 +13,8 @@ type InitialState = {
   offers: OfferData[];
   authorizationStatus: AuthorizationStatus;
   isOffersDataLoading: boolean;
+  offer: OfferDetailed | null;
+  offersNearby: OfferNearby[];
   error: string | null;
 }
 
@@ -20,6 +24,8 @@ const initialState: InitialState = {
   sorting: 'Popular',
   authorizationStatus: AuthorizationStatus.Unknown,
   isOffersDataLoading: false,
+  offer: null,
+  offersNearby: [],
   error: null,
 };
 
@@ -36,6 +42,16 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
+    })
+    .addCase(setOffer, (state, action) => {
+      state.offer = action.payload;
+    })
+    .addCase(dropOffer, (state) => {
+      state.offer = null;
+      state.offersNearby = [];
+    })
+    .addCase(setOffersNearby, (state, action) => {
+      state.offersNearby = action.payload;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;

@@ -2,7 +2,9 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { OfferData } from '../types/offers';
-import { setOffers, requireAuthorization, setError, setOffersDataLoadingStatus } from './action';
+import { OfferNearby } from '../mocks/offers-nearby';
+import { OfferDetailed } from '../mocks/offer';
+import { setOffers, setOffer, setOffersNearby, requireAuthorization, setError, setOffersDataLoadingStatus } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AuthorizationStatus } from '../utils/constants';
 import { AuthData } from '../types/auth-data';
@@ -74,5 +76,30 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     await api.delete(APIRoute.Logout);
     dropToken();
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+  },
+);
+
+export const fetchSelectOffer = createAsyncThunk<void, { offerId: string }, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'setOffer',
+  async ({offerId}, {dispatch, extra: api}) => {
+    const {data} = await api.get<OfferDetailed>(`${APIRoute.Offers}/${offerId}`);
+    dispatch(setOffer(data));
+  },
+);
+
+export const fetchOffersNearby = createAsyncThunk<void, { offerId: string }, {
+  offerId: string;
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'setOffersNearby',
+  async ({offerId}, {dispatch, extra: api}) => {
+    const {data} = await api.get<OfferNearby[]>(`${APIRoute.Offers}/${offerId}${APIRoute.OffersNearby}`);
+    dispatch(setOffersNearby(data));
   },
 );

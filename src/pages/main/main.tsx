@@ -59,7 +59,7 @@ function Main(): JSX.Element {
                 {SORTING_TYPES.map((option) => <PlacesOption option={option} key={option}/>)}
               </ul>
             </form>
-            {<OffersList variant={'vertical'} onListItemHover={handleListItemHover}/>}
+            {<OffersList variant={'vertical'} isSelectedOffer={false} onListItemHover={handleListItemHover}/>}
           </section>
           <div className="cities__right-section">
             {<Map isMain selectedPoint={selectedPoint}/>}
