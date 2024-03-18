@@ -6,15 +6,12 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchSelectOffer, fetchOffersNearby } from '../../store/api-actions';
 import { dropOffer } from '../../store/action';
 import { selectedOffer } from '../../store/selectors';
-import { OfferDetailed } from '../../mocks/offer';
 import { offer } from '../../mocks/offer';
 import OfferGoods from './components/offer-goods';
 import ReviewsList from './components/reviews-list';
 import Map from '../../components/map';
 import OffersList from '../../components/offers-list/offers-list';
 import Loader from '../../components/loader/loader';
-
-
 
 type OfferProps = {
   reviews: ReviewData[];
@@ -42,8 +39,6 @@ function Offer ({reviews}: OfferProps): JSX.Element {
     <Loader />;
   }
 
-  const {rating, price, type, bedrooms, maxAdults, goods, host, description} = offer;
-
   return (
     <main className="page__main page__main--offer">
       <section className="offer">
@@ -54,7 +49,7 @@ function Offer ({reviews}: OfferProps): JSX.Element {
           <div className="offer__gallery">
             {offerById?.images.map((image) => (
               <div className="offer__image-wrapper" key={image}>
-                <img className="offer__image" src={image} alt={`Photo ${offerById.type}`}/>
+                <img className="offer__image" src={image} alt={`Photo ${offerById?.type}`}/>
               </div>)
             )}
           </div>
@@ -88,7 +83,7 @@ function Offer ({reviews}: OfferProps): JSX.Element {
             </div>
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
-                {offerById?.type.charAt(0).toUpperCase() + type.slice(1)}
+                {offerById?.type.charAt(0).toUpperCase() + offerById?.type.slice(1)}
               </li>
               <li className="offer__feature offer__feature--bedrooms">
                 {offerById?.bedrooms} Bedrooms
