@@ -3,8 +3,8 @@ import {setCity, setSorting, setOffers, setOffer, requireAuthorization, setOffer
 import { City } from '../components/cities-list/cities-list';
 import { Sorting } from '../pages/main/main';
 import { OfferData } from '../types/offers';
-import { OfferDetailed } from '../mocks/offer';
-import { OfferNearby } from '../mocks/offers-nearby';
+import { OfferDetailed } from '../types/offer';
+import { OfferNearby } from '../types/offers-nearby';
 import { AuthorizationStatus } from '../utils/constants';
 
 type InitialState = {

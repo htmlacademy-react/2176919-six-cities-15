@@ -2,8 +2,8 @@ import {createAction} from '@reduxjs/toolkit';
 import { City } from '../components/cities-list/cities-list';
 import { Sorting } from '../pages/main/main';
 import { OfferData } from '../types/offers';
-import { OfferDetailed } from '../mocks/offer';
-import { OfferNearby } from '../mocks/offers-nearby';
+import { OfferDetailed } from '../types/offer';
+import { OfferNearby } from '../types/offers-nearby';
 import { ReviewData } from '../mocks/reviews';
 import { AuthorizationStatus } from '../utils/constants';
 

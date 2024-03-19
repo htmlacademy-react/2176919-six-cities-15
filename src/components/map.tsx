@@ -1,12 +1,13 @@
 import {useRef, useEffect} from 'react';
 import {Icon, Marker} from 'leaflet';
 import { useAppSelector } from '../hooks';
-import { selectedCityLocation, pointsOffersByCity } from '../store/selectors';
-import { offersNearby } from '../mocks/offers-nearby';
+import { selectedCityLocation, pointsOffersByCity, getOffersNearby } from '../store/selectors';
 import useMap from '../hooks/use-map';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import classNames from 'classnames';
+
+const OFFERS_NEARBY_COUNT = 3;
 
 export type Point = {
   id: string;
@@ -38,9 +39,10 @@ function Map(props: MapProps): JSX.Element {
   const {isMain, selectedPoint} = props;
   const city = useAppSelector(selectedCityLocation);
   let points = useAppSelector(pointsOffersByCity);
+  const offersNearby = useAppSelector(getOffersNearby);
 
-  if (!isMain) {
-    points = offersNearby.map((item) => ({id: item.id, latitude: item.location.latitude, longitude: item.location.longitude, zoom: item.location.zoom}));
+  if (!isMain && offersNearby) {
+    points = offersNearby.map((item) => ({id: item.id, latitude: item.location.latitude, longitude: item.location.longitude, zoom: item.location.zoom})).slice(0, OFFERS_NEARBY_COUNT);
   }
 
   const mapRef = useRef(null);
