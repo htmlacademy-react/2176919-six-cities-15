@@ -26,3 +26,5 @@ export const setOffersNearby = createAction<OfferNearby[]>('setOffersNearby');
 export const setReviews = createAction<ReviewData[]>('setReviews');
 
 export const dropOffer = createAction('dropOffer');
+
+export const sendingReview = createAction('sendingReview');

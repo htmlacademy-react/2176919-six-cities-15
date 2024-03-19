@@ -5,7 +5,7 @@ import { OfferData } from '../types/offers';
 import { OfferNearby } from '../types/offers-nearby';
 import { OfferDetailed } from '../types/offer';
 import { ReviewData } from '../types/reviews';
-import { setOffers, setOffer, setOffersNearby, requireAuthorization, setReviews, setError, setOffersDataLoadingStatus } from './action';
+import { setOffers, setOffer, setOffersNearby, requireAuthorization, setReviews, setError, setOffersDataLoadingStatus, sendingReview } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, AuthorizationStatus } from '../utils/constants';
 import { AuthData } from '../types/auth-data';
@@ -113,5 +113,22 @@ export const fetchReviews = createAsyncThunk<void, { offerId: string }, {
   async ({offerId}, {dispatch, extra: api}) => {
     const {data} = await api.get<ReviewData[]>(`${APIRoute.Reviews}/${offerId}`);
     dispatch(setReviews(data));
+  },
+);
+
+export const reviewAction = createAsyncThunk<void, {
+    offerId: string;
+    comment: string;
+    rating: number;
+  }, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'sendingReview',
+  async (_arg, {dispatch, extra: api}) => {
+    const {offerId, comment, rating} = _arg;
+    const data = await api.post(`${APIRoute.Reviews}/${offerId}`, {comment, rating});
+    dispatch(sendingReview(data));
   },
 );
