@@ -19,3 +19,5 @@ export const getIsOffersDataLoading = (state: State) => state.isOffersDataLoadin
 export const selectedOffer = (state: State) => state.offer;
 
 export const getOffersNearby = (state: State) => state.offersNearby;
+
+export const getReviews = (state: State) => state.reviews;

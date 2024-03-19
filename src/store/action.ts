@@ -4,7 +4,7 @@ import { Sorting } from '../pages/main/main';
 import { OfferData } from '../types/offers';
 import { OfferDetailed } from '../types/offer';
 import { OfferNearby } from '../types/offers-nearby';
-import { ReviewData } from '../mocks/reviews';
+import { ReviewData } from '../types/reviews';
 import { AuthorizationStatus } from '../utils/constants';
 
 export const setCity = createAction<City>('setCity');
