@@ -1,16 +1,23 @@
 import { Helmet } from 'react-helmet-async';
-import {useRef, FormEvent} from 'react';
+import {useRef, FormEvent, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
-import { AppRoute } from '../../utils/constants';
+import { AppRoute, AuthorizationStatus } from '../../utils/constants';
+import { getAuthorizationStatus } from '../../store/selectors';
 
 function Login (): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
+  const auth = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  useEffect(()=> {
+    if (auth === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Root);
+    }
+  }, [auth, navigate]);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -21,6 +28,7 @@ function Login (): JSX.Element {
         password: passwordRef.current.value
       }));
     }
+    navigate(AppRoute.Root);
   };
 
   return (
@@ -40,7 +48,7 @@ function Login (): JSX.Element {
               <label className="visually-hidden">Password</label>
               <input className="login__input form__input" ref={passwordRef} type="password" name="password" id="password" placeholder="Password" required/>
             </div>
-            <button className="login__submit form__submit button" type="submit" onClick={() => navigate(AppRoute.Root)}>Sign in</button>
+            <button className="login__submit form__submit button" type="submit">Sign in</button>
           </form>
         </section>
         <section className="locations locations--login locations--current">

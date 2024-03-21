@@ -1,16 +1,25 @@
 import { sortOffers } from '../utils/sorting';
+import { createSelector } from '@reduxjs/toolkit';
 
 import { State } from '../types/state';
 
 export const selectedCitySelector = (state: State) => state.city;
 
+export const selectSorting = (state: State) => state.sorting;
+
 export const selectedOffersByCity = (state: State) => state.offers.filter((offer) => offer.city.name === state.city);
 
-export const sortedOffersSelector = (state: State) => sortOffers(state.sorting, selectedOffersByCity(state));
+export const sortedOffersSelector = createSelector(
+  selectSorting,
+  selectedOffersByCity,
+  (sorting, selectedOffers) => sortOffers(sorting, selectedOffers)
+);
 
 export const selectedCityLocation = (state: State) => selectedOffersByCity(state)[0].city;
 
-export const pointsOffersByCity = (state: State) => selectedOffersByCity(state).map((offer) => ({id: offer.id, latitude: offer.location.latitude, longitude: offer.location.longitude, zoom: offer.location.zoom}));
+export const pointsOffersByCity = createSelector(
+  selectedOffersByCity,
+  (offers) => offers.map((offer) => ({id: offer.id, latitude: offer.location.latitude, longitude: offer.location.longitude, zoom: offer.location.zoom})));
 
 export const getAuthorizationStatus = (state: State) => state.authorizationStatus;
 
