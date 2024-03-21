@@ -27,7 +27,7 @@ function Main(): JSX.Element {
     setSelectedPoint(currentPoint);
   };
 
-  const handleSorting = (evt) => {
+  const handleSorting = (evt: React.MouseEvent<HTMLElement>) => {
     const value = (evt.target as HTMLElement).textContent;
     if (value) {
       dispatch(setSorting(value as Sorting));
