@@ -1,7 +1,7 @@
 import { sortOffers } from '../utils/sorting';
 import { createSelector } from '@reduxjs/toolkit';
 import { State } from '../types/state';
-import { sortReviewByDate } from '../utils/sorting';
+import { sortReview } from '../utils/sorting';
 
 export const selectedCitySelector = (state: State) => state.city;
 
@@ -35,3 +35,8 @@ export const pointSelected = createSelector(
 export const getOffersNearby = (state: State) => state.offersNearby;
 
 export const getReviews = (state: State) => state.reviews;
+
+export const getSortedReviews = createSelector(
+  getReviews,
+  (reviews) => sortReview(reviews)
+);

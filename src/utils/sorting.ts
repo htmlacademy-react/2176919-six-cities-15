@@ -48,12 +48,17 @@ export function sortOffers(sorting: Sorting, offers: OfferData[]) {
 
 export const humanizeReviewDate = (reviewDate: string) => dayjs(reviewDate).format('MMMM YYYY');
 
-export function sortReviewByDate(reviewA: ReviewData, reviewB: ReviewData) {
-  if (reviewA.date > reviewB.date) {
+function sortReviewByDate(reviewA: ReviewData, reviewB: ReviewData) {
+  if (reviewA.date < reviewB.date) {
     return 1;
   }
-  if (reviewA.date < reviewB.date) {
+  if (reviewA.date > reviewB.date) {
     return -1;
   }
   return 0;
+}
+
+export function sortReview(reviews: ReviewData[]) {
+  const reviewsCopy = [...reviews];
+  return reviewsCopy.sort(sortReviewByDate);
 }

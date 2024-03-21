@@ -1,5 +1,5 @@
 import { ReviewData } from '../../../types/reviews';
-import { getReviews } from '../../../store/selectors';
+import { getSortedReviews } from '../../../store/selectors';
 import { useAppSelector } from '../../../hooks';
 import CommentSubmissionForm from './comment-submission-form';
 import Review from './review';
@@ -7,7 +7,7 @@ import Review from './review';
 const REVIEW_COUNT = 10;
 
 function ReviewsList(): JSX.Element {
-  const reviews: ReviewData[] = useAppSelector(getReviews);
+  const reviews: ReviewData[] = useAppSelector(getSortedReviews);
   const reviewsCounter = reviews.length;
   return (
     <section className="offer__reviews reviews">
