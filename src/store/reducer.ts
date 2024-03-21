@@ -1,7 +1,7 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {setCity, setSorting, setOffers, setOffer, setReviews, requireAuthorization, setOffersDataLoadingStatus, setError, setOffersNearby, dropOffer } from './action';
 import { City } from '../components/cities-list/cities-list';
-import { Sorting } from '../pages/main/main';
+import { Sorting } from '../pages/main/components/places-options';
 import { OfferData } from '../types/offers';
 import { OfferDetailed } from '../types/offer';
 import { ReviewData } from '../types/reviews';

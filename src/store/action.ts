@@ -1,6 +1,6 @@
 import {createAction} from '@reduxjs/toolkit';
 import { City } from '../components/cities-list/cities-list';
-import { Sorting } from '../pages/main/main';
+import { Sorting } from '../pages/main/components/places-options';
 import { OfferData } from '../types/offers';
 import { OfferDetailed } from '../types/offer';
 import { OfferNearby } from '../types/offers-nearby';

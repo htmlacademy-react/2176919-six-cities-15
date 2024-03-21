@@ -1,5 +1,7 @@
+import dayjs from 'dayjs';
 import { OfferData } from '../types/offers';
-import { Sorting } from '../pages/main/main';
+import { Sorting } from '../pages/main/components/places-options';
+import { ReviewData } from '../types/reviews';
 
 function sortOfferByPriceToHigh(offerA: OfferData, offerB: OfferData) {
   if (Number(offerA.price) > Number(offerB.price)) {
@@ -42,4 +44,16 @@ export function sortOffers(sorting: Sorting, offers: OfferData[]) {
     default:
       return offers;
   }
+}
+
+export const humanizeReviewDate = (reviewDate: string) => dayjs(reviewDate).format('MMMM YYYY');
+
+export function sortReviewByDate(reviewA: ReviewData, reviewB: ReviewData) {
+  if (reviewA.date > reviewB.date) {
+    return 1;
+  }
+  if (reviewA.date < reviewB.date) {
+    return -1;
+  }
+  return 0;
 }

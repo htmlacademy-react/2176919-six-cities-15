@@ -1,11 +1,12 @@
 import { ReviewData } from '../../../types/reviews';
+import { humanizeReviewDate } from '../../../utils/sorting';
 
 type ReviewProp = {
   review: ReviewData;
 };
 
 function Review({review}: ReviewProp): JSX.Element {
-  const {user, comment} = review;
+  const {user, comment, date} = review;
   return (
     <ul className="reviews__list">
       <li className="reviews__item">
@@ -27,7 +28,7 @@ function Review({review}: ReviewProp): JSX.Element {
           <p className="reviews__text">
             {comment}
           </p>
-          <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
+          <time className="reviews__time" dateTime={humanizeReviewDate(date)}>{humanizeReviewDate(date)}</time>
         </div>
       </li>
     </ul>
