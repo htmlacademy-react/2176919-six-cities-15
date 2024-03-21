@@ -1,5 +1,5 @@
 import { OfferData } from '../../types/offers';
-import { AppRoute, PlaceCardSize } from '../../utils/constants';
+import { PlaceCardSize } from '../../utils/constants';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import Premium from './components/premium';
@@ -42,7 +42,7 @@ function PlaceCard({offer, variant, onMouseEnter, onMouseLeave}: PlaceCardProp):
         {'favorites__image-wrapper': !isVertical}
       )}
       >
-        <Link to={`${AppRoute.Offer}${id}`}>
+        <Link to={`/offer/${id}`}>
           <img className="place-card__image" src={previewImage} width={cardWidth} height={cardHeight} alt="Place image"/>
         </Link>
       </div>
@@ -70,7 +70,7 @@ function PlaceCard({offer, variant, onMouseEnter, onMouseLeave}: PlaceCardProp):
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Offer}${id}`}>{title}</Link>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type.charAt(0).toUpperCase() + type.slice(1)}</p>
       </div>

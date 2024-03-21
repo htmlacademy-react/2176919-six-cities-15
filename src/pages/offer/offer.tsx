@@ -12,11 +12,8 @@ import Map from '../../components/map';
 import OffersList from '../../components/offers-list/offers-list';
 import NotFound from '../not-found/not-found';
 
-const COUNTER_SUBSTRING = 3;
-
 function Offer (): JSX.Element {
-  const { id } = useParams();
-  const offerId = id?.substring(COUNTER_SUBSTRING);
+  const { id: offerId } = useParams();
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;

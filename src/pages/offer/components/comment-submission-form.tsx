@@ -5,11 +5,9 @@ import { reviewAction } from '../../../store/api-actions';
 import ReviewStar from './review-star';
 
 const COUNTDOWN_STARS = [5, 4, 3, 2, 1];
-const COUNTER_SUBSTRING = 3;
 
 function CommentSubmissionForm(): JSX.Element {
-  const { id } = useParams();
-  const offerId = id?.substring(COUNTER_SUBSTRING);
+  const { id: offerId } = useParams();
   const dispatch = useAppDispatch();
   const [formData, setFormData] = useState({
     rating: 0,
