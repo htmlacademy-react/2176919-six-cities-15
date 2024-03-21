@@ -1,7 +1,7 @@
 import {useRef, useEffect} from 'react';
 import {Icon, Marker} from 'leaflet';
 import { useAppSelector } from '../hooks';
-import { selectedCityLocation, pointsOffersByCity, getOffersNearby } from '../store/selectors';
+import { selectedCityLocation, pointsOffersByCity, getOffersNearby, pointSelected } from '../store/selectors';
 import useMap from '../hooks/use-map';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -40,6 +40,7 @@ function Map(props: MapProps): JSX.Element {
   const city = useAppSelector(selectedCityLocation);
   let points = useAppSelector(pointsOffersByCity);
   const offersNearby = useAppSelector(getOffersNearby);
+  const pointSelectedByOffer = useAppSelector(pointSelected);
 
   if (!isMain && offersNearby) {
     points = offersNearby.map((item) => ({id: item.id, latitude: item.location.latitude, longitude: item.location.longitude, zoom: item.location.zoom})).slice(0, OFFERS_NEARBY_COUNT);
@@ -58,6 +59,9 @@ function Map(props: MapProps): JSX.Element {
   useEffect(() => {
     if (map) {
       markerLayer.addTo(map);
+      if (!isMain && pointSelectedByOffer) {
+        points.push(pointSelectedByOffer as Point);
+      }
       points.forEach((point) => {
         const marker = new Marker({
           lat: point.latitude,
@@ -66,7 +70,7 @@ function Map(props: MapProps): JSX.Element {
 
         marker
           .setIcon(
-            selectedPoint !== undefined && point.id === selectedPoint.id
+            selectedPoint !== undefined && point.id === selectedPoint.id || point.id === pointSelectedByOffer?.id
               ? currentCustomIcon
               : defaultCustomIcon
           )
@@ -77,7 +81,7 @@ function Map(props: MapProps): JSX.Element {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, points, selectedPoint, markerLayer]);
+  }, [map, points, selectedPoint, markerLayer, isMain, pointSelectedByOffer]);
 
   return (
     <section className={classNames(

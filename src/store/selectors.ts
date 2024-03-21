@@ -27,6 +27,11 @@ export const getIsOffersDataLoading = (state: State) => state.isOffersDataLoadin
 
 export const selectedOffer = (state: State) => state.offer;
 
+export const pointSelected = createSelector(
+  selectedOffer,
+  (offer) => ({id: offer?.id, latitude: offer?.location.latitude, longitude: offer?.location.longitude, zoom: offer?.location.zoom})
+);
+
 export const getOffersNearby = (state: State) => state.offersNearby;
 
 export const getReviews = (state: State) => state.reviews;
