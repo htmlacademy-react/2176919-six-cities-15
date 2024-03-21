@@ -6,7 +6,7 @@ export type Sorting = typeof SORTING_TYPES[number]
 
 type PlacesOptionProps = {
   sorting: Sorting;
-  onChange: (evt) => void;
+  onChange: (evt: React.MouseEvent<HTMLElement>) => void;
 }
 
 function PlacesOptions({sorting, onChange}: PlacesOptionProps): JSX.Element {
