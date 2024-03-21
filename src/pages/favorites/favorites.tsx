@@ -1,8 +1,11 @@
 import { Helmet } from 'react-helmet-async';
+import { useAppSelector } from '../../hooks';
 import Footer from '../../components/footer/footer';
 import OffersList from '../../components/offers-list/offers-list';
+import { getOffersNearby } from '../../store/selectors';
 
 function Favorites (): JSX.Element {
+  const offers = useAppSelector(getOffersNearby);
   return (
     <>
       <main className="page__main page__main--favorites">
@@ -21,7 +24,7 @@ function Favorites (): JSX.Element {
                     </a>
                   </div>
                 </div>
-                {<OffersList variant={'horizontal'} isSelectedOffer={false} />}
+                {<OffersList offers={offers} variant={'horizontal'} />}
               </li>
             </ul>
           </section>

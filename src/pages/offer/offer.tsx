@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchSelectOffer, fetchOffersNearby, fetchReviews } from '../../store/api-actions';
 import { dropOffer } from '../../store/action';
-import { selectedOffer, getAuthorizationStatus } from '../../store/selectors';
+import { selectedOffer, getAuthorizationStatus, getOffersNearby } from '../../store/selectors';
 import { AuthorizationStatus } from '../../utils/constants';
 import OfferGoods from './components/offer-goods';
 import ReviewsList from './components/reviews-list';
@@ -31,6 +31,7 @@ function Offer (): JSX.Element {
   }, [offerId, dispatch]);
 
   const offerById = useAppSelector(selectedOffer);
+  const offersNearby = useAppSelector(getOffersNearby);
 
   if (offerById === null) {
     return <NotFound />;
@@ -132,7 +133,7 @@ function Offer (): JSX.Element {
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <OffersList isSelectedOffer variant={'vertical'}/>
+          <OffersList offers={offersNearby} variant={'vertical'}/>
         </section>
       </div>
     </main>

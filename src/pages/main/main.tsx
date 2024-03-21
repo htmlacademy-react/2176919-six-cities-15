@@ -58,7 +58,7 @@ function Main(): JSX.Element {
               sorting={sorting}
               onChange={handleSorting}
             />
-            {<OffersList variant={'vertical'} isSelectedOffer={false} onListItemHover={handleListItemHover}/>}
+            {<OffersList offers={selectedOffers} variant={'vertical'} onListItemHover={handleListItemHover}/>}
           </section>
           <div className="cities__right-section">
             {<Map isMain selectedPoint={selectedPoint}/>}

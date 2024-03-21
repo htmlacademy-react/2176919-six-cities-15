@@ -1,25 +1,15 @@
 import { OfferData } from '../../types/offers';
-import { useState } from 'react';
-import { useAppSelector } from '../../hooks';
-import { getOffersNearby, sortedOffersSelector } from '../../store/selectors';
 import PlaceCard from '../place-card/place-card';
 import classNames from 'classnames';
 
 type OffersListProps = {
+  offers: OfferData[];
   variant: 'vertical' | 'horizontal';
-  isSelectedOffer: boolean;
   onListItemHover?: (listItemId: string) => void;
 }
 
-function OffersList({variant, isSelectedOffer, onListItemHover}: OffersListProps): JSX.Element {
-  const [cardActive, setCardActive ] = useState('');
+function OffersList({offers, variant, onListItemHover}: OffersListProps): JSX.Element {
   const isVertical = variant === 'vertical';
-  const selectedOffers = useAppSelector(sortedOffersSelector);
-  const offersNearby = useAppSelector(getOffersNearby);
-
-  if (onListItemHover) {
-    onListItemHover(cardActive);
-  }
 
   return (
     <div className={classNames(
@@ -28,7 +18,17 @@ function OffersList({variant, isSelectedOffer, onListItemHover}: OffersListProps
       {'favorites__places': !isVertical}
     )}
     >
-      {isSelectedOffer ? offersNearby.map((offer: OfferData) => <PlaceCard variant={variant} offer={offer} key={offer.id} onMouseEnter={() => setCardActive(offer.id)} onMouseLeave={() => setCardActive('')} />) : selectedOffers.map((offer: OfferData) => <PlaceCard variant={variant} offer={offer} key={offer.id} onMouseEnter={() => setCardActive(offer.id)} onMouseLeave={() => setCardActive('')} />)};
+      {
+        offers.map((offer) => (
+          <PlaceCard
+            variant={variant}
+            offer={offer}
+            key={offer.id}
+            onMouseEnter={() => onListItemHover ? onListItemHover(offer.id) : undefined}
+            onMouseLeave={() => onListItemHover ? onListItemHover('') : undefined}
+          />
+        ))
+      }
     </div>
   );
 }
