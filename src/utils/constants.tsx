@@ -26,6 +26,15 @@ enum APIRoute {
   OffersNearby = '/nearby',
 }
 
+enum NameSpace {
+  Offers = 'Offers',
+  Offer = 'Offer',
+  NearPlaces = 'NearPlaces',
+  Favorites = 'Favorites',
+  Reviews = 'Reviews',
+  User = 'User',
+}
+
 const PlaceCardSize = {
   PlaceCard: {
     with: '260',
@@ -37,4 +46,4 @@ const PlaceCardSize = {
   }
 };
 
-export {AppRoute, AuthorizationStatus, SortType, APIRoute, PlaceCardSize};
+export {AppRoute, AuthorizationStatus, SortType, APIRoute, NameSpace, PlaceCardSize};

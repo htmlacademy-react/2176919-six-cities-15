@@ -2,12 +2,13 @@ import { sortOffers } from '../utils/sorting';
 import { createSelector } from '@reduxjs/toolkit';
 import { State } from '../types/state';
 import { sortReview } from '../utils/sorting';
+import { NameSpace } from '../utils/constants';
 
-export const selectedCitySelector = (state: State) => state.city;
+export const selectedCitySelector = (state: State) => state[NameSpace.Offers].city;
 
-export const selectSorting = (state: State) => state.sorting;
+export const selectSorting = (state: State) => state[NameSpace.Offers].sorting;
 
-export const selectedOffersByCity = (state: State) => state.offers.filter((offer) => offer.city.name === state.city);
+export const selectedOffersByCity = (state: State) => state[NameSpace.Offers].offers.filter((offer) => offer.city.name === state[NameSpace.Offers].city);
 
 export const sortedOffersSelector = createSelector(
   selectSorting,
@@ -19,20 +20,21 @@ export const selectedCityLocation = (state: State) => selectedOffersByCity(state
 
 export const pointsOffersByCity = createSelector(
   selectedOffersByCity,
-  (offers) => offers.map((offer) => ({id: offer.id, latitude: offer.location.latitude, longitude: offer.location.longitude, zoom: offer.location.zoom})));
+  (offers) => offers.map((offer) => ({id: offer.id, latitude: offer.location.latitude, longitude: offer.location.longitude, zoom: offer.location.zoom}))
+);
 
-export const getAuthorizationStatus = (state: State) => state.authorizationStatus;
+export const getAuthorizationStatus = (state: State) => state[NameSpace.User].authorizationStatus;
 
-export const getIsOffersDataLoading = (state: State) => state.isOffersDataLoading;
+export const getIsOffersDataLoading = (state: State) => state[NameSpace.Offers].isOffersDataLoading;
 
-export const selectedOffer = (state: State) => state.offer;
+export const selectedOffer = (state: State) => state[NameSpace.Offer].offer;
 
 export const pointSelected = createSelector(
   selectedOffer,
   (offer) => ({id: offer?.id, latitude: offer?.location.latitude, longitude: offer?.location.longitude, zoom: offer?.location.zoom})
 );
 
-export const getOffersNearby = (state: State) => state.offersNearby;
+export const getOffersNearby = (state: State) => state[NameSpace.Offer].offersNearby;
 
 export const getReviews = (state: State) => state.reviews;
 

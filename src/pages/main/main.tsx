@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Point } from '../../components/map';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import { selectedCitySelector, sortedOffersSelector, pointsOffersByCity, selectSorting} from '../../store/selectors';
-import { setSorting } from '../../store/action';
+import { setSorting } from '../../store/slices/offers';
 import { Sorting } from './components/places-options';
 import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map';

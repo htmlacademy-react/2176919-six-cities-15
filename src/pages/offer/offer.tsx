@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchSelectOffer, fetchOffersNearby, fetchReviews } from '../../store/api-actions';
-import { dropOffer } from '../../store/action';
+import { dropOffer } from '../../store/slices/offer';
 import { selectedOffer, getAuthorizationStatus, getOffersNearby } from '../../store/selectors';
 import { AuthorizationStatus } from '../../utils/constants';
 import OfferGoods from './components/offer-goods';
