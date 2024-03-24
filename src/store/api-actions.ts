@@ -1,11 +1,11 @@
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
-import { OfferData } from '../types/offers';
 import { OfferNearby } from '../types/offers-nearby';
 import { OfferDetailed } from '../types/offer';
+import { OfferData } from '../types/offers';
 import { ReviewData } from '../types/reviews';
-import { setReviews, setError } from './action';
+import { setError } from './action';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute } from '../utils/constants';
 import { AuthData } from '../types/auth-data';
@@ -31,7 +31,7 @@ export const clearErrorAction = createAsyncThunk(
   },
 );
 
-export const fetchOffersAction = createAsyncThunk<void, undefined, AsyncThunkConfig>(
+export const fetchOffersAction = createAsyncThunk<OfferData[], undefined, AsyncThunkConfig>(
   `${NameSpace.Offers}/setOffers`,
   async (_arg, {extra: api}) => {
     const {data} = await api.get<OfferData[]>(APIRoute.Offers);
@@ -62,27 +62,27 @@ export const logoutAction = createAsyncThunk<void, undefined, AsyncThunkConfig>(
   },
 );
 
-export const fetchSelectOffer = createAsyncThunk<void, { offerId: string }, AsyncThunkConfig>(
-  `${NameSpace.User}/setOffer`,
+export const fetchSelectOffer = createAsyncThunk<OfferDetailed, { offerId: string }, AsyncThunkConfig>(
+  `${NameSpace.User}/getOffer`,
   async ({offerId}, {extra: api}) => {
     const {data} = await api.get<OfferDetailed>(`${APIRoute.Offers}/${offerId}`);
     return data;
   },
 );
 
-export const fetchOffersNearby = createAsyncThunk<void, { offerId: string }, AsyncThunkConfig>(
-  `${NameSpace.User}/setOffersNearby`,
+export const fetchOffersNearby = createAsyncThunk<OfferNearby[], { offerId: string }, AsyncThunkConfig>(
+  `${NameSpace.User}/getOffersNearby`,
   async ({offerId}, {extra: api}) => {
     const {data} = await api.get<OfferNearby[]>(`${APIRoute.Offers}/${offerId}${APIRoute.OffersNearby}`);
     return data;
   },
 );
 
-export const fetchReviews = createAsyncThunk<void, { offerId: string }, AsyncThunkConfig>(
-  'setReviews',
-  async ({offerId}, {dispatch, extra: api}) => {
+export const fetchReviews = createAsyncThunk<ReviewData[], { offerId: string }, AsyncThunkConfig>(
+  `${NameSpace.User}/setReviews`,
+  async ({offerId}, {extra: api}) => {
     const {data} = await api.get<ReviewData[]>(`${APIRoute.Reviews}/${offerId}`);
-    dispatch(setReviews(data));
+    return data;
   },
 );
 

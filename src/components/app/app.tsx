@@ -1,8 +1,10 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {HelmetProvider} from 'react-helmet-async';
 import { useAppSelector } from '../../hooks';
-import { AppRoute, AuthorizationStatus } from '../../utils/constants';
+import { AppRoute, AuthorizationStatus, RequestStatus } from '../../utils/constants';
 import { getAuthorizationStatus, getIsOffersDataLoading } from '../../store/selectors';
+import { checkAuthAction, fetchOffersAction } from '../../store/api-actions';
+import { store } from '../../store';
 import Main from '../../pages/main/main';
 import Favorites from '../../pages/favorites/favorites';
 import Login from '../../pages/login/login';
@@ -12,9 +14,12 @@ import PrivateRoute from '../private-route/private-route';
 import Layout from '../layout/layout';
 import Loader from '../loader/loader';
 
+store.dispatch(checkAuthAction());
+store.dispatch(fetchOffersAction());
+
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
+  const isOffersDataLoading = useAppSelector(getIsOffersDataLoading) === RequestStatus.Success;
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return (

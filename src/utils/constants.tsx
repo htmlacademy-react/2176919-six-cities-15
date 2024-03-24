@@ -35,6 +35,13 @@ enum NameSpace {
   User = 'User',
 }
 
+enum RequestStatus {
+  Idle = 'Idle',
+  Loading = 'Loading',
+  Success = 'Success',
+  Error = 'Error',
+}
+
 const PlaceCardSize = {
   PlaceCard: {
     with: '260',
@@ -46,4 +53,4 @@ const PlaceCardSize = {
   }
 };
 
-export {AppRoute, AuthorizationStatus, SortType, APIRoute, NameSpace, PlaceCardSize};
+export {AppRoute, AuthorizationStatus, RequestStatus, SortType, APIRoute, NameSpace, PlaceCardSize};

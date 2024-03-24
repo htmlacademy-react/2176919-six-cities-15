@@ -25,7 +25,7 @@ export const pointsOffersByCity = createSelector(
 
 export const getAuthorizationStatus = (state: State) => state[NameSpace.User].authorizationStatus;
 
-export const getIsOffersDataLoading = (state: State) => state[NameSpace.Offers].isOffersDataLoading;
+export const getIsOffersDataLoading = (state: State) => state[NameSpace.Offers].offersLoadingStatus;
 
 export const selectedOffer = (state: State) => state[NameSpace.Offer].offer;
 
@@ -36,7 +36,7 @@ export const pointSelected = createSelector(
 
 export const getOffersNearby = (state: State) => state[NameSpace.Offer].offersNearby;
 
-export const getReviews = (state: State) => state.reviews;
+export const getReviews = (state: State) => state[NameSpace.Offer].reviews;
 
 export const getSortedReviews = createSelector(
   getReviews,

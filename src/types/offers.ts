@@ -2,7 +2,7 @@ import { City } from '../components/cities-list/cities-list';
 
 export type CityLocation = {
   'name': City;
-      'location': Location;
+  'location': Location;
 }
 
 export type Location = {
