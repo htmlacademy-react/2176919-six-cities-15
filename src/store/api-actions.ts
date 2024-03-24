@@ -7,10 +7,9 @@ import { OfferData } from '../types/offers';
 import { ReviewData } from '../types/reviews';
 import { setError } from './slices/offers';
 import { saveToken, dropToken } from '../services/token';
-import { APIRoute } from '../utils/constants';
+import { APIRoute, NameSpace } from '../utils/constants';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
-import { NameSpace } from '../utils/constants';
 import { store } from './';
 
 const TIMEOUT_SHOW_ERROR = 2000;
