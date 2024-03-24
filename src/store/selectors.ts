@@ -42,3 +42,5 @@ export const getSortedReviews = createSelector(
   getReviews,
   (reviews) => sortReview(reviews)
 );
+
+export const setError = (state: State) => state[NameSpace.Offers].error;

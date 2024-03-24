@@ -5,7 +5,7 @@ import { OfferNearby } from '../types/offers-nearby';
 import { OfferDetailed } from '../types/offer';
 import { OfferData } from '../types/offers';
 import { ReviewData } from '../types/reviews';
-import { setError } from './action';
+import { setError } from './slices/offers';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute } from '../utils/constants';
 import { AuthData } from '../types/auth-data';
@@ -22,7 +22,7 @@ type AsyncThunkConfig = {
 }
 
 export const clearErrorAction = createAsyncThunk(
-  'clearError',
+  `${NameSpace.Offers}/clearError`,
   () => {
     setTimeout(
       () => store.dispatch(setError(null)),
