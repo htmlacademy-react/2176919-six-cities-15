@@ -1,10 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/selectors';
 import { AppRoute, AuthorizationStatus } from '../../utils/constants';
+import { logoutAction } from '../../store/api-actions';
 
 
 function UserLoginMenu(): JSX.Element {
+  const dispatch = useAppDispatch();
   const authorized = useAppSelector(getAuthorizationStatus);
   const {pathname} = useLocation();
   if (pathname as AppRoute === AppRoute.Login) {
@@ -26,9 +28,11 @@ function UserLoginMenu(): JSX.Element {
             </Link>
           </li>
           <li className="header__nav-item">
-            <Link className="header__nav-link" to={AppRoute.Login}>
-              <span className="header__signout">Sign out</span>
-            </Link>
+            <span className="header__signout" style={{cursor: 'pointer'}} onClick={() => {
+              dispatch(logoutAction());
+            }}
+            >Sign out
+            </span>
           </li>
         </ul>
       ) :

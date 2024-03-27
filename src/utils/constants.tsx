@@ -22,6 +22,8 @@ enum APIRoute {
   Offers = '/offers',
   Login = '/login',
   Logout = '/logout',
+  Reviews = '/comments',
+  OffersNearby = '/nearby',
 }
 
 const PlaceCardSize = {

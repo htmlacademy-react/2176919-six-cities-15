@@ -1,21 +1,21 @@
 import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 import { Point } from '../../components/map';
-import {useAppSelector} from '../../hooks';
-import { selectedCitySelector, sortedOffersSelector, pointsOffersByCity } from '../../store/selectors';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import { selectedCitySelector, sortedOffersSelector, pointsOffersByCity, selectSorting} from '../../store/selectors';
+import { setSorting } from '../../store/action';
+import { Sorting } from './components/places-options';
 import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map';
-import PlacesOption from './components/places-option';
+import PlacesOptions from './components/places-options';
 import CitiesList from '../../components/cities-list/cities-list';
-
-const SORTING_TYPES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'] as const;
-
-export type Sorting = typeof SORTING_TYPES[number]
 
 function Main(): JSX.Element {
   const selectedCity = useAppSelector(selectedCitySelector);
   const selectedOffers = useAppSelector(sortedOffersSelector);
+  const sorting: Sorting = useAppSelector(selectSorting);
   const points = useAppSelector(pointsOffersByCity);
+  const dispatch = useAppDispatch();
 
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
     undefined
@@ -25,6 +25,13 @@ function Main(): JSX.Element {
     const currentPoint = points.find((point) => point.id === listItemId);
 
     setSelectedPoint(currentPoint);
+  };
+
+  const handleSorting = (evt: React.MouseEvent<HTMLElement>) => {
+    const value = (evt.target as HTMLElement).textContent;
+    if (value) {
+      dispatch(setSorting(value as Sorting));
+    }
   };
 
   return (
@@ -47,19 +54,11 @@ function Main(): JSX.Element {
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
             <b className="places__found">{selectedOffers.length} places to stay in {selectedCity}</b>
-            <form className="places__sorting" action="#" method="get">
-              <span className="places__sorting-caption">Sort by</span>
-              <span className="places__sorting-type" tabIndex={0}>
-                Popular
-                <svg className="places__sorting-arrow" width="7" height="4">
-                  <use xlinkHref="#icon-arrow-select"></use>
-                </svg>
-              </span>
-              <ul className="places__options places__options--custom places__options--opened">
-                {SORTING_TYPES.map((option) => <PlacesOption option={option} key={option}/>)}
-              </ul>
-            </form>
-            {<OffersList variant={'vertical'} onListItemHover={handleListItemHover}/>}
+            <PlacesOptions
+              sorting={sorting}
+              onChange={handleSorting}
+            />
+            {<OffersList offers={selectedOffers} variant={'vertical'} onListItemHover={handleListItemHover}/>}
           </section>
           <div className="cities__right-section">
             {<Map isMain selectedPoint={selectedPoint}/>}
