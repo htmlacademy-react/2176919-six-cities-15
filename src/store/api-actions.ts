@@ -5,12 +5,12 @@ import { OfferNearby } from '../types/offers-nearby';
 import { OfferDetailed } from '../types/offer';
 import { OfferData } from '../types/offers';
 import { ReviewData } from '../types/reviews';
-import { setError } from './slices/offers';
+//import { setError } from './slices/offers';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, NameSpace } from '../utils/constants';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
-import { store } from './';
+//import { store } from './';
 
 const TIMEOUT_SHOW_ERROR = 2000;
 
@@ -20,15 +20,15 @@ type AsyncThunkConfig = {
   extra: AxiosInstance;
 }
 
-export const clearErrorAction = createAsyncThunk(
+/* export const clearErrorAction = createAsyncThunk(
   `${NameSpace.Offers}/clearError`,
   () => {
     setTimeout(
-      () => store.dispatch(setError(null)),
+      () => dispatch(setError(null)),
       TIMEOUT_SHOW_ERROR,
     );
   },
-);
+); */
 
 export const fetchOffersAction = createAsyncThunk<OfferData[], undefined, AsyncThunkConfig>(
   `${NameSpace.Offers}/setOffers`,

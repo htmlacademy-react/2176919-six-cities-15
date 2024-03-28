@@ -8,19 +8,32 @@ export const selectedCitySelector = (state: State) => state[NameSpace.Offers].ci
 
 export const selectSorting = (state: State) => state[NameSpace.Offers].sorting;
 
-export const selectedOffersByCity = (state: State) => state[NameSpace.Offers].offers.filter((offer) => offer.city.name === state[NameSpace.Offers].city);
-
 export const sortedOffersSelector = createSelector(
-  selectSorting,
-  selectedOffersByCity,
-  (sorting, selectedOffers) => sortOffers(sorting, selectedOffers)
+  (state: State) => state[NameSpace.Offers].sorting,
+  (state: State) => state[NameSpace.Offers].offers,
+  (state: State) => state[NameSpace.Offers].city,
+  (sorting, offers, city) => {
+    const selectedOffers = offers.filter((offer) => offer.city.name === city);
+    return sortOffers(sorting, selectedOffers);
+  }
 );
 
-export const selectedCityLocation = (state: State) => selectedOffersByCity(state)[0].city;
+export const selectedCityLocation = createSelector(
+  (state: State) => state[NameSpace.Offers].offers,
+  (state: State) => state[NameSpace.Offers].city,
+  (offers, city) => {
+    const selectedOffers = offers.filter((offer) => offer.city.name === city);
+    return selectedOffers.length > 0 ? selectedOffers[0].city : null;
+  }
+);
 
 export const pointsOffersByCity = createSelector(
-  selectedOffersByCity,
-  (offers) => offers.map((offer) => ({id: offer.id, latitude: offer.location.latitude, longitude: offer.location.longitude, zoom: offer.location.zoom}))
+  (state: State) => state[NameSpace.Offers].offers,
+  (state: State) => state[NameSpace.Offers].city,
+  (offers, city) => {
+    const selectedOffers = offers.filter((offer) => offer.city.name === city);
+    return selectedOffers.map((offer) => ({id: offer.id, latitude: offer.location.latitude, longitude: offer.location.longitude, zoom: offer.location.zoom}));
+  }
 );
 
 export const getAuthorizationStatus = (state: State) => state[NameSpace.User].authorizationStatus;

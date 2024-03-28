@@ -12,9 +12,9 @@ import CitiesList from '../../components/cities-list/cities-list';
 
 function Main(): JSX.Element {
   const selectedCity = useAppSelector(selectedCitySelector);
-  const selectedOffers = useAppSelector(sortedOffersSelector);
   const sorting: Sorting = useAppSelector(selectSorting);
   const points = useAppSelector(pointsOffersByCity);
+  const selectedOffers = useAppSelector(sortedOffersSelector);
   const dispatch = useAppDispatch();
 
   const [selectedPoint, setSelectedPoint] = useState<Point | undefined>(
