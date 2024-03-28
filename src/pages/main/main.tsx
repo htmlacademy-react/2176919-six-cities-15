@@ -29,12 +29,13 @@ function Main(): JSX.Element {
     setSelectedPoint(currentPoint);
   }, [points]);
 
-  const handleSorting = (evt: React.MouseEvent<HTMLElement>) => {
+  const handleSorting = useCallback((evt: React.MouseEvent<HTMLElement>) => {
     const value = (evt.target as HTMLElement).textContent;
     if (value) {
       dispatch(setSorting(value as Sorting));
     }
-  };
+  }, [dispatch]);
+
   if (!selectedOffers.length) {
     return <Navigate to={ AppRoute.NoOffers }/>;
   }
