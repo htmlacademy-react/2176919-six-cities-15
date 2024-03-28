@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import { setCity } from '../../store/action';
+import { setCity } from '../../store/slices/offers';
 import { City } from './cities-list';
 import { selectedCitySelector } from '../../store/selectors';
 

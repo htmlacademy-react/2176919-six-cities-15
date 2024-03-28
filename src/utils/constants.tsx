@@ -3,6 +3,7 @@ enum AppRoute {
   Login='/login',
   Favorites='/favorites',
   Offer='/offer/:id',
+  NoOffers = '/no-offers'
 }
 
 enum AuthorizationStatus {
@@ -24,6 +25,23 @@ enum APIRoute {
   Logout = '/logout',
   Reviews = '/comments',
   OffersNearby = '/nearby',
+  Favorites = '/favorite',
+}
+
+enum NameSpace {
+  Offers = 'Offers',
+  Offer = 'Offer',
+  NearPlaces = 'NearPlaces',
+  Favorites = 'Favorites',
+  Reviews = 'Reviews',
+  User = 'User',
+}
+
+enum RequestStatus {
+  Idle = 'Idle',
+  Loading = 'Loading',
+  Success = 'Success',
+  Error = 'Error',
 }
 
 const PlaceCardSize = {
@@ -37,4 +55,4 @@ const PlaceCardSize = {
   }
 };
 
-export {AppRoute, AuthorizationStatus, SortType, APIRoute, PlaceCardSize};
+export {AppRoute, AuthorizationStatus, RequestStatus, SortType, APIRoute, NameSpace, PlaceCardSize};
