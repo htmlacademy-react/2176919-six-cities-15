@@ -57,3 +57,5 @@ export const getSortedReviews = createSelector(
 );
 
 export const setError = (state: State) => state[NameSpace.Offers].error;
+
+export const getFavoriteOffers = (state: State) => state[NameSpace.Favorites].offersFavorite;

@@ -76,7 +76,7 @@ export const reviewAction = createAsyncThunk<void, {
     comment: string;
     rating: number;
   }, AsyncThunkConfig>(
-    'sendingReview',
+    `${NameSpace.Offer}/sendingReview`,
     async (_arg, {extra: api}) => {
       const {offerId, comment, rating} = _arg;
       await api.post(`${APIRoute.Reviews}/${offerId}`, {comment, rating});
