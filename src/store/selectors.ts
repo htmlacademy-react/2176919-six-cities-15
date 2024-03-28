@@ -23,7 +23,7 @@ export const selectedCityLocation = createSelector(
   (state: State) => state[NameSpace.Offers].city,
   (offers, city) => {
     const selectedOffers = offers.filter((offer) => offer.city.name === city);
-    return selectedOffers.length > 0 ? selectedOffers[0].city : null;
+    return selectedOffers[0].city;
   }
 );
 
