@@ -16,7 +16,7 @@ import Loader from '../loader/loader';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isOffersDataLoading = useAppSelector(getIsOffersDataLoading) === RequestStatus.Success;
+  const isOffersDataLoading = useAppSelector(getIsOffersDataLoading) === RequestStatus.Loading;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
