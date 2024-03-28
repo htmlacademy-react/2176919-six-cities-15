@@ -5,30 +5,16 @@ import { OfferNearby } from '../types/offers-nearby';
 import { OfferDetailed } from '../types/offer';
 import { OfferData } from '../types/offers';
 import { ReviewData } from '../types/reviews';
-//import { setError } from './slices/offers';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, NameSpace } from '../utils/constants';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
-//import { store } from './';
-
-const TIMEOUT_SHOW_ERROR = 2000;
 
 type AsyncThunkConfig = {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }
-
-/* export const clearErrorAction = createAsyncThunk(
-  `${NameSpace.Offers}/clearError`,
-  () => {
-    setTimeout(
-      () => dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-); */
 
 export const fetchOffersAction = createAsyncThunk<OfferData[], undefined, AsyncThunkConfig>(
   `${NameSpace.Offers}/setOffers`,
@@ -96,3 +82,11 @@ export const reviewAction = createAsyncThunk<void, {
       await api.post(`${APIRoute.Reviews}/${offerId}`, {comment, rating});
     },
   );
+
+export const fetchFavoriteOffers = createAsyncThunk<OfferData[], undefined, AsyncThunkConfig>(
+  `${NameSpace.Favorites}/setFavoriteOffers`,
+  async (_arg, {extra: api}) => {
+    const {data} = await api.get<OfferData[]>(APIRoute.Favorites);
+    return data;
+  },
+);

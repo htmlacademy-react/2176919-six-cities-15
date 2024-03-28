@@ -1,10 +1,12 @@
 import { Helmet } from 'react-helmet-async';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
+import { Navigate } from 'react-router-dom';
 import { Point } from '../../components/map';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import { selectedCitySelector, sortedOffersSelector, pointsOffersByCity, selectSorting} from '../../store/selectors';
 import { setSorting } from '../../store/slices/offers';
 import { Sorting } from './components/places-options';
+import { AppRoute } from '../../utils/constants';
 import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map';
 import PlacesOptions from './components/places-options';
@@ -21,11 +23,11 @@ function Main(): JSX.Element {
     undefined
   );
 
-  const handleListItemHover = (listItemId: string) => {
+  const handleListItemHover = useCallback((listItemId: string) => {
     const currentPoint = points.find((point) => point.id === listItemId);
 
     setSelectedPoint(currentPoint);
-  };
+  }, [points]);
 
   const handleSorting = (evt: React.MouseEvent<HTMLElement>) => {
     const value = (evt.target as HTMLElement).textContent;
@@ -33,6 +35,9 @@ function Main(): JSX.Element {
       dispatch(setSorting(value as Sorting));
     }
   };
+  if (!selectedOffers.length) {
+    return <Navigate to={ AppRoute.NoOffers }/>;
+  }
 
   return (
     <main className="page__main page__main--index">

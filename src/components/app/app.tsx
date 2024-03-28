@@ -9,6 +9,7 @@ import Main from '../../pages/main/main';
 import Favorites from '../../pages/favorites/favorites';
 import Login from '../../pages/login/login';
 import NotFound from '../../pages/not-found/not-found';
+import MainEmpty from '../../pages/main/main-empty';
 import Offer from '../../pages/offer/offer';
 import PrivateRoute from '../private-route/private-route';
 import Layout from '../layout/layout';
@@ -58,6 +59,10 @@ function App(): JSX.Element {
             <Route
               path={AppRoute.Offer}
               element={<Offer />}
+            />
+            <Route
+              path={ `${ AppRoute.NoOffers }` }
+              element={ <MainEmpty /> }
             />
             <Route
               path="*"

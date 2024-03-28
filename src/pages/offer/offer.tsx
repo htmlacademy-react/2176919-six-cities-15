@@ -4,8 +4,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchSelectOffer, fetchOffersNearby, fetchReviews } from '../../store/api-actions';
 import { dropOffer } from '../../store/slices/offer';
-import { selectedOffer, getAuthorizationStatus, getOffersNearby } from '../../store/selectors';
-import { AuthorizationStatus } from '../../utils/constants';
+import { selectedOffer, getOffersNearby } from '../../store/selectors';
 import OfferGoods from './components/offer-goods';
 import ReviewsList from './components/reviews-list';
 import Map from '../../components/map';
@@ -15,8 +14,6 @@ import NotFound from '../not-found/not-found';
 function Offer (): JSX.Element {
   const { id: offerId } = useParams();
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
 
   useEffect(() => {
     if (offerId) {
@@ -123,9 +120,7 @@ function Offer (): JSX.Element {
                 </p>
               </div>
             </div>
-            {
-              isAuth ? <ReviewsList /> : null
-            }
+            <ReviewsList />
           </div>
         </div>
         <Map isMain={false}/>

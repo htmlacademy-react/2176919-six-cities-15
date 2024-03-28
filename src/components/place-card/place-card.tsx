@@ -1,6 +1,7 @@
 import { OfferData } from '../../types/offers';
 import { PlaceCardSize } from '../../utils/constants';
 import { Link } from 'react-router-dom';
+import { memo } from 'react';
 import classNames from 'classnames';
 import Premium from './components/premium';
 
@@ -23,7 +24,7 @@ const getPlaceCardState = (variant = 'vertical') => {
   return {cardWidth, cardHeight};
 };
 
-function PlaceCard({offer, variant, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.Element {
+function Card({offer, variant, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.Element {
   const {title, isPremium, price, type, previewImage, rating, id} = offer;
   const {cardWidth, cardHeight} = getPlaceCardState(variant);
   const isVertical = variant === 'vertical';
@@ -77,5 +78,11 @@ function PlaceCard({offer, variant, onMouseEnter, onMouseLeave}: PlaceCardProp):
     </article>
   );
 }
+
+function arePropsEqual(oldProps: PlaceCardProp, newProps: PlaceCardProp) {
+  return oldProps.offer === newProps.offer;
+}
+
+const PlaceCard = memo(Card, arePropsEqual);
 
 export default PlaceCard;

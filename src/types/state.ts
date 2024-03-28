@@ -28,6 +28,12 @@ export type OfferSlice = {
   status: RequestStatus;
 };
 
+export type FavoritesSlice = {
+  offersFavorite: OfferData[];
+  offersFavoriteLoadingStatus: RequestStatus;
+  status: RequestStatus;
+}
+
 
 export type State = ReturnType<typeof store.getState>;
 
