@@ -3,20 +3,19 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchSelectOffer, fetchOffersNearby, fetchReviews } from '../../store/api-actions';
-import { dropOffer } from '../../store/action';
-import { selectedOffer, getAuthorizationStatus, getOffersNearby } from '../../store/selectors';
-import { AuthorizationStatus } from '../../utils/constants';
+import { dropOffer } from '../../store/slices/offer';
+import { selectedOffer, getOffersNearby, statusOffer } from '../../store/selectors';
+import { RequestStatus } from '../../utils/constants';
 import OfferGoods from './components/offer-goods';
 import ReviewsList from './components/reviews-list';
 import Map from '../../components/map';
 import OffersList from '../../components/offers-list/offers-list';
 import NotFound from '../not-found/not-found';
+import Loader from '../../components/loader/loader';
 
 function Offer (): JSX.Element {
   const { id: offerId } = useParams();
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
 
   useEffect(() => {
     if (offerId) {
@@ -32,8 +31,12 @@ function Offer (): JSX.Element {
 
   const offerById = useAppSelector(selectedOffer);
   const offersNearby = useAppSelector(getOffersNearby);
+  const statusLoading = useAppSelector(statusOffer);
 
   if (offerById === null) {
+    if(statusLoading === RequestStatus.Loading) {
+      return <Loader />;
+    }
     return <NotFound />;
   }
 
@@ -123,9 +126,7 @@ function Offer (): JSX.Element {
                 </p>
               </div>
             </div>
-            {
-              isAuth ? <ReviewsList /> : null
-            }
+            <ReviewsList />
           </div>
         </div>
         <Map isMain={false}/>

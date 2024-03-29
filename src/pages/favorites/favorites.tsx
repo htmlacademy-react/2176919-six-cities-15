@@ -1,11 +1,30 @@
 import { Helmet } from 'react-helmet-async';
-import { useAppSelector } from '../../hooks';
+import { useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { getFavoriteOffers } from '../../store/selectors';
+import { fetchFavoriteOffers } from '../../store/api-actions';
 import Footer from '../../components/footer/footer';
 import OffersList from '../../components/offers-list/offers-list';
-import { getOffersNearby } from '../../store/selectors';
+import FavoritesEmpty from './favorites-empty';
 
 function Favorites (): JSX.Element {
-  const offers = useAppSelector(getOffersNearby);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFavoriteOffers());
+  }, [dispatch]);
+
+  const offers = useAppSelector(getFavoriteOffers);
+
+  if (offers.length === 0) {
+    return (
+      <>
+        <FavoritesEmpty />
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <main className="page__main page__main--favorites">
