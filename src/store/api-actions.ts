@@ -6,7 +6,7 @@ import { OfferDetailed } from '../types/offer';
 import { OfferData } from '../types/offers';
 import { ReviewData } from '../types/reviews';
 import { saveToken, dropToken } from '../services/token';
-import { APIRoute, NameSpace } from '../utils/constants';
+import { APIRoute, NameSpace, FavoriteStatus } from '../utils/constants';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 
@@ -88,5 +88,16 @@ export const fetchFavoriteOffers = createAsyncThunk<OfferData[], undefined, Asyn
   async (_arg, {extra: api}) => {
     const {data} = await api.get<OfferData[]>(APIRoute.Favorites);
     return data;
+  },
+);
+
+export const favoriteAction = createAsyncThunk<void, {
+  offerId: string;
+  isFavorite: FavoriteStatus;
+}, AsyncThunkConfig>(
+  `${NameSpace.Favorites}/setFavorite`,
+  async (_arg, {extra: api}) => {
+    const {offerId, isFavorite} = _arg;
+    await api.post(`${APIRoute.Favorites}/${offerId}/${isFavorite}`);
   },
 );

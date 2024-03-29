@@ -12,6 +12,11 @@ enum AuthorizationStatus {
   Unknown = 'Unknown',
 }
 
+enum FavoriteStatus {
+  Add = '1',
+  Extract = '0',
+}
+
 enum SortType {
   Popular = 'Popular',
   PriceAscending = 'Price: low to high',
@@ -55,4 +60,4 @@ const PlaceCardSize = {
   }
 };
 
-export {AppRoute, AuthorizationStatus, RequestStatus, SortType, APIRoute, NameSpace, PlaceCardSize};
+export {AppRoute, AuthorizationStatus, FavoriteStatus, RequestStatus, SortType, APIRoute, NameSpace, PlaceCardSize};
