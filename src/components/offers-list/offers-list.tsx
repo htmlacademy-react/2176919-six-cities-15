@@ -1,4 +1,5 @@
 import { OfferData } from '../../types/offers';
+import { memo } from 'react';
 import PlaceCard from '../place-card/place-card';
 import classNames from 'classnames';
 
@@ -8,7 +9,7 @@ type OffersListProps = {
   onListItemHover?: (listItemId: string) => void;
 }
 
-function OffersList({offers, variant, onListItemHover}: OffersListProps): JSX.Element {
+function OffersCatalog({offers, variant, onListItemHover}: OffersListProps): JSX.Element {
   const isVertical = variant === 'vertical';
 
   return (
@@ -33,4 +34,5 @@ function OffersList({offers, variant, onListItemHover}: OffersListProps): JSX.El
   );
 }
 
+const OffersList = memo(OffersCatalog);
 export default OffersList;
