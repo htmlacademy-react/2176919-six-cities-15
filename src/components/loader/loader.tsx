@@ -3,8 +3,8 @@ function Loader(): JSX.Element {
     <svg style={{width: '5%', margin: '47vh 47vw'}} version="1.1" id="L3" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
       viewBox="0 0 100 100" enableBackground="new 0 0 0 0" xmlSpace="preserve"
     >
-      <circle fill="none" stroke="#a510b0" strokeWidth="4" cx="50" cy="50" r="44" style={{ opacity: 0.5 }}/>
-      <circle fill="#a510b0" stroke="#e74c3c" strokeWidth="3" cx="8" cy="54" r="6" >
+      <circle fill="none" stroke="#4481c3" strokeWidth="4" cx="50" cy="50" r="44" style={{ opacity: 0.5 }}/>
+      <circle fill="#4481c3" stroke="#000000" strokeWidth="3" cx="8" cy="54" r="6" >
         <animateTransform
           attributeName="transform"
           dur="2s"

@@ -4,8 +4,8 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 import { getFavoriteOffers } from '../../store/selectors';
 import { fetchFavoriteOffers } from '../../store/api-actions';
 import Footer from '../../components/footer/footer';
-import OffersList from '../../components/offers-list/offers-list';
 import FavoritesEmpty from './favorites-empty';
+import FavoritesListItem from './components/favorites-list-item';
 
 function Favorites (): JSX.Element {
   const dispatch = useAppDispatch();
@@ -35,16 +35,9 @@ function Favorites (): JSX.Element {
             </Helmet>
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Amsterdam</span>
-                    </a>
-                  </div>
-                </div>
-                {<OffersList offers={offers} variant={'horizontal'} />}
-              </li>
+              {
+                offers.map((item) => <FavoritesListItem title={item.city} key={item.city} offers={item.offers}/>)
+              }
             </ul>
           </section>
         </div>

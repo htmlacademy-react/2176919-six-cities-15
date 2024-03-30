@@ -3,6 +3,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { State } from '../types/state';
 import { sortReview } from '../utils/sorting';
 import { NameSpace } from '../utils/constants';
+import { favoritesByCity } from '../utils/filtration';
 
 export const selectedCitySelector = (state: State) => state[NameSpace.Offers].city;
 
@@ -60,4 +61,7 @@ export const getSortedReviews = createSelector(
 
 export const setError = (state: State) => state[NameSpace.Offers].error;
 
-export const getFavoriteOffers = (state: State) => state[NameSpace.Favorites].offersFavorite;
+export const getFavoriteOffers = createSelector(
+  (state: State) => state[NameSpace.Favorites].offersFavorite,
+  (offers) => favoritesByCity(offers)
+);
