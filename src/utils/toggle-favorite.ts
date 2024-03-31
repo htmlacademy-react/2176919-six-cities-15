@@ -21,5 +21,4 @@ export const toggleFavorite = (state: FavoritesSlice, offer: FavoriteOfferDetail
     };
     state.offersFavorite.push(newFavoriteOffer);
   }
-  state.favoriteOffer = {};
 };

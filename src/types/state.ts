@@ -34,7 +34,6 @@ export type OfferSlice = {
 export type FavoritesSlice = {
   offersFavorite: OfferData[];
   status: RequestStatus;
-  favoriteOffer: FavoriteOfferDetailed;
 }
 
 

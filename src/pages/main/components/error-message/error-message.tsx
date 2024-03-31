@@ -1,5 +1,4 @@
 import { useAppSelector, useAppDispatch } from '../../../../hooks';
-import './error-message.css';
 import { setError } from '../../../../store/selectors';
 import { fetchOffersAction } from '../../../../store/api-actions';
 

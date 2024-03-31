@@ -8,7 +8,6 @@ import { toggleFavorite } from '../../utils/toggle-favorite';
 const initialState: FavoritesSlice = {
   offersFavorite: [],
   status: RequestStatus.Idle,
-  favoriteOffer: {},
 };
 
 export const favoritesSlice = createSlice({
@@ -32,7 +31,6 @@ export const favoritesSlice = createSlice({
       })
       .addCase(favoriteAction.fulfilled, (state, action) => {
         state.status = RequestStatus.Success;
-        //state.favoriteOffer = action.payload;
         toggleFavorite(state, action.payload);
       })
       .addCase(favoriteAction.rejected, (state) => {
