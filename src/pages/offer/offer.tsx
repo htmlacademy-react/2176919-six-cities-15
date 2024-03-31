@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchSelectOffer, fetchOffersNearby, fetchReviews, favoriteAction } from '../../store/api-actions';
 import { getFavoritesAll, getAuthorizationStatus } from '../../store/selectors';
@@ -49,7 +49,7 @@ function Offer (): JSX.Element {
     };
   }, [offerId, dispatch]);
 
-  const handleFavorite = useCallback(() => {
+  const handleFavorite = () => {
     const checkingFavorites = (idOffer: string, offers: FavoriteOffer[]) => {
       const selectedOffers = offers.filter((item) => item.id === idOffer);
       if(selectedOffers.length !== 0) {
@@ -64,7 +64,7 @@ function Offer (): JSX.Element {
     } else {
       navigate(AppRoute.Login);
     }
-  }, [dispatch, offerId, authorizationStatus, navigate, favoritesOffers]);
+  };
 
   const offerById = useAppSelector(selectedOffer);
   const offersNearby = useAppSelector(getOffersNearby);

@@ -24,9 +24,6 @@ export const offersSlice = createSlice({
     setSorting: (state, action: PayloadAction<Sorting>) => {
       state.sorting = action.payload;
     },
-    setError: (state, action: PayloadAction<string | null>) => {
-      state.error = action.payload;
-    },
   },
   extraReducers(builder) {
     builder
@@ -39,8 +36,9 @@ export const offersSlice = createSlice({
       })
       .addCase(fetchOffersAction.rejected, (state) => {
         state.offersLoadingStatus = RequestStatus.Error;
+        state.error = 'Error receiving offers';
       });
   }
 });
 
-export const {setCity, setSorting, setError} = offersSlice.actions;
+export const {setCity, setSorting} = offersSlice.actions;
