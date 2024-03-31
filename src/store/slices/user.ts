@@ -4,6 +4,7 @@ import { UserSlice } from '../../types/state';
 import { checkAuthAction, loginAction, logoutAction } from '../api-actions';
 
 const initialState: UserSlice = {
+  user: {email: '', avatarUrl: ''},
   authorizationStatus: AuthorizationStatus.Unknown,
   loginLoadingStatus: RequestStatus.Idle,
 };
@@ -23,9 +24,10 @@ export const userSlice = createSlice({
       .addCase(loginAction.pending, (state) => {
         state.loginLoadingStatus = RequestStatus.Loading;
       })
-      .addCase(loginAction.fulfilled, (state) => {
+      .addCase(loginAction.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
         state.loginLoadingStatus = RequestStatus.Success;
+        state.user = action.payload;
       })
       .addCase(loginAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
