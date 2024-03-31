@@ -7,7 +7,6 @@ import { OfferDetailed } from './offer';
 import { ReviewData } from './reviews';
 import { OfferNearby } from './offers-nearby';
 import { RequestStatus } from '../utils/constants';
-import { FavoriteOfferDetailed } from './favorite-offer';
 import { User } from './user-data';
 
 export type UserSlice = {
