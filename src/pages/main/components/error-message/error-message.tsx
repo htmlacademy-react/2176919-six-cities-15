@@ -8,7 +8,8 @@ function ErrorMessage(): JSX.Element | null {
   const error = useAppSelector(setError);
 
   return (error)
-    ? <div style={{margin: '47vh 30vw'}}>
+    ?
+    <div style={{margin: '47vh 30vw'}}>
       <b style={{display:'block', marginBottom: '15px',fontSize:'32px'}}>{error}</b>
       <button onClick={() => {
         dispatch(fetchOffersAction());
