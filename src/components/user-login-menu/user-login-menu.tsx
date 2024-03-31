@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { getAuthorizationStatus } from '../../store/selectors';
+import { getAuthorizationStatus, getFavoritesQuantity } from '../../store/selectors';
 import { AppRoute, AuthorizationStatus } from '../../utils/constants';
 import { logoutAction } from '../../store/api-actions';
 
@@ -8,6 +8,7 @@ import { logoutAction } from '../../store/api-actions';
 function UserLoginMenu(): JSX.Element {
   const dispatch = useAppDispatch();
   const authorized = useAppSelector(getAuthorizationStatus);
+  const favoritesQuantity = useAppSelector(getFavoritesQuantity);
   const {pathname} = useLocation();
   if (pathname as AppRoute === AppRoute.Login) {
     return (
@@ -24,7 +25,7 @@ function UserLoginMenu(): JSX.Element {
               <div className="header__avatar-wrapper user__avatar-wrapper">
               </div>
               <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-              <span className="header__favorite-count">3</span>
+              <span className="header__favorite-count">{favoritesQuantity}</span>
             </Link>
           </li>
           <li className="header__nav-item">

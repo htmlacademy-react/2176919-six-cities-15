@@ -6,7 +6,8 @@ import { Sorting } from '../pages/main/components/places-options';
 import { OfferDetailed } from './offer';
 import { ReviewData } from './reviews';
 import { OfferNearby } from './offers-nearby';
-import { RequestStatus, FavoriteStatus } from '../utils/constants';
+import { RequestStatus } from '../utils/constants';
+import { FavoriteOfferDetailed } from './favorite-offer';
 
 export type UserSlice = {
   authorizationStatus: AuthorizationStatus;
@@ -31,6 +32,7 @@ export type OfferSlice = {
 export type FavoritesSlice = {
   offersFavorite: OfferData[];
   status: RequestStatus;
+  favoriteOffer: FavoriteOfferDetailed;
 }
 
 

@@ -2,11 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../utils/constants';
 import { FavoritesSlice } from '../../types/state';
 import { fetchFavoriteOffers, favoriteAction } from '../api-actions';
-import { RequestStatus, FavoriteStatus } from '../../utils/constants';
+import { RequestStatus } from '../../utils/constants';
+import { toggleFavorite } from '../../utils/toggle-favorite';
 
 const initialState: FavoritesSlice = {
   offersFavorite: [],
   status: RequestStatus.Idle,
+  favoriteOffer: {},
 };
 
 export const favoritesSlice = createSlice({
@@ -28,8 +30,10 @@ export const favoritesSlice = createSlice({
       .addCase(favoriteAction.pending, (state) => {
         state.status = RequestStatus.Loading;
       })
-      .addCase(favoriteAction.fulfilled, (state) => {
+      .addCase(favoriteAction.fulfilled, (state, action) => {
         state.status = RequestStatus.Success;
+        //state.favoriteOffer = action.payload;
+        toggleFavorite(state, action.payload);
       })
       .addCase(favoriteAction.rejected, (state) => {
         state.status = RequestStatus.Error;

@@ -65,3 +65,10 @@ export const getFavoriteOffers = createSelector(
   (state: State) => state[NameSpace.Favorites].offersFavorite,
   (offers) => favoritesByCity(offers)
 );
+
+export const getFavoritesAll = (state: State) => state[NameSpace.Favorites].offersFavorite;
+
+export const getFavoritesQuantity = createSelector(
+  (state: State) => state[NameSpace.Favorites].offersFavorite,
+  (favorite) => favorite.length
+);

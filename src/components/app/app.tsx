@@ -3,7 +3,7 @@ import {HelmetProvider} from 'react-helmet-async';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { AppRoute, AuthorizationStatus, RequestStatus } from '../../utils/constants';
 import { getAuthorizationStatus, getIsOffersDataLoading } from '../../store/selectors';
-import { checkAuthAction, fetchOffersAction } from '../../store/api-actions';
+import { checkAuthAction, fetchOffersAction, fetchFavoriteOffers } from '../../store/api-actions';
 import { useEffect } from 'react';
 import Main from '../../pages/main/main';
 import Favorites from '../../pages/favorites/favorites';
@@ -23,6 +23,7 @@ function App(): JSX.Element {
   useEffect(() => {
     dispatch(checkAuthAction());
     dispatch(fetchOffersAction());
+    dispatch(fetchFavoriteOffers());
   }, [dispatch]);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {

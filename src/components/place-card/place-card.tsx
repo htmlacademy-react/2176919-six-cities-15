@@ -4,7 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { memo, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { favoriteAction } from '../../store/api-actions';
-import { getAuthorizationStatus } from '../../store/selectors';
+import { getAuthorizationStatus, getFavoritesAll } from '../../store/selectors';
+import { FavoriteOffer } from '../../types/favorite-offer';
 import classNames from 'classnames';
 import Premium from './components/premium';
 import BookmarkButton from './components/bookmark-button';
@@ -35,14 +36,22 @@ function Card({offer, variant, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.
   const {cardWidth, cardHeight} = getPlaceCardState(variant);
   const isVertical = variant === 'vertical';
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const favoritesOffers = useAppSelector(getFavoritesAll);
 
   const handleFavorite = useCallback(() => {
+    const checkingFavorites = (idOffer: string, offers: FavoriteOffer[]) => {
+      const selectedOffers = offers.filter((item) => item.id === idOffer);
+      if(selectedOffers.length !== 0) {
+        return FavoriteStatus.Extract;
+      }
+      return FavoriteStatus.Add;
+    };
     if (authorizationStatus === AuthorizationStatus.Auth) {
-      dispatch(favoriteAction({offerId:id, isFavorite:FavoriteStatus.Add}));
+      dispatch(favoriteAction({offerId:id, isFavorite: checkingFavorites(id, favoritesOffers)}));
     } else {
       navigate(AppRoute.Login);
     }
-  }, [dispatch, id, authorizationStatus, navigate]);
+  }, [dispatch, id, authorizationStatus, navigate, favoritesOffers]);
 
   return (
     <article className={classNames(
