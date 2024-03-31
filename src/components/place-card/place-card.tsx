@@ -1,7 +1,7 @@
 import { OfferData } from '../../types/offers';
 import { FavoriteStatus, PlaceCardSize, AuthorizationStatus, AppRoute } from '../../utils/constants';
 import { Link, useNavigate } from 'react-router-dom';
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { favoriteAction } from '../../store/api-actions';
 import { getAuthorizationStatus, getFavoritesAll } from '../../store/selectors';
@@ -30,6 +30,7 @@ const getPlaceCardState = (variant = 'vertical') => {
 };
 
 function Card({offer, variant, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.Element {
+  const [isFavorite, setIsFavorite] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {title, isPremium, price, type, previewImage, rating, id} = offer;
@@ -38,12 +39,27 @@ function Card({offer, variant, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const favoritesOffers = useAppSelector(getFavoritesAll);
 
+  useEffect(() => {
+    const initialFavoriteStatus = (idOffer: string, offers: FavoriteOffer[]) => {
+      const selectedOffers = offers.filter((item) => item.id === idOffer);
+      if(selectedOffers.length !== 0) {
+        setIsFavorite(true);
+      }
+    };
+
+    if (favoritesOffers && id) {
+      initialFavoriteStatus(id, favoritesOffers);
+    }
+  }, [favoritesOffers, id]);
+
   const handleFavorite = useCallback(() => {
     const checkingFavorites = (idOffer: string, offers: FavoriteOffer[]) => {
       const selectedOffers = offers.filter((item) => item.id === idOffer);
       if(selectedOffers.length !== 0) {
+        setIsFavorite(false);
         return FavoriteStatus.Extract;
       }
+      setIsFavorite(true);
       return FavoriteStatus.Add;
     };
     if (authorizationStatus === AuthorizationStatus.Auth) {
@@ -82,7 +98,7 @@ function Card({offer, variant, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <BookmarkButton onChange={handleFavorite}/>
+          <BookmarkButton isFavorite={isFavorite} onChange={handleFavorite}/>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

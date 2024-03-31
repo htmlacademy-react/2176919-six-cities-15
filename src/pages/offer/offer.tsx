@@ -1,11 +1,14 @@
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchSelectOffer, fetchOffersNearby, fetchReviews } from '../../store/api-actions';
+import { fetchSelectOffer, fetchOffersNearby, fetchReviews, favoriteAction } from '../../store/api-actions';
+import { getFavoritesAll, getAuthorizationStatus } from '../../store/selectors';
 import { dropOffer } from '../../store/slices/offer';
 import { selectedOffer, getOffersNearby, statusOffer } from '../../store/selectors';
-import { RequestStatus } from '../../utils/constants';
+import { RequestStatus, FavoriteStatus, AuthorizationStatus, AppRoute } from '../../utils/constants';
+import { FavoriteOffer } from '../../types/favorite-offer';
+import classNames from 'classnames';
 import OfferGoods from './components/offer-goods';
 import ReviewsList from './components/reviews-list';
 import Map from '../../components/map';
@@ -16,6 +19,23 @@ import Loader from '../../components/loader/loader';
 function Offer (): JSX.Element {
   const { id: offerId } = useParams();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const favoritesOffers = useAppSelector(getFavoritesAll);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    const initialFavoriteStatus = (idOffer: string, offers: FavoriteOffer[]) => {
+      const selectedOffers = offers.filter((item) => item.id === idOffer);
+      if(selectedOffers.length !== 0) {
+        setIsFavorite(true);
+      }
+    };
+
+    if (favoritesOffers && offerId) {
+      initialFavoriteStatus(offerId, favoritesOffers);
+    }
+  }, [favoritesOffers, offerId]);
 
   useEffect(() => {
     if (offerId) {
@@ -28,6 +48,23 @@ function Offer (): JSX.Element {
       dispatch(dropOffer());
     };
   }, [offerId, dispatch]);
+
+  const handleFavorite = useCallback(() => {
+    const checkingFavorites = (idOffer: string, offers: FavoriteOffer[]) => {
+      const selectedOffers = offers.filter((item) => item.id === idOffer);
+      if(selectedOffers.length !== 0) {
+        setIsFavorite(false);
+        return FavoriteStatus.Extract;
+      }
+      setIsFavorite(true);
+      return FavoriteStatus.Add;
+    };
+    if (authorizationStatus === AuthorizationStatus.Auth && offerId) {
+      dispatch(favoriteAction({offerId: offerId, isFavorite: checkingFavorites(offerId, favoritesOffers)}));
+    } else {
+      navigate(AppRoute.Login);
+    }
+  }, [dispatch, offerId, authorizationStatus, navigate, favoritesOffers]);
 
   const offerById = useAppSelector(selectedOffer);
   const offersNearby = useAppSelector(getOffersNearby);
@@ -68,7 +105,11 @@ function Offer (): JSX.Element {
               <h1 className="offer__name">
                 {offerById?.title}
               </h1>
-              <button className="offer__bookmark-button button" type="button">
+              <button className={classNames(
+                'offer__bookmark-button button',
+                {'offer__bookmark-button--active' : isFavorite}
+              )} type="button" onClick={handleFavorite}
+              >
                 <svg className="offer__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark"></use>
                 </svg>
