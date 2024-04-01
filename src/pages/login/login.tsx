@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AppRoute, AuthorizationStatus } from '../../utils/constants';
 import { getAuthorizationStatus } from '../../store/selectors';
+import { toast } from 'react-toastify';
 
 function Login (): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -12,6 +13,7 @@ function Login (): JSX.Element {
   const auth = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const validatePassword = (password: string) => password.match(/^(?=.*[A-Za-z])(?=.*\d).+$/);
 
   useEffect(()=> {
     if (auth === AuthorizationStatus.Auth) {
@@ -23,6 +25,9 @@ function Login (): JSX.Element {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
+      if (!validatePassword(passwordRef.current.value)) {
+        return toast.warning('Password not valid, should contain at least one digit and one character');
+      }
       dispatch(loginAction({
         login: loginRef.current.value,
         password: passwordRef.current.value
