@@ -20,7 +20,6 @@ export type OffersSlice = {
   sorting: Sorting;
   offers: OfferData[];
   offersLoadingStatus: RequestStatus;
-  error: string | null;
 }
 
 export type OfferSlice = {

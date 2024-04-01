@@ -11,7 +11,6 @@ const initialState: OffersSlice = {
   sorting: 'Popular',
   offers: [],
   offersLoadingStatus: RequestStatus.Idle,
-  error: null,
 };
 
 export const offersSlice = createSlice({
@@ -36,7 +35,6 @@ export const offersSlice = createSlice({
       })
       .addCase(fetchOffersAction.rejected, (state) => {
         state.offersLoadingStatus = RequestStatus.Error;
-        state.error = 'Error receiving offers';
       });
   }
 });
