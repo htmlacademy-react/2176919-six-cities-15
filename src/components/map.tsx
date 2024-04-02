@@ -7,8 +7,6 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import classNames from 'classnames';
 
-const OFFERS_NEARBY_COUNT = 3;
-
 export type Point = {
   id: string;
   latitude: number;
@@ -43,7 +41,7 @@ function Map(props: MapProps): JSX.Element {
   const pointSelectedByOffer = useAppSelector(pointSelected);
 
   if (!isMain && offersNearby) {
-    points = offersNearby.map((item) => ({id: item.id, latitude: item.location.latitude, longitude: item.location.longitude, zoom: item.location.zoom})).slice(0, OFFERS_NEARBY_COUNT);
+    points = offersNearby.map((item) => ({id: item.id, latitude: item.location.latitude, longitude: item.location.longitude, zoom: item.location.zoom}));
   }
 
   const mapRef = useRef(null);

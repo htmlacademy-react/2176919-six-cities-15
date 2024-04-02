@@ -5,6 +5,8 @@ import { sortReview } from '../utils/sorting';
 import { NameSpace } from '../utils/constants';
 import { favoritesByCity } from '../utils/filtration';
 
+const OFFERS_NEARBY_COUNT = 3;
+
 export const selectedCitySelector = (state: State) => state[NameSpace.Offers].city;
 
 export const selectSorting = (state: State) => state[NameSpace.Offers].sorting;
@@ -52,7 +54,9 @@ export const pointSelected = createSelector(
   (offer) => ({id: offer?.id, latitude: offer?.location.latitude, longitude: offer?.location.longitude, zoom: offer?.location.zoom})
 );
 
-export const getOffersNearby = (state: State) => state[NameSpace.Offer].offersNearby;
+export const getOffersNearby = createSelector(
+  (state: State) => state[NameSpace.Offer].offersNearby,
+  (offers) => offers.slice(0, OFFERS_NEARBY_COUNT));
 
 export const getReviews = (state: State) => state[NameSpace.Offer].reviews;
 

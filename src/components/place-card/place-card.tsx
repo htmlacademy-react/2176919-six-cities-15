@@ -16,6 +16,7 @@ type PlaceCardProp = {
   variant: 'vertical' | 'horizontal';
   onMouseEnter(): void;
   onMouseLeave(): void;
+  isNearby?: boolean;
 };
 
 const getPlaceCardState = (variant = 'vertical') => {
@@ -29,7 +30,7 @@ const getPlaceCardState = (variant = 'vertical') => {
   return {cardWidth, cardHeight};
 };
 
-function Card({offer, variant, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.Element {
+function Card({offer, variant, onMouseEnter, onMouseLeave, isNearby}: PlaceCardProp): JSX.Element {
   const [isFavorite, setIsFavorite] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -73,7 +74,8 @@ function Card({offer, variant, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.
     <article className={classNames(
       'place-card',
       {'cities__card': isVertical},
-      {'favorites__card': !isVertical}
+      {'favorites__card': !isVertical},
+      {'near-places__card': isNearby}
     )} onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
     >
@@ -81,7 +83,8 @@ function Card({offer, variant, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.
       <div className={classNames(
         'place-card__image-wrapper',
         {'cities__image-wrapper': isVertical},
-        {'favorites__image-wrapper': !isVertical}
+        {'favorites__image-wrapper': !isVertical},
+        {'near-places__image-wrapper': isNearby}
       )}
       >
         <Link to={`/offer/${id}`}>

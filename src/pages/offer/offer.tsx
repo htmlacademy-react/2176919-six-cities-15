@@ -16,6 +16,8 @@ import OffersList from '../../components/offers-list/offers-list';
 import NotFound from '../not-found/not-found';
 import Loader from '../../components/loader/loader';
 
+const OFFER_IMAGE_COUNT = 6;
+
 function Offer (): JSX.Element {
   const { id: offerId } = useParams();
   const dispatch = useAppDispatch();
@@ -89,7 +91,7 @@ function Offer (): JSX.Element {
               <div className="offer__image-wrapper" key={image}>
                 <img className="offer__image" src={image} alt={`Photo ${offerById?.type}`}/>
               </div>)
-            )}
+            ).slice(0, OFFER_IMAGE_COUNT)}
           </div>
         </div>
         <div className="offer__container container">
@@ -118,7 +120,7 @@ function Offer (): JSX.Element {
             </div>
             <div className="offer__rating rating">
               <div className="offer__stars rating__stars">
-                <span style={{width: '80%'}}></span>
+                <span style={{width: `${Math.round(offerById.rating) * 20}%`}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
               <span className="offer__rating-value rating__value">{offerById?.rating}</span>
@@ -175,7 +177,7 @@ function Offer (): JSX.Element {
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <OffersList offers={offersNearby} variant={'vertical'}/>
+          <OffersList offers={offersNearby} variant={'vertical'} isNearby/>
         </section>
       </div>
     </main>
