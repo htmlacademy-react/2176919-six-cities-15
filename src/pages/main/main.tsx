@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { useState, useCallback } from 'react';
+import pluralize from 'pluralize';
 import { Point } from '../../components/map';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import { selectedCitySelector, sortedOffersSelector, pointsOffersByCity, selectSorting} from '../../store/selectors';
@@ -65,7 +66,7 @@ function Main(): JSX.Element {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{selectedOffers.length} places to stay in {selectedCity}</b>
+                <b className="places__found">{selectedOffers.length} {pluralize('places', selectedOffers.length)} to stay in {selectedCity}</b>
                 <PlacesOptions
                   sorting={sorting}
                   onChange={handleSorting}
