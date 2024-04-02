@@ -73,7 +73,7 @@ export const fetchReviews = createAsyncThunk<ReviewData[], { offerId: string }, 
   },
 );
 
-export const reviewAction = createAsyncThunk<void, {
+export const reviewAction = createAsyncThunk<ReviewData, {
     offerId: string;
     comment: string;
     rating: number;
@@ -81,7 +81,8 @@ export const reviewAction = createAsyncThunk<void, {
     `${NameSpace.Offer}/sendingReview`,
     async (_arg, {extra: api}) => {
       const {offerId, comment, rating} = _arg;
-      await api.post(`${APIRoute.Reviews}/${offerId}`, {comment, rating});
+      const {data} = await api.post<ReviewData>(`${APIRoute.Reviews}/${offerId}`, {comment, rating});
+      return data;
     },
   );
 

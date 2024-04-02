@@ -56,8 +56,9 @@ export const offerSlice = createSlice({
       .addCase(reviewAction.pending, (state) => {
         state.status = RequestStatus.Loading;
       })
-      .addCase(reviewAction.fulfilled, (state) => {
+      .addCase(reviewAction.fulfilled, (state, action) => {
         state.status = RequestStatus.Success;
+        state.reviews.push(action.payload);
         toast.success('Your review successfully added');
       })
       .addCase(reviewAction.rejected, (state) => {
