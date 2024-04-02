@@ -65,8 +65,6 @@ export const getSortedReviews = createSelector(
   (reviews) => sortReview(reviews)
 );
 
-export const setError = (state: State) => state[NameSpace.Offers].error;
-
 export const getFavoriteOffers = createSelector(
   (state: State) => state[NameSpace.Favorites].offersFavorite,
   (offers) => favoritesByCity(offers)

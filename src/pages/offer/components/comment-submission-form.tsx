@@ -1,7 +1,9 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { useAppDispatch } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { useParams } from 'react-router-dom';
 import { reviewAction } from '../../../store/api-actions';
+import { statusOffer } from '../../../store/selectors';
+import { RequestStatus } from '../../../utils/constants';
 import ReviewStar from './review-star';
 
 const COUNTDOWN_STARS = [5, 4, 3, 2, 1];
@@ -13,6 +15,7 @@ const DEFAULT_FORM = {
 function CommentSubmissionForm(): JSX.Element {
   const { id: offerId } = useParams();
   const dispatch = useAppDispatch();
+  const dispatchStatus = useAppSelector(statusOffer);
   const [formData, setFormData] = useState(DEFAULT_FORM);
   const handleFieldChange: (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void = (evt) => {
     const { name, value } = evt.target as HTMLInputElement | HTMLTextAreaElement;
@@ -26,7 +29,9 @@ function CommentSubmissionForm(): JSX.Element {
     const rating = + formData.rating;
     if (offerId) {
       dispatch(reviewAction({offerId, comment, rating}));
-      setFormData(DEFAULT_FORM);
+      if (dispatchStatus === RequestStatus.Success) {
+        setFormData(DEFAULT_FORM);
+      }
     }
   };
 
