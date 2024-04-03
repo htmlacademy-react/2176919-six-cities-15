@@ -1,10 +1,14 @@
 import { Helmet } from 'react-helmet-async';
-import {useRef, FormEvent, useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useRef, FormEvent, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AppRoute, AuthorizationStatus } from '../../utils/constants';
 import { getAuthorizationStatus } from '../../store/selectors';
+import { toast } from 'react-toastify';
+import { getRandomArrayElement } from '../../utils/random-city';
+import { cityArray } from '../../components/cities-list/cities-list';
+import { setCity } from '../../store/slices/offers';
 
 function Login (): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -12,6 +16,8 @@ function Login (): JSX.Element {
   const auth = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const validatePassword = (password: string) => password.match(/^(?=.*[A-Za-z])(?=.*\d).+$/);
+  const city = getRandomArrayElement(cityArray);
 
   useEffect(()=> {
     if (auth === AuthorizationStatus.Auth) {
@@ -23,12 +29,17 @@ function Login (): JSX.Element {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
+      if (!validatePassword(passwordRef.current.value)) {
+        return toast.warning('Password not valid, should contain at least one digit and one character');
+      }
       dispatch(loginAction({
         login: loginRef.current.value,
         password: passwordRef.current.value
       }));
     }
-    navigate(AppRoute.Root);
+    if (auth === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Root);
+    }
   };
 
   return (
@@ -53,9 +64,13 @@ function Login (): JSX.Element {
         </section>
         <section className="locations locations--login locations--current">
           <div className="locations__item">
-            <a className="locations__item-link" href="#">
-              <span>Amsterdam</span>
-            </a>
+            <button type='button' className="locations__item-link" onClick={ () => {
+              dispatch(setCity(city));
+              navigate(AppRoute.Root);
+            }}
+            >
+              <span>{city}</span>
+            </button>
           </div>
         </section>
       </div>

@@ -6,9 +6,11 @@ import { OfferDetailed } from '../types/offer';
 import { OfferData } from '../types/offers';
 import { ReviewData } from '../types/reviews';
 import { saveToken, dropToken } from '../services/token';
-import { APIRoute, NameSpace } from '../utils/constants';
+import { APIRoute, NameSpace, FavoriteStatus } from '../utils/constants';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
+import { FavoriteOfferDetailed } from '../types/favorite-offer';
+import { saveUserData, dropUserData } from '../services/user-data';
 
 type AsyncThunkConfig = {
   dispatch: AppDispatch;
@@ -34,8 +36,9 @@ export const checkAuthAction = createAsyncThunk<void, undefined, AsyncThunkConfi
 export const loginAction = createAsyncThunk<void, AuthData, AsyncThunkConfig>(
   `${NameSpace.User}/login`,
   async ({login: email, password}, {extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
-    saveToken(token);
+    const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
+    saveToken(data.token);
+    saveUserData({email: data.email, avatarUrl: data.avatarUrl});
   },
 );
 
@@ -44,6 +47,7 @@ export const logoutAction = createAsyncThunk<void, undefined, AsyncThunkConfig>(
   async (_arg, {extra: api}) => {
     await api.delete(APIRoute.Logout);
     dropToken();
+    dropUserData();
   },
 );
 
@@ -71,7 +75,7 @@ export const fetchReviews = createAsyncThunk<ReviewData[], { offerId: string }, 
   },
 );
 
-export const reviewAction = createAsyncThunk<void, {
+export const reviewAction = createAsyncThunk<ReviewData, {
     offerId: string;
     comment: string;
     rating: number;
@@ -79,7 +83,8 @@ export const reviewAction = createAsyncThunk<void, {
     `${NameSpace.Offer}/sendingReview`,
     async (_arg, {extra: api}) => {
       const {offerId, comment, rating} = _arg;
-      await api.post(`${APIRoute.Reviews}/${offerId}`, {comment, rating});
+      const {data} = await api.post<ReviewData>(`${APIRoute.Reviews}/${offerId}`, {comment, rating});
+      return data;
     },
   );
 
@@ -87,6 +92,18 @@ export const fetchFavoriteOffers = createAsyncThunk<OfferData[], undefined, Asyn
   `${NameSpace.Favorites}/setFavoriteOffers`,
   async (_arg, {extra: api}) => {
     const {data} = await api.get<OfferData[]>(APIRoute.Favorites);
+    return data;
+  },
+);
+
+export const favoriteAction = createAsyncThunk<FavoriteOfferDetailed, {
+  offerId: string;
+  isFavorite: FavoriteStatus;
+}, AsyncThunkConfig>(
+  `${NameSpace.Favorites}/setFavorite`,
+  async (arg, {extra: api}) => {
+    const {offerId, isFavorite} = arg;
+    const {data} = await api.post<FavoriteOfferDetailed>(`${APIRoute.Favorites}/${offerId}/${isFavorite}`);
     return data;
   },
 );

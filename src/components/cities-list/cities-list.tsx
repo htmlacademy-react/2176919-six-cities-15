@@ -2,8 +2,8 @@ import Location from '../../components/cities-list/location';
 
 
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'] as const;
-
-export type City = typeof CITIES[number]
+export type City = typeof CITIES[number];
+export const cityArray: City[] = [...CITIES];
 
 type CitiesListProps = {
   isTabs: boolean;

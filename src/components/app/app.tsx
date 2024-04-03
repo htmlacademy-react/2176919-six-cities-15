@@ -3,13 +3,12 @@ import {HelmetProvider} from 'react-helmet-async';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { AppRoute, AuthorizationStatus, RequestStatus } from '../../utils/constants';
 import { getAuthorizationStatus, getIsOffersDataLoading } from '../../store/selectors';
-import { checkAuthAction, fetchOffersAction } from '../../store/api-actions';
+import { checkAuthAction, fetchOffersAction, fetchFavoriteOffers } from '../../store/api-actions';
 import { useEffect } from 'react';
 import Main from '../../pages/main/main';
 import Favorites from '../../pages/favorites/favorites';
 import Login from '../../pages/login/login';
 import NotFound from '../../pages/not-found/not-found';
-import MainEmpty from '../../pages/main/main-empty';
 import Offer from '../../pages/offer/offer';
 import PrivateRoute from '../private-route/private-route';
 import Layout from '../layout/layout';
@@ -23,13 +22,17 @@ function App(): JSX.Element {
   useEffect(() => {
     dispatch(checkAuthAction());
     dispatch(fetchOffersAction());
-  }, [dispatch]);
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoriteOffers());
+    }
+  }, [dispatch, authorizationStatus]);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return (
       <Loader />
     );
   }
+
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -59,10 +62,6 @@ function App(): JSX.Element {
             <Route
               path={AppRoute.Offer}
               element={<Offer />}
-            />
-            <Route
-              path={ `${ AppRoute.NoOffers }` }
-              element={ <MainEmpty /> }
             />
             <Route
               path="*"

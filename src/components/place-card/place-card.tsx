@@ -1,9 +1,14 @@
 import { OfferData } from '../../types/offers';
-import { PlaceCardSize } from '../../utils/constants';
-import { Link } from 'react-router-dom';
-import { memo } from 'react';
+import { FavoriteStatus, PlaceCardSize, AuthorizationStatus, AppRoute } from '../../utils/constants';
+import { Link, useNavigate } from 'react-router-dom';
+import { memo, useCallback, useState, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { favoriteAction } from '../../store/api-actions';
+import { getAuthorizationStatus, getFavoritesAll } from '../../store/selectors';
+import { FavoriteOffer } from '../../types/favorite-offer';
 import classNames from 'classnames';
 import Premium from './components/premium';
+import BookmarkButton from './components/bookmark-button';
 
 
 type PlaceCardProp = {
@@ -11,6 +16,7 @@ type PlaceCardProp = {
   variant: 'vertical' | 'horizontal';
   onMouseEnter(): void;
   onMouseLeave(): void;
+  isNearby?: boolean;
 };
 
 const getPlaceCardState = (variant = 'vertical') => {
@@ -24,15 +30,52 @@ const getPlaceCardState = (variant = 'vertical') => {
   return {cardWidth, cardHeight};
 };
 
-function Card({offer, variant, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.Element {
+function Card({offer, variant, onMouseEnter, onMouseLeave, isNearby}: PlaceCardProp): JSX.Element {
+  const [isFavorite, setIsFavorite] = useState(false);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const {title, isPremium, price, type, previewImage, rating, id} = offer;
   const {cardWidth, cardHeight} = getPlaceCardState(variant);
   const isVertical = variant === 'vertical';
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const favoritesOffers = useAppSelector(getFavoritesAll);
+
+  useEffect(() => {
+    const initialFavoriteStatus = (idOffer: string, offers: FavoriteOffer[]) => {
+      const selectedOffers = offers.filter((item) => item.id === idOffer);
+      if(selectedOffers.length !== 0) {
+        setIsFavorite(true);
+      }
+    };
+
+    if (favoritesOffers && id) {
+      initialFavoriteStatus(id, favoritesOffers);
+    }
+  }, [favoritesOffers, id]);
+
+  const handleFavorite = useCallback(() => {
+    const checkingFavorites = (idOffer: string, offers: FavoriteOffer[]) => {
+      const selectedOffers = offers.filter((item) => item.id === idOffer);
+      if(selectedOffers.length !== 0) {
+        setIsFavorite(false);
+        return FavoriteStatus.Extract;
+      }
+      setIsFavorite(true);
+      return FavoriteStatus.Add;
+    };
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(favoriteAction({offerId:id, isFavorite: checkingFavorites(id, favoritesOffers)}));
+    } else {
+      navigate(AppRoute.Login);
+    }
+  }, [dispatch, id, authorizationStatus, navigate, favoritesOffers]);
+
   return (
     <article className={classNames(
       'place-card',
       {'cities__card': isVertical},
-      {'favorites__card': !isVertical}
+      {'favorites__card': !isVertical},
+      {'near-places__card': isNearby}
     )} onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
     >
@@ -40,7 +83,8 @@ function Card({offer, variant, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.
       <div className={classNames(
         'place-card__image-wrapper',
         {'cities__image-wrapper': isVertical},
-        {'favorites__image-wrapper': !isVertical}
+        {'favorites__image-wrapper': !isVertical},
+        {'near-places__image-wrapper': isNearby}
       )}
       >
         <Link to={`/offer/${id}`}>
@@ -57,16 +101,11 @@ function Card({offer, variant, onMouseEnter, onMouseLeave}: PlaceCardProp): JSX.
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <BookmarkButton isFavorite={isFavorite} onChange={handleFavorite}/>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${rating * 20}%` }}></span>
+            <span style={{ width: `${Math.round(rating) * 20}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

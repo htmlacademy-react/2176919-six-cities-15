@@ -11,7 +11,6 @@ const initialState: OffersSlice = {
   sorting: 'Popular',
   offers: [],
   offersLoadingStatus: RequestStatus.Idle,
-  error: null,
 };
 
 export const offersSlice = createSlice({
@@ -23,9 +22,6 @@ export const offersSlice = createSlice({
     },
     setSorting: (state, action: PayloadAction<Sorting>) => {
       state.sorting = action.payload;
-    },
-    setError: (state, action: PayloadAction<string | null>) => {
-      state.error = action.payload;
     },
   },
   extraReducers(builder) {
@@ -43,4 +39,4 @@ export const offersSlice = createSlice({
   }
 });
 
-export const {setCity, setSorting, setError} = offersSlice.actions;
+export const {setCity, setSorting} = offersSlice.actions;

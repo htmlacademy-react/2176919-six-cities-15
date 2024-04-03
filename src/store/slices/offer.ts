@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../utils/constants';
 import { OfferSlice } from '../../types/state';
-import { fetchSelectOffer, fetchOffersNearby, fetchReviews } from '../api-actions';
+import { fetchSelectOffer, fetchOffersNearby, fetchReviews, reviewAction } from '../api-actions';
 import { RequestStatus } from '../../utils/constants';
 
 const initialState: OfferSlice = {
@@ -29,6 +29,9 @@ export const offerSlice = createSlice({
         state.offer = action.payload;
         state.status = RequestStatus.Success;
       })
+      .addCase(fetchSelectOffer.rejected, (state) => {
+        state.status = RequestStatus.Error;
+      })
       .addCase(fetchOffersNearby.pending, (state) => {
         state.status = RequestStatus.Loading;
       })
@@ -36,12 +39,28 @@ export const offerSlice = createSlice({
         state.offersNearby = action.payload;
         state.status = RequestStatus.Success;
       })
+      .addCase(fetchOffersNearby.rejected, (state) => {
+        state.status = RequestStatus.Error;
+      })
       .addCase(fetchReviews.pending, (state) => {
         state.status = RequestStatus.Loading;
       })
       .addCase(fetchReviews.fulfilled, (state, action) => {
         state.reviews = action.payload;
         state.status = RequestStatus.Success;
+      })
+      .addCase(fetchReviews.rejected, (state) => {
+        state.status = RequestStatus.Error;
+      })
+      .addCase(reviewAction.pending, (state) => {
+        state.status = RequestStatus.Loading;
+      })
+      .addCase(reviewAction.fulfilled, (state, action) => {
+        state.status = RequestStatus.Success;
+        state.reviews.push(action.payload);
+      })
+      .addCase(reviewAction.rejected, (state) => {
+        state.status = RequestStatus.Error;
       });
   }
 });

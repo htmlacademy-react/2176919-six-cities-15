@@ -3,13 +3,17 @@ enum AppRoute {
   Login='/login',
   Favorites='/favorites',
   Offer='/offer/:id',
-  NoOffers = '/no-offers'
 }
 
 enum AuthorizationStatus {
   Auth = 'Auth',
   NoAuth = 'NoAuth',
   Unknown = 'Unknown',
+}
+
+enum FavoriteStatus {
+  Add = '1',
+  Extract = '0',
 }
 
 enum SortType {
@@ -55,4 +59,6 @@ const PlaceCardSize = {
   }
 };
 
-export {AppRoute, AuthorizationStatus, RequestStatus, SortType, APIRoute, NameSpace, PlaceCardSize};
+const ReviewStatus = ['null', 'terribly', 'badly', 'not bad', 'good', 'perfect'];
+
+export {AppRoute, ReviewStatus, AuthorizationStatus, FavoriteStatus, RequestStatus, SortType, APIRoute, NameSpace, PlaceCardSize};

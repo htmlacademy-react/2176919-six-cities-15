@@ -18,7 +18,6 @@ export type OffersSlice = {
   sorting: Sorting;
   offers: OfferData[];
   offersLoadingStatus: RequestStatus;
-  error: string | null;
 }
 
 export type OfferSlice = {
@@ -30,7 +29,6 @@ export type OfferSlice = {
 
 export type FavoritesSlice = {
   offersFavorite: OfferData[];
-  offersFavoriteLoadingStatus: RequestStatus;
   status: RequestStatus;
 }
 

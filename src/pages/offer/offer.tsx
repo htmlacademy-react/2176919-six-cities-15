@@ -1,11 +1,14 @@
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchSelectOffer, fetchOffersNearby, fetchReviews } from '../../store/api-actions';
+import { fetchSelectOffer, fetchOffersNearby, fetchReviews, favoriteAction } from '../../store/api-actions';
+import { getFavoritesAll, getAuthorizationStatus } from '../../store/selectors';
 import { dropOffer } from '../../store/slices/offer';
 import { selectedOffer, getOffersNearby, statusOffer } from '../../store/selectors';
-import { RequestStatus } from '../../utils/constants';
+import { RequestStatus, FavoriteStatus, AuthorizationStatus, AppRoute } from '../../utils/constants';
+import { FavoriteOffer } from '../../types/favorite-offer';
+import classNames from 'classnames';
 import OfferGoods from './components/offer-goods';
 import ReviewsList from './components/reviews-list';
 import Map from '../../components/map';
@@ -13,9 +16,28 @@ import OffersList from '../../components/offers-list/offers-list';
 import NotFound from '../not-found/not-found';
 import Loader from '../../components/loader/loader';
 
+const OFFER_IMAGE_COUNT = 6;
+
 function Offer (): JSX.Element {
   const { id: offerId } = useParams();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const favoritesOffers = useAppSelector(getFavoritesAll);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    const initialFavoriteStatus = (idOffer: string, offers: FavoriteOffer[]) => {
+      const selectedOffers = offers.filter((item) => item.id === idOffer);
+      if(selectedOffers.length !== 0) {
+        setIsFavorite(true);
+      }
+    };
+
+    if (favoritesOffers && offerId) {
+      initialFavoriteStatus(offerId, favoritesOffers);
+    }
+  }, [favoritesOffers, offerId]);
 
   useEffect(() => {
     if (offerId) {
@@ -28,6 +50,23 @@ function Offer (): JSX.Element {
       dispatch(dropOffer());
     };
   }, [offerId, dispatch]);
+
+  const handleFavorite = () => {
+    const checkingFavorites = (idOffer: string, offers: FavoriteOffer[]) => {
+      const selectedOffers = offers.filter((item) => item.id === idOffer);
+      if(selectedOffers.length !== 0) {
+        setIsFavorite(false);
+        return FavoriteStatus.Extract;
+      }
+      setIsFavorite(true);
+      return FavoriteStatus.Add;
+    };
+    if (authorizationStatus === AuthorizationStatus.Auth && offerId) {
+      dispatch(favoriteAction({offerId: offerId, isFavorite: checkingFavorites(offerId, favoritesOffers)}));
+    } else {
+      navigate(AppRoute.Login);
+    }
+  };
 
   const offerById = useAppSelector(selectedOffer);
   const offersNearby = useAppSelector(getOffersNearby);
@@ -52,7 +91,7 @@ function Offer (): JSX.Element {
               <div className="offer__image-wrapper" key={image}>
                 <img className="offer__image" src={image} alt={`Photo ${offerById?.type}`}/>
               </div>)
-            )}
+            ).slice(0, OFFER_IMAGE_COUNT)}
           </div>
         </div>
         <div className="offer__container container">
@@ -68,7 +107,11 @@ function Offer (): JSX.Element {
               <h1 className="offer__name">
                 {offerById?.title}
               </h1>
-              <button className="offer__bookmark-button button" type="button">
+              <button className={classNames(
+                'offer__bookmark-button button',
+                {'offer__bookmark-button--active' : isFavorite}
+              )} type="button" onClick={handleFavorite}
+              >
                 <svg className="offer__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark"></use>
                 </svg>
@@ -77,7 +120,7 @@ function Offer (): JSX.Element {
             </div>
             <div className="offer__rating rating">
               <div className="offer__stars rating__stars">
-                <span style={{width: '80%'}}></span>
+                <span style={{width: `${Math.round(offerById.rating) * 20}%`}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
               <span className="offer__rating-value rating__value">{offerById?.rating}</span>
@@ -106,7 +149,10 @@ function Offer (): JSX.Element {
             <div className="offer__host">
               <h2 className="offer__host-title">Meet the host</h2>
               <div className="offer__host-user user">
-                <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                <div className={classNames(
+                  'offer__avatar-wrapper user__avatar-wrapper',
+                  {'offer__avatar-wrapper--pro' : offerById?.host.isPro})}
+                >
                   <img className="offer__avatar user__avatar" src={offerById?.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                 </div>
                 <span className="offer__user-name">
@@ -134,7 +180,7 @@ function Offer (): JSX.Element {
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <OffersList offers={offersNearby} variant={'vertical'}/>
+          <OffersList offers={offersNearby} variant={'vertical'} isNearby/>
         </section>
       </div>
     </main>

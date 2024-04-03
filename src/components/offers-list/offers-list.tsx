@@ -7,16 +7,18 @@ type OffersListProps = {
   offers: OfferData[];
   variant: 'vertical' | 'horizontal';
   onListItemHover?: (listItemId: string) => void;
+  isNearby?: boolean;
 }
 
-function OffersCatalog({offers, variant, onListItemHover}: OffersListProps): JSX.Element {
+function OffersCatalog({offers, variant, onListItemHover, isNearby}: OffersListProps): JSX.Element {
   const isVertical = variant === 'vertical';
 
   return (
     <div className={classNames(
       '',
       {'cities__places-list places__list tabs__content': isVertical},
-      {'favorites__places': !isVertical}
+      {'favorites__places': !isVertical},
+      {'near-places__list places__list': isNearby}
     )}
     >
       {
@@ -27,6 +29,7 @@ function OffersCatalog({offers, variant, onListItemHover}: OffersListProps): JSX
             key={offer.id}
             onMouseEnter={() => onListItemHover ? onListItemHover(offer.id) : undefined}
             onMouseLeave={() => onListItemHover ? onListItemHover('') : undefined}
+            isNearby
           />
         ))
       }

@@ -1,24 +1,39 @@
 import { Outlet, useLocation, Link } from 'react-router-dom';
 import { AppRoute } from '../../utils/constants';
+import { useAppSelector } from '../../hooks';
+import { getFavoriteOffers } from '../../store/selectors';
 import UserLoginMenu from '../user-login-menu/user-login-menu';
 
 const getLayoutState = (pathname: AppRoute) => {
   let rootClassName = '';
   let linkClassName = '';
 
-  if (pathname === AppRoute.Root) {
-    rootClassName = 'page--gray page--main';
-    linkClassName = 'header__logo-link--active';
-  } else if (pathname === AppRoute.Login) {
-    rootClassName = 'page--gray page--login';
+  switch (pathname) {
+    case AppRoute.Root:
+      rootClassName = 'page--gray page--main';
+      linkClassName = 'header__logo-link--active';
+      break;
+    case AppRoute.Login:
+      rootClassName = 'page--gray page--login';
+      break;
+    case AppRoute.Favorites:
+      rootClassName = '';
+      break;
+    default:
+      rootClassName = '';
   }
 
   return {rootClassName, linkClassName};
 };
 
 function Layout(): JSX.Element {
+  const offers = useAppSelector(getFavoriteOffers);
   const {pathname} = useLocation();
-  const {rootClassName, linkClassName} = getLayoutState(pathname as AppRoute);
+  let {rootClassName} = getLayoutState(pathname as AppRoute);
+  const {linkClassName} = getLayoutState(pathname as AppRoute);
+  if (pathname === '/favorites' && offers.length === 0) {
+    rootClassName = 'page--favorites-empty';
+  }
   return (
     <div className={`page ${rootClassName}`}>
       <header className="header">
