@@ -8,7 +8,7 @@ import { ReviewData } from '../types/reviews';
 import { saveToken, dropToken } from '../services/token';
 import { APIRoute, NameSpace, FavoriteStatus } from '../utils/constants';
 import { AuthData } from '../types/auth-data';
-import { UserData, User } from '../types/user-data';
+import { UserData } from '../types/user-data';
 import { FavoriteOfferDetailed } from '../types/favorite-offer';
 import { saveUserData, dropUserData } from '../services/user-data';
 
@@ -33,13 +33,12 @@ export const checkAuthAction = createAsyncThunk<void, undefined, AsyncThunkConfi
   }
 );
 
-export const loginAction = createAsyncThunk<User, AuthData, AsyncThunkConfig>(
+export const loginAction = createAsyncThunk<void, AuthData, AsyncThunkConfig>(
   `${NameSpace.User}/login`,
   async ({login: email, password}, {extra: api}) => {
     const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
     saveToken(data.token);
     saveUserData({email: data.email, avatarUrl: data.avatarUrl});
-    return {email: data.email, avatarUrl: data.avatarUrl};
   },
 );
 
