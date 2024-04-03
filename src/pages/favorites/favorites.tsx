@@ -18,12 +18,14 @@ function Favorites (): JSX.Element {
 
   if (offers.length === 0) {
     return (
-      <main className="page__main page__main--favorites page__main--favorites-empty">
-        <div className="page__favorites-container container">
-          <FavoritesEmpty />
-          <Footer />
-        </div>
-      </main>
+      <>
+        <main className="page__main page__main--favorites page__main--favorites-empty">
+          <div className="page__favorites-container container">
+            <FavoritesEmpty />
+          </div>
+        </main>
+        <Footer />
+      </>
     );
   }
 

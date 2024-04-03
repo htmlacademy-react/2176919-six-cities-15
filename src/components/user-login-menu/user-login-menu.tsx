@@ -1,16 +1,14 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { getAuthorizationStatus, getFavoritesQuantity } from '../../store/selectors';
+import { getAuthorizationStatus, getFavoritesQuantity, getUser } from '../../store/selectors';
 import { AppRoute, AuthorizationStatus } from '../../utils/constants';
 import { logoutAction } from '../../store/api-actions';
-import { getUserData } from '../../services/user-data';
-
 
 function UserLoginMenu(): JSX.Element {
   const dispatch = useAppDispatch();
   const authorized = useAppSelector(getAuthorizationStatus);
   const favoritesQuantity = useAppSelector(getFavoritesQuantity);
-  const user = getUserData();
+  const user = useAppSelector(getUser);
   const {pathname} = useLocation();
   if (pathname as AppRoute === AppRoute.Login) {
     return (
