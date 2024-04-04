@@ -41,6 +41,8 @@ export const pointsOffersByCity = createSelector(
 
 export const getAuthorizationStatus = (state: State) => state[NameSpace.User].authorizationStatus;
 
+export const getLoginLoadingStatus = (state: State) => state[NameSpace.User].loginLoadingStatus;
+
 export const getUser = (state: State) => state[NameSpace.User].user;
 
 export const getIsOffersDataLoading = (state: State) => state[NameSpace.Offers].offersLoadingStatus;
@@ -76,3 +78,5 @@ export const getFavoritesQuantity = createSelector(
   (state: State) => state[NameSpace.Favorites].offersFavorite,
   (favorite) => favorite.length
 );
+
+export const getLoadingFavoriteStatus = (state: State) => state[NameSpace.Favorites].status;
