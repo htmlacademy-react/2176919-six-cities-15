@@ -9,6 +9,7 @@ const initialState: OfferSlice = {
   offersNearby: [],
   reviews: [],
   status: RequestStatus.Idle,
+  reviewSendingStatus: RequestStatus.Idle,
 };
 
 export const offerSlice = createSlice({
@@ -53,14 +54,14 @@ export const offerSlice = createSlice({
         state.status = RequestStatus.Error;
       })
       .addCase(reviewAction.pending, (state) => {
-        state.status = RequestStatus.Loading;
+        state.reviewSendingStatus = RequestStatus.Loading;
       })
       .addCase(reviewAction.fulfilled, (state, action) => {
-        state.status = RequestStatus.Success;
+        state.reviewSendingStatus = RequestStatus.Success;
         state.reviews.push(action.payload);
       })
       .addCase(reviewAction.rejected, (state) => {
-        state.status = RequestStatus.Error;
+        state.reviewSendingStatus = RequestStatus.Error;
       });
   }
 });

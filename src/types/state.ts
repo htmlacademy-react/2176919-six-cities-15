@@ -27,6 +27,7 @@ export type OfferSlice = {
   offersNearby: OfferNearby[];
   reviews: ReviewData[];
   status: RequestStatus;
+  reviewSendingStatus: RequestStatus;
 };
 
 export type FavoritesSlice = {

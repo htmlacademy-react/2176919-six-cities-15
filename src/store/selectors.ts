@@ -51,6 +51,8 @@ export const selectedOffer = (state: State) => state[NameSpace.Offer].offer;
 
 export const statusOffer = (state: State) => state[NameSpace.Offer].status;
 
+export const statusReviewSending = (state: State) => state[NameSpace.Offer].reviewSendingStatus;
+
 export const pointSelected = createSelector(
   selectedOffer,
   (offer) => ({id: offer?.id, latitude: offer?.location.latitude, longitude: offer?.location.longitude, zoom: offer?.location.zoom})
