@@ -22,9 +22,6 @@ function App(): JSX.Element {
   useEffect(() => {
     dispatch(checkAuthAction());
     dispatch(fetchOffersAction());
-    if (authorizationStatus === AuthorizationStatus.Auth) {
-      dispatch(fetchFavoriteOffers());
-    }
   }, [dispatch, authorizationStatus]);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {

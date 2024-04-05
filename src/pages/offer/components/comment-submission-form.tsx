@@ -69,7 +69,7 @@ function CommentSubmissionForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={comment.length <= MIN_REVIEW_LENGTH || comment.length >= MAX_REVIEW_LENGTH || rating === 0}
+          disabled={comment.length <= MIN_REVIEW_LENGTH || comment.length >= MAX_REVIEW_LENGTH || rating === 0 || isLoading}
         >Submit
         </button>
       </div>

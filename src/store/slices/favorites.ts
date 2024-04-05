@@ -13,7 +13,11 @@ const initialState: FavoritesSlice = {
 export const favoritesSlice = createSlice({
   name: NameSpace.Favorites,
   initialState,
-  reducers: {},
+  reducers: {
+    dropFavorite: (state) => {
+      state.offersFavorite = [];
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchFavoriteOffers.pending, (state) => {
@@ -38,3 +42,5 @@ export const favoritesSlice = createSlice({
       });
   }
 });
+
+export const {dropFavorite} = favoritesSlice.actions;

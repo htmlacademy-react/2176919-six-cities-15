@@ -1,8 +1,11 @@
 import { Link, useLocation } from 'react-router-dom';
+import { useEffect, useCallback } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks';
+import { fetchFavoriteOffers } from '../../store/api-actions';
 import { getAuthorizationStatus, getFavoritesQuantity, getUser } from '../../store/selectors';
 import { AppRoute, AuthorizationStatus } from '../../utils/constants';
 import { logoutAction } from '../../store/api-actions';
+import { dropFavorite } from '../../store/slices/favorites';
 
 function UserLoginMenu(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -10,6 +13,18 @@ function UserLoginMenu(): JSX.Element {
   const favoritesQuantity = useAppSelector(getFavoritesQuantity);
   const user = useAppSelector(getUser);
   const {pathname} = useLocation();
+
+  useEffect(() => {
+    if (authorized === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoriteOffers());
+    }
+  }, [dispatch, authorized]);
+
+  const handleClick = useCallback((): void => {
+    dispatch(logoutAction())
+      .then(() => dispatch(dropFavorite()));
+  }, [dispatch]);
+
   if (pathname as AppRoute === AppRoute.Login) {
     return (
       <>
@@ -30,9 +45,7 @@ function UserLoginMenu(): JSX.Element {
             </Link>
           </li>
           <li className="header__nav-item">
-            <span className="header__signout" style={{cursor: 'pointer'}} onClick={() => {
-              dispatch(logoutAction());
-            }}
+            <span className="header__signout" style={{cursor: 'pointer'}} onClick={handleClick}
             >Sign out
             </span>
           </li>
