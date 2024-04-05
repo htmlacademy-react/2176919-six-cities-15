@@ -45,8 +45,8 @@ function UserLoginMenu(): JSX.Element {
             </Link>
           </li>
           <li className="header__nav-item">
-            <span className="header__signout" style={{cursor: 'pointer'}} onClick={handleClick}
-            >Sign out
+            <span className="header__signout" style={{cursor: 'pointer'}} onClick={handleClick}>
+              Sign out
             </span>
           </li>
         </ul>
