@@ -59,6 +59,4 @@ const PlaceCardSize = {
   }
 };
 
-const ReviewStatus = ['null', 'terribly', 'badly', 'not bad', 'good', 'perfect'];
-
-export {AppRoute, ReviewStatus, AuthorizationStatus, FavoriteStatus, RequestStatus, SortType, APIRoute, NameSpace, PlaceCardSize};
+export {AppRoute, AuthorizationStatus, FavoriteStatus, RequestStatus, SortType, APIRoute, NameSpace, PlaceCardSize};

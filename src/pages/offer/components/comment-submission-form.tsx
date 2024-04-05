@@ -1,44 +1,42 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { useParams } from 'react-router-dom';
 import { reviewAction } from '../../../store/api-actions';
 import { statusReviewSending } from '../../../store/selectors';
 import { RequestStatus } from '../../../utils/constants';
-import ReviewStar from './review-star';
+import StarsList from './stars-list';
 
-const COUNTDOWN_STARS = [5, 4, 3, 2, 1];
 const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 300;
-const DEFAULT_FORM = {
-  rating: 0,
-  review: '',
-};
 
 function CommentSubmissionForm(): JSX.Element {
+  const [rating, setRating] = useState<number> (0);
+  const [comment, setComment] = useState<string>('');
   const { id: offerId } = useParams();
   const dispatch = useAppDispatch();
   const dispatchStatus = useAppSelector(statusReviewSending);
   const isLoading = dispatchStatus === RequestStatus.Loading;
-  const [formData, setFormData] = useState(DEFAULT_FORM);
-  const isSuccessfulSubmission = dispatchStatus === RequestStatus.Success;
   const isErrorSubmission = dispatchStatus === RequestStatus.Error;
+  const isSuccessSubmission = dispatchStatus === RequestStatus.Success;
 
   const clearingForm = () => {
-    if (isSuccessfulSubmission && !isErrorSubmission) {
-      setFormData(DEFAULT_FORM);
+    if (!isLoading && !isErrorSubmission && isSuccessSubmission) {
+      setComment('');
+      setRating(0);
     }
   };
 
-  const handleFieldChange: (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => void = (evt) => {
-    const { name, value } = evt.target as HTMLInputElement | HTMLTextAreaElement;
-    setFormData({...formData, [name]: value});
-  };
+  function handleChange(evt: ChangeEvent<HTMLTextAreaElement>) {
+    setComment(evt.target.value);
+  }
+
+  const handleRating = useCallback((evt: ChangeEvent<HTMLInputElement>) => {
+    setRating(Number(evt.target.value));
+  }, []);
 
   const onFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const comment = formData.review;
-    const rating = + formData.rating;
     if (offerId) {
       dispatch(reviewAction({offerId, comment, rating}));
       clearingForm();
@@ -48,9 +46,8 @@ function CommentSubmissionForm(): JSX.Element {
   return (
     <form className="reviews__form form" action='#' method="post" onSubmit={onFormSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <div className="reviews__rating-form form__rating">
-        {COUNTDOWN_STARS.map((counter) => <ReviewStar counter={counter} onChangeField={handleFieldChange} key={counter} isLoading={isLoading} rating={formData.rating} />)}
-      </div>
+
+      <StarsList onChangeField={handleRating} isLoading={isLoading} rating={rating} />
 
       <textarea
         className="reviews__textarea form__textarea"
@@ -59,8 +56,8 @@ function CommentSubmissionForm(): JSX.Element {
         minLength={MIN_REVIEW_LENGTH}
         maxLength={MAX_REVIEW_LENGTH}
         placeholder="Tell how was your stay, what you like and what can be improved"
-        value={formData.review}
-        onChange={handleFieldChange}
+        value={comment}
+        onChange={handleChange}
         disabled={isLoading}
       >
       </textarea>
@@ -72,7 +69,7 @@ function CommentSubmissionForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={formData.review.length <= MIN_REVIEW_LENGTH || formData.review.length >= MAX_REVIEW_LENGTH || formData.rating === 0}
+          disabled={comment.length <= MIN_REVIEW_LENGTH || comment.length >= MAX_REVIEW_LENGTH || rating === 0}
         >Submit
         </button>
       </div>
