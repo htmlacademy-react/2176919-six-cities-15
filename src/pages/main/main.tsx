@@ -5,7 +5,7 @@ import { Point } from '../../components/map';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import { selectedCitySelector, sortedOffersSelector, pointsOffersByCity, selectSorting} from '../../store/selectors';
 import { setSorting } from '../../store/slices/offers';
-import { Sorting } from './components/places-options';
+import { Sorting } from '../../utils/sorting-types';
 import classNames from 'classnames';
 import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map';

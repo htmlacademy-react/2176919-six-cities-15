@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { OfferData } from '../types/offers';
-import { Sorting } from '../pages/main/components/places-options';
+import { Sorting } from './sorting-types';
 import { ReviewData } from '../types/reviews';
 
 function sortOfferByPriceToHigh(offerA: OfferData, offerB: OfferData) {

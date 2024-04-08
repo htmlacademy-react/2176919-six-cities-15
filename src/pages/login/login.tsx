@@ -7,7 +7,7 @@ import { AppRoute, AuthorizationStatus, RequestStatus } from '../../utils/consta
 import { getAuthorizationStatus, getLoginLoadingStatus } from '../../store/selectors';
 import { toast } from 'react-toastify';
 import { getRandomArrayElement } from '../../utils/random-city';
-import { cityArray } from '../../components/cities-list/cities-list';
+import { CITIES } from '../../utils/cities';
 import { setCity } from '../../store/slices/offers';
 
 function Login (): JSX.Element {
@@ -18,7 +18,7 @@ function Login (): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const validatePassword = (password: string) => password.match(/^(?=.*[A-Za-z])(?=.*\d).+$/);
-  const city = getRandomArrayElement(cityArray);
+  const city = getRandomArrayElement(CITIES);
 
   useEffect(()=> {
     if (auth === AuthorizationStatus.Auth) {

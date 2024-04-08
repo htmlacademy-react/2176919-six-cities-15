@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../hooks';
 import { setCity } from '../../../store/slices/offers';
-import { City } from '../../../components/cities-list/cities-list';
+import { City } from '../../../utils/cities';
 import { OfferData } from '../../../types/offers';
 import { AppRoute } from '../../../utils/constants';
 import OffersList from '../../../components/offers-list/offers-list';

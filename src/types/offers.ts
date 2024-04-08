@@ -1,4 +1,4 @@
-import { City } from '../components/cities-list/cities-list';
+import { City } from '../utils/cities';
 
 export type CityLocation = {
   'name': City;

@@ -1,4 +1,4 @@
-import { City } from '../../components/cities-list/cities-list';
+import { City } from '../../utils/cities';
 
 type MainEmptyProps = {
   city: City;

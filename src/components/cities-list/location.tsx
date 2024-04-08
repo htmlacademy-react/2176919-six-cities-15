@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import { setCity } from '../../store/slices/offers';
-import { City } from './cities-list';
+import { City } from '../../utils/cities';
 import { selectedCitySelector } from '../../store/selectors';
 
 type LocationProps = {
@@ -23,7 +23,7 @@ function Location({city, isTabs}: LocationProps) {
         evt.preventDefault();
         const value = (evt.target as HTMLElement).textContent;
         if (value) {
-          dispatch(setCity(value as City));
+          dispatch(setCity(value));
         }
       }}
       >
