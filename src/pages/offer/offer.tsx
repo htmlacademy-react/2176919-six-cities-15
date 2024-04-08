@@ -1,3 +1,4 @@
+import pluralize from 'pluralize';
 import { Helmet } from 'react-helmet-async';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -87,9 +88,9 @@ function Offer (): JSX.Element {
         </Helmet>
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
-            {offerById?.images.map((image) => (
+            {offerById.images.map((image) => (
               <div className="offer__image-wrapper" key={image}>
-                <img className="offer__image" src={image} alt={`Photo ${offerById?.type}`}/>
+                <img className="offer__image" src={image} alt={`Photo ${offerById.type}`}/>
               </div>)
             ).slice(0, OFFER_IMAGE_COUNT)}
           </div>
@@ -97,7 +98,7 @@ function Offer (): JSX.Element {
         <div className="offer__container container">
           <div className="offer__wrapper">
             {
-              offerById?.isPremium ? (
+              offerById.isPremium ? (
                 <div className="offer__mark">
                   <span>Premium</span>
                 </div>
@@ -105,7 +106,7 @@ function Offer (): JSX.Element {
             }
             <div className="offer__name-wrapper">
               <h1 className="offer__name">
-                {offerById?.title}
+                {offerById.title}
               </h1>
               <button className={classNames(
                 'offer__bookmark-button button',
@@ -123,27 +124,27 @@ function Offer (): JSX.Element {
                 <span style={{width: `${Math.round(offerById.rating) * 20}%`}}></span>
                 <span className="visually-hidden">Rating</span>
               </div>
-              <span className="offer__rating-value rating__value">{offerById?.rating}</span>
+              <span className="offer__rating-value rating__value">{offerById.rating}</span>
             </div>
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
-                {offerById?.type ? offerById?.type.charAt(0).toUpperCase() + offerById?.type.slice(1) : null}
+                {offerById.type ? offerById.type.charAt(0).toUpperCase() + offerById.type.slice(1) : null}
               </li>
               <li className="offer__feature offer__feature--bedrooms">
-                {offerById?.bedrooms} Bedrooms
+                {offerById.bedrooms} {pluralize('Bedrooms', offerById.bedrooms)}
               </li>
               <li className="offer__feature offer__feature--adults">
-                Max {offerById?.maxAdults} adults
+                Max {offerById.maxAdults} {pluralize('adults', offerById.maxAdults)}
               </li>
             </ul>
             <div className="offer__price">
-              <b className="offer__price-value">&euro;{offerById?.price}</b>
+              <b className="offer__price-value">&euro;{offerById.price}</b>
               <span className="offer__price-text">&nbsp;night</span>
             </div>
             <div className="offer__inside">
               <h2 className="offer__inside-title">What&apos;s inside</h2>
               <ul className="offer__inside-list">
-                {offerById?.goods.map((good) => <OfferGoods good={good} key={good}/>)}
+                {offerById.goods.map((good) => <OfferGoods good={good} key={good}/>)}
               </ul>
             </div>
             <div className="offer__host">
@@ -151,15 +152,15 @@ function Offer (): JSX.Element {
               <div className="offer__host-user user">
                 <div className={classNames(
                   'offer__avatar-wrapper user__avatar-wrapper',
-                  {'offer__avatar-wrapper--pro' : offerById?.host.isPro})}
+                  {'offer__avatar-wrapper--pro' : offerById.host.isPro})}
                 >
-                  <img className="offer__avatar user__avatar" src={offerById?.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
+                  <img className="offer__avatar user__avatar" src={offerById.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                 </div>
                 <span className="offer__user-name">
-                  {offerById?.host.name}
+                  {offerById.host.name}
                 </span>
                 {
-                  offerById?.host.isPro ? (
+                  offerById.host.isPro ? (
                     <span className="offer__user-status">
                       Pro
                     </span>
@@ -168,7 +169,7 @@ function Offer (): JSX.Element {
               </div>
               <div className="offer__description">
                 <p className="offer__text">
-                  {offerById?.description}
+                  {offerById.description}
                 </p>
               </div>
             </div>
