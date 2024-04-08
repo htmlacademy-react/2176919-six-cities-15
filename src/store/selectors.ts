@@ -3,7 +3,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { State } from '../types/state';
 import { sortReview } from '../utils/sorting';
 import { NameSpace } from '../utils/constants';
-import { favoritesByCity } from '../utils/filtration';
+import { getFavoritesByCity } from '../utils/filtration';
 
 const OFFERS_NEARBY_COUNT = 3;
 
@@ -41,11 +41,17 @@ export const pointsOffersByCity = createSelector(
 
 export const getAuthorizationStatus = (state: State) => state[NameSpace.User].authorizationStatus;
 
+export const getLoginLoadingStatus = (state: State) => state[NameSpace.User].loginLoadingStatus;
+
+export const getUser = (state: State) => state[NameSpace.User].user;
+
 export const getIsOffersDataLoading = (state: State) => state[NameSpace.Offers].offersLoadingStatus;
 
 export const selectedOffer = (state: State) => state[NameSpace.Offer].offer;
 
 export const statusOffer = (state: State) => state[NameSpace.Offer].status;
+
+export const statusReviewSending = (state: State) => state[NameSpace.Offer].reviewSendingStatus;
 
 export const pointSelected = createSelector(
   selectedOffer,
@@ -65,7 +71,7 @@ export const getSortedReviews = createSelector(
 
 export const getFavoriteOffers = createSelector(
   (state: State) => state[NameSpace.Favorites].offersFavorite,
-  (offers) => favoritesByCity(offers)
+  (offers) => getFavoritesByCity(offers)
 );
 
 export const getFavoritesAll = (state: State) => state[NameSpace.Favorites].offersFavorite;
@@ -74,3 +80,5 @@ export const getFavoritesQuantity = createSelector(
   (state: State) => state[NameSpace.Favorites].offersFavorite,
   (favorite) => favorite.length
 );
+
+export const getLoadingFavoriteStatus = (state: State) => state[NameSpace.Favorites].status;

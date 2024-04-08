@@ -31,7 +31,7 @@ function Main(): JSX.Element {
     setSelectedPoint(currentPoint);
   }, [points]);
 
-  const handleSorting = useCallback((evt: React.MouseEvent<HTMLElement>) => {
+  const handleSortingFormChange = useCallback((evt: React.MouseEvent<HTMLElement>) => {
     const value = (evt.target as HTMLElement).textContent;
     if (value) {
       dispatch(setSorting(value as Sorting));
@@ -69,7 +69,7 @@ function Main(): JSX.Element {
                 <b className="places__found">{selectedOffers.length} {pluralize('places', selectedOffers.length)} to stay in {selectedCity}</b>
                 <PlacesOptions
                   sorting={sorting}
-                  onChange={handleSorting}
+                  onChange={handleSortingFormChange}
                 />
                 {<OffersList offers={selectedOffers} variant={'vertical'} onListItemHover={handleListItemHover}/>}
               </section>

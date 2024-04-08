@@ -7,8 +7,10 @@ import { OfferDetailed } from './offer';
 import { ReviewData } from './reviews';
 import { OfferNearby } from './offers-nearby';
 import { RequestStatus } from '../utils/constants';
+import { User } from './user-data';
 
 export type UserSlice = {
+  user: User;
   authorizationStatus: AuthorizationStatus;
   loginLoadingStatus: RequestStatus;
 };
@@ -25,6 +27,7 @@ export type OfferSlice = {
   offersNearby: OfferNearby[];
   reviews: ReviewData[];
   status: RequestStatus;
+  reviewSendingStatus: RequestStatus;
 };
 
 export type FavoritesSlice = {

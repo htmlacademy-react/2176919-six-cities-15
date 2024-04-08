@@ -1,7 +1,7 @@
-import OffersList from '../../../components/offers-list/offers-list';
 import { memo } from 'react';
 import { City } from '../../../components/cities-list/cities-list';
 import { OfferData } from '../../../types/offers';
+import OffersList from '../../../components/offers-list/offers-list';
 
 type FavoritesItemProps = {
   title: City;

@@ -24,7 +24,15 @@ function PlacesOptions({sorting, onChange}: PlacesOptionProps): JSX.Element {
       <ul className={`places__options places__options--custom ${isOpened ? 'places__options--opened' : 'places__options--closed'}`}>
         {
           SORTING_TYPES.map((option): JSX.Element => (
-            <li className={`places__option ${option === sorting ? 'places__option--active' : ''}`} tabIndex={0} onClick={onChange} key={option}>
+            <li
+              className={`places__option ${option === sorting ? 'places__option--active' : ''}`}
+              tabIndex={0}
+              onClick={(e) => {
+                setIsOpened(false);
+                onChange(e);
+              }}
+              key={option}
+            >
               {option}
             </li>
           ))
