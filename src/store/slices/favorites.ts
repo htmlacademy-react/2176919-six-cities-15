@@ -3,7 +3,7 @@ import { NameSpace } from '../../utils/constants';
 import { FavoritesSlice } from '../../types/state';
 import { fetchFavoriteOffers, favoriteAction } from '../api-actions';
 import { RequestStatus } from '../../utils/constants';
-import { toggleFavorite } from '../../utils/toggle-favorite';
+import { togglesFavorite } from '../../utils/toggle-favorite';
 
 const initialState: FavoritesSlice = {
   offersFavorite: [],
@@ -35,7 +35,7 @@ export const favoritesSlice = createSlice({
       })
       .addCase(favoriteAction.fulfilled, (state, action) => {
         state.status = RequestStatus.Success;
-        toggleFavorite(state, action.payload);
+        togglesFavorite(state, action.payload);
       })
       .addCase(favoriteAction.rejected, (state) => {
         state.status = RequestStatus.Error;

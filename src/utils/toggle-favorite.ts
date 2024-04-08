@@ -1,7 +1,7 @@
 import { FavoriteOffer, FavoriteOfferDetailed } from '../types/favorite-offer';
 import { FavoritesSlice } from '../types/state';
 
-export const toggleFavorite = (state: FavoritesSlice, offer: FavoriteOfferDetailed) => {
+export const togglesFavorite = (state: FavoritesSlice, offer: FavoriteOfferDetailed) => {
   const oldFavoriteOffer = state.offersFavorite.find(({ id }) => id === offer.id);
   if (oldFavoriteOffer) {
     const favoriteOffersIndex = state.offersFavorite.indexOf(oldFavoriteOffer);

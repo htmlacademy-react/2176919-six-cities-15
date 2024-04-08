@@ -51,7 +51,7 @@ function Offer (): JSX.Element {
     };
   }, [offerId, dispatch]);
 
-  const handleFavorite = () => {
+  const handleFavoriteButtonClick = () => {
     const checkingFavorites = (idOffer: string, offers: FavoriteOffer[]) => {
       const selectedOffers = offers.filter((item) => item.id === idOffer);
       if(selectedOffers.length !== 0) {
@@ -110,7 +110,7 @@ function Offer (): JSX.Element {
               <button className={classNames(
                 'offer__bookmark-button button',
                 {'offer__bookmark-button--active' : isFavorite}
-              )} type="button" onClick={handleFavorite}
+              )} type="button" onClick={handleFavoriteButtonClick}
               >
                 <svg className="offer__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark"></use>

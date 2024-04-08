@@ -16,13 +16,6 @@ enum FavoriteStatus {
   Extract = '0',
 }
 
-enum SortType {
-  Popular = 'Popular',
-  PriceAscending = 'Price: low to high',
-  PriceDescending = 'Price: high to low',
-  RatingDescending = 'Top rated first',
-}
-
 enum APIRoute {
   Offers = '/offers',
   Login = '/login',
@@ -59,4 +52,4 @@ const PlaceCardSize = {
   }
 };
 
-export {AppRoute, AuthorizationStatus, FavoriteStatus, RequestStatus, SortType, APIRoute, NameSpace, PlaceCardSize};
+export {AppRoute, AuthorizationStatus, FavoriteStatus, RequestStatus, APIRoute, NameSpace, PlaceCardSize};

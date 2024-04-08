@@ -20,7 +20,7 @@ function UserLoginMenu(): JSX.Element {
     }
   }, [dispatch, authorized]);
 
-  const handleClick = useCallback((): void => {
+  const handleSpanClick = useCallback((): void => {
     dispatch(logoutAction())
       .then(() => dispatch(dropFavorite()));
   }, [dispatch]);
@@ -45,7 +45,7 @@ function UserLoginMenu(): JSX.Element {
             </Link>
           </li>
           <li className="header__nav-item">
-            <span className="header__signout" style={{cursor: 'pointer'}} onClick={handleClick}>
+            <span className="header__signout" style={{cursor: 'pointer'}} onClick={handleSpanClick}>
               Sign out
             </span>
           </li>

@@ -53,7 +53,7 @@ function Card({offer, variant, onMouseEnter, onMouseLeave, isNearby}: PlaceCardP
     }
   }, [favoritesOffers, id]);
 
-  const handleFavorite = useCallback(() => {
+  const handleButtonFavoriteClick = useCallback(() => {
     const checkingFavorites = (idOffer: string, offers: FavoriteOffer[]) => {
       const selectedOffers = offers.filter((item) => item.id === idOffer);
       if(selectedOffers.length !== 0) {
@@ -101,7 +101,7 @@ function Card({offer, variant, onMouseEnter, onMouseLeave, isNearby}: PlaceCardP
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <BookmarkButton isFavorite={isFavorite} onChange={handleFavorite}/>
+          <BookmarkButton isFavorite={isFavorite} onChange={handleButtonFavoriteClick}/>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

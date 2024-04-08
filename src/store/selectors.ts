@@ -3,7 +3,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { State } from '../types/state';
 import { sortReview } from '../utils/sorting';
 import { NameSpace } from '../utils/constants';
-import { favoritesByCity } from '../utils/filtration';
+import { getFavoritesByCity } from '../utils/filtration';
 
 const OFFERS_NEARBY_COUNT = 3;
 
@@ -71,7 +71,7 @@ export const getSortedReviews = createSelector(
 
 export const getFavoriteOffers = createSelector(
   (state: State) => state[NameSpace.Favorites].offersFavorite,
-  (offers) => favoritesByCity(offers)
+  (offers) => getFavoritesByCity(offers)
 );
 
 export const getFavoritesAll = (state: State) => state[NameSpace.Favorites].offersFavorite;

@@ -26,11 +26,11 @@ function CommentSubmissionForm(): JSX.Element {
     }
   };
 
-  function handleChange(evt: ChangeEvent<HTMLTextAreaElement>) {
+  function handleTextareaChange(evt: ChangeEvent<HTMLTextAreaElement>) {
     setComment(evt.target.value);
   }
 
-  const handleRating = useCallback((evt: ChangeEvent<HTMLInputElement>) => {
+  const handleInputRatingChange = useCallback((evt: ChangeEvent<HTMLInputElement>) => {
     setRating(Number(evt.target.value));
   }, []);
 
@@ -47,7 +47,7 @@ function CommentSubmissionForm(): JSX.Element {
     <form className="reviews__form form" action='#' method="post" onSubmit={onFormSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
 
-      <StarsList onChangeField={handleRating} isLoading={isLoading} rating={rating} />
+      <StarsList onChangeField={handleInputRatingChange} isLoading={isLoading} rating={rating} />
 
       <textarea
         className="reviews__textarea form__textarea"
@@ -57,7 +57,7 @@ function CommentSubmissionForm(): JSX.Element {
         maxLength={MAX_REVIEW_LENGTH}
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={comment}
-        onChange={handleChange}
+        onChange={handleTextareaChange}
         disabled={isLoading}
       >
       </textarea>
