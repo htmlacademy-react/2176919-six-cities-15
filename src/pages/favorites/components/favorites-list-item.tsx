@@ -5,6 +5,7 @@ import { setCity } from '../../../store/slices/offers';
 import { City } from '../../../utils/cities';
 import { OfferData } from '../../../types/offers';
 import { AppRoute } from '../../../utils/constants';
+import { PlaceCardVariant } from '../../../utils/constants';
 import OffersList from '../../../components/offers-list/offers-list';
 
 type FavoritesItemProps = {
@@ -30,7 +31,7 @@ function FavoritesItem({title, offers}: FavoritesItemProps): JSX.Element {
           </a>
         </div>
       </div>
-      {<OffersList offers={offers} variant={'horizontal'} />}
+      {<OffersList offers={offers} variant={PlaceCardVariant.Horizontal} />}
     </li>
   );
 }

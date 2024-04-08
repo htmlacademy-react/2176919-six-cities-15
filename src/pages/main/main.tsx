@@ -6,6 +6,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import { selectedCitySelector, sortedOffersSelector, pointsOffersByCity, selectSorting} from '../../store/selectors';
 import { setSorting } from '../../store/slices/offers';
 import { Sorting } from '../../utils/sorting-types';
+import { PlaceCardVariant } from '../../utils/constants';
 import classNames from 'classnames';
 import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map';
@@ -71,10 +72,10 @@ function Main(): JSX.Element {
                   sorting={sorting}
                   onChange={handleSortingFormChange}
                 />
-                {<OffersList offers={selectedOffers} variant={'vertical'} onListItemHover={handleListItemHover}/>}
+                {<OffersList offers={selectedOffers} variant={PlaceCardVariant.Vertical} onListItemHover={handleListItemHover}/>}
               </section>
               <div className="cities__right-section">
-                {<Map isMain selectedPoint={selectedPoint}/>}
+                {<Map points={points} isMain selectedPoint={selectedPoint}/>}
               </div>
             </div>
           </div>

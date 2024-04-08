@@ -7,7 +7,7 @@ import { fetchSelectOffer, fetchOffersNearby, fetchReviews, favoriteAction } fro
 import { getFavoritesAll, getAuthorizationStatus } from '../../store/selectors';
 import { dropOffer } from '../../store/slices/offer';
 import { selectedOffer, getOffersNearby, statusOffer } from '../../store/selectors';
-import { RequestStatus, FavoriteStatus, AuthorizationStatus, AppRoute } from '../../utils/constants';
+import { RequestStatus, FavoriteStatus, AuthorizationStatus, AppRoute, PlaceCardVariant } from '../../utils/constants';
 import { FavoriteOffer } from '../../types/favorite-offer';
 import classNames from 'classnames';
 import OfferGoods from './components/offer-goods';
@@ -72,6 +72,7 @@ function Offer (): JSX.Element {
   const offerById = useAppSelector(selectedOffer);
   const offersNearby = useAppSelector(getOffersNearby);
   const statusLoading = useAppSelector(statusOffer);
+  const points = offersNearby.map((item) => ({id: item.id, latitude: item.location.latitude, longitude: item.location.longitude, zoom: item.location.zoom}));
 
   if (offerById === null) {
     if(statusLoading === RequestStatus.Loading) {
@@ -176,12 +177,12 @@ function Offer (): JSX.Element {
             <ReviewsList />
           </div>
         </div>
-        <Map isMain={false}/>
+        <Map points={points} isMain={false}/>
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <OffersList offers={offersNearby} variant={'vertical'} isNearby/>
+          <OffersList offers={offersNearby} variant={PlaceCardVariant.Vertical} isNearby/>
         </section>
       </div>
     </main>
