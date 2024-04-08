@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ToastContainer limit={1}/>
+      <ToastContainer limit={3}/>
       <App />
     </Provider>
   </React.StrictMode>

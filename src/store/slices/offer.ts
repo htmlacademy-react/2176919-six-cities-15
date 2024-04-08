@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import {toast} from 'react-toastify';
 import { NameSpace } from '../../utils/constants';
 import { OfferSlice } from '../../types/state';
 import { fetchSelectOffer, fetchOffersNearby, fetchReviews, reviewAction } from '../api-actions';
@@ -62,6 +63,7 @@ export const offerSlice = createSlice({
       })
       .addCase(reviewAction.rejected, (state) => {
         state.reviewSendingStatus = RequestStatus.Error;
+        toast.error('Something go wrong when trying to send your review');
       });
   }
 });

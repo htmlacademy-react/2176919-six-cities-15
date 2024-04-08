@@ -65,17 +65,16 @@ function Login (): JSX.Element {
         </section>
         <section className="locations locations--login locations--current">
           <div className="locations__item">
-            <button
-              type='button'
+            <a
+              href='#'
               className="locations__item-link"
-              disabled ={isPending}
               onClick={ () => {
                 dispatch(setCity(city));
                 navigate(AppRoute.Root);
               }}
             >
               <span>{city}</span>
-            </button>
+            </a>
           </div>
         </section>
       </div>
