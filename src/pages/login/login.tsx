@@ -68,7 +68,8 @@ function Login (): JSX.Element {
             <a
               href='#'
               className="locations__item-link"
-              onClick={ () => {
+              onClick={ (evt) => {
+                evt.preventDefault();
                 dispatch(setCity(city));
                 navigate(AppRoute.Root);
               }}

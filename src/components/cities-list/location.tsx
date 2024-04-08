@@ -19,7 +19,8 @@ function Location({city, isTabs}: LocationProps) {
         'locations__item-link',
         {'tabs__item' :isTabs},
         {'tabs__item--active' :isCurrentCity}
-      )} href="#" onClick={(evt) => {
+      )} href='#' onClick={(evt) => {
+        evt.preventDefault();
         const value = (evt.target as HTMLElement).textContent;
         if (value) {
           dispatch(setCity(value as City));

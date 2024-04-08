@@ -1,5 +1,5 @@
 import { OfferData } from '../../types/offers';
-import { FavoriteStatus, PlaceCardSize, AuthorizationStatus, AppRoute } from '../../utils/constants';
+import { FavoriteStatus, PlaceCardSize, AuthorizationStatus, AppRoute, PlaceCardVariant } from '../../utils/constants';
 import { Link, useNavigate } from 'react-router-dom';
 import { memo, useCallback, useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -13,17 +13,17 @@ import BookmarkButton from './components/bookmark-button';
 
 type PlaceCardProp = {
   offer: OfferData;
-  variant: 'vertical' | 'horizontal';
+  variant: PlaceCardVariant;
   onMouseEnter(): void;
   onMouseLeave(): void;
   isNearby?: boolean;
 };
 
-const getPlaceCardState = (variant = 'vertical') => {
+const getPlaceCardState = (variant = PlaceCardVariant.Vertical) => {
   let cardWidth = PlaceCardSize.PlaceCard.with;
   let cardHeight = PlaceCardSize.PlaceCard.height;
 
-  if (variant === 'horizontal') {
+  if (variant === PlaceCardVariant.Horizontal) {
     cardWidth = PlaceCardSize.PlaceCardSmall.with;
     cardHeight = PlaceCardSize.PlaceCardSmall.height;
   }
@@ -36,7 +36,7 @@ function Card({offer, variant, onMouseEnter, onMouseLeave, isNearby}: PlaceCardP
   const navigate = useNavigate();
   const {title, isPremium, price, type, previewImage, rating, id} = offer;
   const {cardWidth, cardHeight} = getPlaceCardState(variant);
-  const isVertical = variant === 'vertical';
+  const isVertical = variant === PlaceCardVariant.Vertical;
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const favoritesOffers = useAppSelector(getFavoritesAll);
 
