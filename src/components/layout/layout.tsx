@@ -31,16 +31,22 @@ function Layout(): JSX.Element {
   const {pathname} = useLocation();
   let {rootClassName} = getLayoutState(pathname as AppRoute);
   const {linkClassName} = getLayoutState(pathname as AppRoute);
-  if (pathname === '/favorites' && offers.length === 0) {
+  const isMain = pathname as AppRoute === AppRoute.Root;
+  if (pathname as AppRoute === AppRoute.Favorites && offers.length === 0) {
     rootClassName = 'page--favorites-empty';
   }
+
   return (
     <div className={`page ${rootClassName}`}>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link className={`header__logo-link ${linkClassName}`} to={AppRoute.Root}>
+              <Link
+                className={`header__logo-link ${linkClassName}`}
+                to={AppRoute.Root}
+                style={isMain ? {pointerEvents: 'none'} : {pointerEvents: 'auto'}}
+              >
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
               </Link>
             </div>
