@@ -18,7 +18,7 @@ function ReviewsList(): JSX.Element {
       <h2 className="reviews__title">{pluralize('Reviews', reviewsCounter)} &middot; <span className="reviews__amount">{reviewsCounter}</span></h2>
       <ul className="reviews__list">
         {
-          reviews?.map((review) => <Review review={review} key={review.id}/>).slice(0, REVIEW_COUNT)
+          reviews.map((review) => <Review review={review} key={review.id}/>).slice(0, REVIEW_COUNT)
         }
 
       </ul>

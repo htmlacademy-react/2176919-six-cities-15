@@ -68,7 +68,7 @@ function Map(props: MapProps): JSX.Element {
 
         marker
           .setIcon(
-            selectedPoint !== undefined && point.id === selectedPoint.id || point.id === pointSelectedByOffer?.id
+            selectedPoint !== undefined && point.id === selectedPoint.id || point.id === pointSelectedByOffer.id
               ? currentCustomIcon
               : defaultCustomIcon
           )

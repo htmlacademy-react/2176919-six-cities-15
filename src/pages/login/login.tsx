@@ -37,9 +37,6 @@ function Login (): JSX.Element {
         login: loginRef.current.value,
         password: passwordRef.current.value
       }));
-      if (auth === AuthorizationStatus.Auth) {
-        navigate(AppRoute.Root);
-      }
     }
   };
 
