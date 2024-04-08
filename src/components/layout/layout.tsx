@@ -22,7 +22,6 @@ const getLayoutState = (pathname: AppRoute) => {
     default:
       rootClassName = '';
   }
-
   return {rootClassName, linkClassName};
 };
 
