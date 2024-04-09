@@ -41,6 +41,11 @@ enum RequestStatus {
   Error = 'Error',
 }
 
+enum PlaceCardVariant {
+ Vertical = 'vertical',
+ Horizontal = 'horizontal',
+}
+
 const PlaceCardSize = {
   PlaceCard: {
     with: '260',
@@ -52,4 +57,4 @@ const PlaceCardSize = {
   }
 };
 
-export {AppRoute, AuthorizationStatus, FavoriteStatus, RequestStatus, APIRoute, NameSpace, PlaceCardSize};
+export {AppRoute, PlaceCardVariant, AuthorizationStatus, FavoriteStatus, RequestStatus, APIRoute, NameSpace, PlaceCardSize};

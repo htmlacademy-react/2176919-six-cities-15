@@ -1,7 +1,7 @@
 import {useRef, useEffect} from 'react';
 import {Icon, Marker} from 'leaflet';
 import { useAppSelector } from '../hooks';
-import { selectedCityLocation, pointsOffersByCity, getOffersNearby, pointSelected } from '../store/selectors';
+import { selectedCityLocation, pointSelected } from '../store/selectors';
 import useMap from '../hooks/use-map';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -29,20 +29,15 @@ const currentCustomIcon = new Icon({
 });
 
 type MapProps = {
+  points: Points;
   isMain: boolean;
   selectedPoint?: Point | undefined;
 };
 
 function Map(props: MapProps): JSX.Element {
-  const {isMain, selectedPoint} = props;
+  const {points, isMain, selectedPoint} = props;
   const city = useAppSelector(selectedCityLocation);
-  let points = useAppSelector(pointsOffersByCity);
-  const offersNearby = useAppSelector(getOffersNearby);
   const pointSelectedByOffer = useAppSelector(pointSelected);
-
-  if (!isMain && offersNearby) {
-    points = offersNearby.map((item) => ({id: item.id, latitude: item.location.latitude, longitude: item.location.longitude, zoom: item.location.zoom}));
-  }
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -55,12 +50,13 @@ function Map(props: MapProps): JSX.Element {
   }, [city, map]);
 
   useEffect(() => {
+    const updatedPoints = [...points];
     if (map) {
       markerLayer.addTo(map);
       if (!isMain && pointSelectedByOffer) {
-        points.push(pointSelectedByOffer as Point);
+        updatedPoints.push(pointSelectedByOffer as Point);
       }
-      points.forEach((point) => {
+      updatedPoints.forEach((point) => {
         const marker = new Marker({
           lat: point.latitude,
           lng: point.longitude
@@ -68,7 +64,7 @@ function Map(props: MapProps): JSX.Element {
 
         marker
           .setIcon(
-            selectedPoint !== undefined && point.id === selectedPoint.id || point.id === pointSelectedByOffer?.id
+            selectedPoint !== undefined && point.id === selectedPoint.id || point.id === pointSelectedByOffer.id
               ? currentCustomIcon
               : defaultCustomIcon
           )
@@ -79,7 +75,7 @@ function Map(props: MapProps): JSX.Element {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, points, selectedPoint, markerLayer, isMain, pointSelectedByOffer]);
+  }, [map, selectedPoint, points, markerLayer, isMain, pointSelectedByOffer]);
 
   return (
     <section className={classNames(

@@ -7,7 +7,7 @@ import { AppRoute, AuthorizationStatus } from '../../utils/constants';
 import { logoutAction } from '../../store/api-actions';
 import { dropFavorite } from '../../store/slices/favorites';
 
-function UserLoginMenu(): JSX.Element {
+function UserLoginMenu(): JSX.Element | null {
   const dispatch = useAppDispatch();
   const authorized = useAppSelector(getAuthorizationStatus);
   const favoritesQuantity = useAppSelector(getFavoritesQuantity);
@@ -26,10 +26,7 @@ function UserLoginMenu(): JSX.Element {
   }, [dispatch]);
 
   if (pathname as AppRoute === AppRoute.Login) {
-    return (
-      <>
-      </>
-    );
+    return null;
   }
   return (
     <nav className="header__nav">
@@ -38,9 +35,9 @@ function UserLoginMenu(): JSX.Element {
           <li className="header__nav-item user">
             <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
               <div className="header__avatar-wrapper user__avatar-wrapper">
-                <img src={user?.avatarUrl} alt="User avatar" width={'20'} height={'20'}/>
+                <img src={user.avatarUrl} alt="User avatar" width={'20'} height={'20'}/>
               </div>
-              <span className="header__user-name user__name">{user?.email}</span>
+              <span className="header__user-name user__name">{user.email}</span>
               <span className="header__favorite-count">{favoritesQuantity}</span>
             </Link>
           </li>

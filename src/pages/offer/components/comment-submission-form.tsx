@@ -16,14 +16,10 @@ function CommentSubmissionForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const dispatchStatus = useAppSelector(statusReviewSending);
   const isLoading = dispatchStatus === RequestStatus.Loading;
-  const isErrorSubmission = dispatchStatus === RequestStatus.Error;
-  const isSuccessSubmission = dispatchStatus === RequestStatus.Success;
 
   const clearingForm = () => {
-    if (!isLoading && !isErrorSubmission && isSuccessSubmission) {
-      setComment('');
-      setRating(0);
-    }
+    setComment('');
+    setRating(0);
   };
 
   function handleTextareaChange(evt: ChangeEvent<HTMLTextAreaElement>) {
@@ -38,8 +34,12 @@ function CommentSubmissionForm(): JSX.Element {
     event.preventDefault();
 
     if (offerId) {
-      dispatch(reviewAction({offerId, comment, rating}));
-      clearingForm();
+      dispatch(reviewAction({offerId, comment, rating}))
+        .then((response) => {
+          if(response.meta.requestStatus !== 'rejected' && !isLoading) {
+            clearingForm();
+          }
+        });
     }
   };
 

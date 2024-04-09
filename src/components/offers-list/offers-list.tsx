@@ -1,17 +1,18 @@
 import { OfferData } from '../../types/offers';
 import { memo } from 'react';
+import { PlaceCardVariant } from '../../utils/constants';
 import PlaceCard from '../place-card/place-card';
 import classNames from 'classnames';
 
 type OffersListProps = {
   offers: OfferData[];
-  variant: 'vertical' | 'horizontal';
+  variant: PlaceCardVariant;
   onListItemHover?: (listItemId: string) => void;
   isNearby?: boolean;
 }
 
 function OffersCatalog({offers, variant, onListItemHover, isNearby}: OffersListProps): JSX.Element {
-  const isVertical = variant === 'vertical';
+  const isVertical = variant === PlaceCardVariant.Vertical;
 
   return (
     <div className={classNames(

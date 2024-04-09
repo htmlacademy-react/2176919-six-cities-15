@@ -1,8 +1,8 @@
 import { store } from '../store';
 import { AuthorizationStatus } from '../utils/constants';
 import { OfferData } from './offers';
-import { City } from '../components/cities-list/cities-list';
-import { Sorting } from '../pages/main/components/places-options';
+import { City } from '../utils/cities';
+import { Sorting } from '../utils/sorting-types';
 import { OfferDetailed } from './offer';
 import { ReviewData } from './reviews';
 import { OfferNearby } from './offers-nearby';

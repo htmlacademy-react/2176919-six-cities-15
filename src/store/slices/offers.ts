@@ -3,8 +3,8 @@ import { NameSpace } from '../../utils/constants';
 import { OffersSlice } from '../../types/state';
 import { fetchOffersAction } from '../api-actions';
 import { RequestStatus } from '../../utils/constants';
-import { City } from '../../components/cities-list/cities-list';
-import { Sorting } from '../../pages/main/components/places-options';
+import { City } from '../../utils/cities';
+import { Sorting } from '../../utils/sorting-types';
 
 const initialState: OffersSlice = {
   city: 'Paris',

@@ -1,5 +1,5 @@
 import { OfferData } from '../types/offers';
-import { City } from '../components/cities-list/cities-list';
+import { City } from './cities';
 
 export const getFavoritesByCity = (offers: OfferData[]) => {
   const cities: City[] = [];

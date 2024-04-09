@@ -1,4 +1,4 @@
-import { City } from '../components/cities-list/cities-list';
+import { City } from './cities';
 
 const getRandomInteger = (a:number = 1, b:number = 500) => {
   const lower = Math.ceil(Math.min(a, b));
