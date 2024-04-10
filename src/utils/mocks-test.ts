@@ -2,6 +2,7 @@ import {internet, image, address, name, lorem, datatype} from 'faker';
 import { nanoid } from 'nanoid';
 import { getRandomInteger } from './random-city';
 import { OfferDetailed } from '../types/offer';
+import { OfferData } from '../types/offers';
 
 export const makeFakeUser = () => ({email: internet.email(), avatarUrl: image.avatar()});
 
@@ -72,4 +73,28 @@ export const makeFakeReview = () => ({
   },
   comment: lorem.text(),
   rating: getRandomInteger(1, 5),
+});
+
+export const makeFakeOfferData = (): OfferData => ({
+  id: nanoid(),
+  title: address.cityName(),
+  type: address.streetName(),
+  price: getRandomInteger(1800, 7000),
+  city: {
+    name: address.cityName(),
+    location: {
+      latitude: getRandomInteger(28, 29),
+      longitude: getRandomInteger(46, 48),
+      zoom: getRandomInteger(10, 16),
+    },
+  },
+  location: {
+    latitude: getRandomInteger(28, 29),
+    longitude: getRandomInteger(46, 48),
+    zoom: getRandomInteger(10, 16),
+  },
+  isFavorite: false,
+  isPremium: false,
+  rating: getRandomInteger(1, 5),
+  previewImage: image.imageUrl(),
 });
