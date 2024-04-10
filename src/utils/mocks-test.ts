@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import { getRandomInteger } from './random-city';
 import { OfferDetailed } from '../types/offer';
 import { OfferData } from '../types/offers';
+import { FavoriteOffer } from '../types/favorite-offer';
 
 export const makeFakeUser = () => ({email: internet.email(), avatarUrl: image.avatar()});
 
@@ -97,4 +98,62 @@ export const makeFakeOfferData = (): OfferData => ({
   isPremium: false,
   rating: getRandomInteger(1, 5),
   previewImage: image.imageUrl(),
+});
+
+export const makeFakeFavoriteOffer = (flag = false) => ({
+  id: nanoid(),
+  title: address.cityName(),
+  type: address.streetName(),
+  price: getRandomInteger(1800, 7000),
+  previewImage: image.imageUrl(),
+  city: {
+    name: address.cityName(),
+    location: {
+      latitude: getRandomInteger(28, 29),
+      longitude: getRandomInteger(46, 48),
+      zoom: getRandomInteger(10, 16),
+    },
+  },
+  location: {
+    latitude: getRandomInteger(28, 29),
+    longitude: getRandomInteger(46, 48),
+    zoom: getRandomInteger(10, 16),
+  },
+  isFavorite: flag,
+  isPremium: false,
+  rating: getRandomInteger(1, 5),
+});
+
+export const makeFakeFavoriteOfferWithFlag = (offer: FavoriteOffer, flag: boolean) => ({
+  id: offer.id,
+  title: offer.title,
+  description: lorem.text(),
+  type: offer.type,
+  price: offer.price,
+  previewImage: offer.previewImage,
+  images: [image.imageUrl()],
+  city: {
+    name: offer.city.name,
+    location: {
+      latitude: offer.city.location.latitude,
+      longitude: offer.city.location.longitude,
+      zoom: offer.city.location.zoom,
+    },
+  },
+  location: {
+    latitude: offer.location.latitude,
+    longitude: offer.location.longitude,
+    zoom: offer.location.zoom,
+  },
+  goods: [lorem.word()],
+  host: {
+    name: name.firstName(),
+    avatarUrl: image.avatar(),
+    isPro: false,
+  },
+  isFavorite: flag,
+  isPremium: offer.isPremium,
+  rating: offer.rating,
+  bedrooms: getRandomInteger(1, 5),
+  maxAdults: getRandomInteger(1, 5),
 });
