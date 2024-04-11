@@ -4,6 +4,12 @@ import { getRandomInteger } from './random-city';
 import { OfferDetailed } from '../types/offer';
 import { OfferData } from '../types/offers';
 import { FavoriteOffer } from '../types/favorite-offer';
+import { Action } from 'redux';
+import { ThunkDispatch } from '@reduxjs/toolkit';
+import { createAPI } from '../services/api';
+import { State } from '../types/state';
+
+export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 
 export const makeFakeUser = () => ({email: internet.email(), avatarUrl: image.avatar()});
 
@@ -157,3 +163,5 @@ export const makeFakeFavoriteOfferWithFlag = (offer: FavoriteOffer, flag: boolea
   bedrooms: getRandomInteger(1, 5),
   maxAdults: getRandomInteger(1, 5),
 });
+
+export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({ type }) => type);

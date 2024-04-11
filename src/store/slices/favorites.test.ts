@@ -108,7 +108,7 @@ describe ('FavoritesSlice', () => {
 
     const result = favoritesSlice.reducer(initialState, favoriteAction.fulfilled(mockFavoriteOfferFalse, '', {
       offerId: mockFavoriteOffer.id,
-      isFavorite: FavoriteStatus.Extract,
+      isFavorite: FavoriteStatus.Add,
     }));
 
     expect(result).toEqual(expectedState);
