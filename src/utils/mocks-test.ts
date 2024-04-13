@@ -8,6 +8,7 @@ import { Action } from 'redux';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import { createAPI } from '../services/api';
 import { State } from '../types/state';
+import { AuthorizationStatus, RequestStatus } from './constants';
 
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 
@@ -165,3 +166,29 @@ export const makeFakeFavoriteOfferWithFlag = (offer: FavoriteOffer, flag: boolea
 });
 
 export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({ type }) => type);
+
+export const makeFakeStore = (initialState?: Partial<State>): State => ({
+  User: {
+    user: {email: '', avatarUrl: ''},
+    authorizationStatus: AuthorizationStatus.Auth,
+    loginLoadingStatus: RequestStatus.Idle,
+  },
+  Offers: {
+    city: 'Paris',
+    sorting: 'Popular',
+    offers: [],
+    offersLoadingStatus: RequestStatus.Idle,
+  },
+  Offer: {
+    offer: null,
+    offersNearby: [],
+    reviews: [],
+    status: RequestStatus.Idle,
+    reviewSendingStatus: RequestStatus.Idle,
+  },
+  Favorites: {
+    offersFavorite: [],
+    status: RequestStatus.Idle,
+  },
+  ...initialState ?? {},
+});
