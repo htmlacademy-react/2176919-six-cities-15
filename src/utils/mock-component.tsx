@@ -9,6 +9,7 @@ import { Action } from 'redux';
 import { Provider } from 'react-redux';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
+import { InitialEntry } from 'history';
 
 
 type ComponentWithMockStore = {
@@ -17,7 +18,16 @@ type ComponentWithMockStore = {
   mockAxiosAdapter: MockAdapter;
 }
 
-export function withRouter(component: JSX.Element) {
+export function withRouter(component: JSX.Element, propsMemory?: InitialEntry) {
+  if(propsMemory) {
+    return (
+      <MemoryRouter initialEntries={[propsMemory]}>
+        <HelmetProvider>
+          {component}
+        </HelmetProvider>
+      </MemoryRouter>
+    );
+  }
   return (
     <MemoryRouter>
       <HelmetProvider>
